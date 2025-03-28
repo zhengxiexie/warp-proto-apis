@@ -1,0 +1,206 @@
+syntax = "proto3";
+
+package mulit_agent;
+
+option go_package = "github.com/warpdotdev/warp-server/proto/multiagent/maa";
+import "google/protobuf/field_mask.proto";
+
+// Main Request message for the API
+message Request {
+  // Context provides the state of tasks and active task
+  Context context = 1;
+
+  // Input from user or tool call result
+  Input input = 2;
+}
+
+// Context contains the current state of tasks and which task is active
+message Context {
+  // List of all tasks
+  repeated Task tasks = 1;
+
+  // Currently active task ID, if there is one.
+  string active_task_id = 2;
+}
+
+// A task represents a unit of work with messages
+message Task {
+  // Unique identifier for the task.
+  string id = 1;
+
+  // Short description for the task.
+  string description = 2;
+
+  // Dependencies for task hierarchy and execution order.
+  Dependencies dependencies = 3;
+
+  // Current status of the task.
+  TaskStatus status = 4;
+
+  // Messages associated with this task
+  repeated Message messages = 5;
+}
+
+// Dependencies for task hierarchy and execution order.
+message Dependencies {
+  // ID of the parent task, may be null for root tasks.  This task cannot
+  // start executing until the parent has started executing.
+  string parent_task_id = 1;
+
+  // List of siblings that this task depends on.  This task cannot start
+  // executing until all listed siblings have completed executing.
+  repeated string sibling_dependencies = 2;
+}
+
+message TaskStatus {
+  oneof status {
+    Pending pending = 1;
+    InProgress in_progress = 2;
+    Blocked blocked = 3;
+    Succeeded succeeded = 4;
+    Failed failed = 5;
+    Aborted aborted = 6;
+  }
+
+  message Pending {}
+  message InProgress {}
+  message Blocked {}
+  message Succeeded {}
+  message Failed {}
+  message Aborted {}
+}
+
+// A message within a task
+message Message {
+  // Globally-unique identifier for the message.
+  string id = 1;
+
+  // The type of message with its specific content
+  oneof message {
+    UserQueryMessage user_query = 2;
+    AgentOutputMessage agent_output = 3;
+    ToolCallMessage tool_call = 4;
+    ToolCallResultMessage tool_call_result = 5;
+  }
+}
+
+// User query message type
+message UserQueryMessage { string query = 1; }
+
+// Agent output message type
+message AgentOutputMessage { string text = 1; }
+
+// Tool call message type
+message ToolCallMessage {
+  string tool_call_id = 1;
+
+  // The specific tool being called
+  oneof tool {
+    RunCommand run_command = 2;
+    SearchCodebase search_codebase = 3;
+    Server server = 4;
+  }
+
+  // run_command tool call.
+  message RunCommand { string command = 1; }
+
+  // search_codebase tool call.
+  message SearchCodebase { string query = 1; }
+
+  // Server-side tool call.
+  message Server { string serialized_call = 1; }
+}
+
+// Entry in the message log representing the result of a tool call.
+message ToolCallResultMessage {
+  string tool_call_id = 1;
+
+  oneof result {
+    RunCommandResult run_command = 2;
+    SearchCodebaseResult search_codebase = 3;
+    ServerResult server = 4;
+  }
+}
+
+// Result of a run_command tool call.
+message RunCommandResult {
+  string output = 1;
+  int32 exit_code = 2;
+}
+
+// Result of a search_codebase tool call.
+message SearchCodebaseResult { repeated string files = 1; }
+
+// Result of a server-side tool call.
+message ServerResult { string serialized_result = 1; }
+
+message InputContext {}
+
+// Input for the Request
+message Input {
+  InputContext context = 1;
+
+  // Type of input
+  oneof type {
+    UserQuery user_query = 2;
+    ToolCallResult tool_call_result = 3;
+  }
+
+  // User query
+  message UserQuery { string query = 1; }
+
+  // Tool call result
+  message ToolCallResult {
+    string tool_call_id = 1;
+
+    oneof result {
+      RunCommandResult run_command = 2;
+      SearchCodebaseResult search_codebase = 3;
+    }
+  }
+}
+
+// Main Response message for the API
+message Response {
+  // List of actions to be performed by the client
+  repeated ClientAction client_actions = 1;
+}
+
+// Client actions that can be requested in a response
+message ClientAction {
+  oneof action {
+    CreateTaskAction create_task = 1;
+    UpdateTaskStatusAction update_task_status = 2;
+    AddMessagesToTaskAction add_messages_to_task = 3;
+    UpdateTaskMessageAction update_task_message = 4;
+    AppendToMessageContentAction append_to_message_content = 5;
+  }
+}
+
+// Create task action
+message CreateTaskAction { Task task = 1; }
+
+// Update task status action
+message UpdateTaskStatusAction {
+  string task_id = 1;
+  TaskStatus task_status = 2;
+}
+
+// Add message to task action
+message AddMessagesToTaskAction {
+  string task_id = 1;
+  repeated Message message = 2;
+}
+
+// Update task message action
+message UpdateTaskMessageAction {
+  Message message = 1;
+  google.protobuf.FieldMask mask = 2;
+}
+
+// Append to message content action
+message AppendToMessageContentAction {
+  Message message = 1;
+  // Fields in mask must be of type string; content is appended
+  google.protobuf.FieldMask mask = 2;
+}
