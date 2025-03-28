@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package multi_agent;
+package warp.multi_agent.v1;
 
 import "google/protobuf/field_mask.proto";
 
