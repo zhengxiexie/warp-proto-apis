@@ -4,6 +4,7 @@ Repository to centralize protobuf-based APIs for Warp services and clients.
 Maintains proto definitions alongside generated code for supported clients.
 
 ## General structure
+```
 warp-server-apis/
 └── apis/
     └── <api>/
@@ -11,6 +12,7 @@ warp-server-apis/
             ├── <api>.proto
             └── gen/
                 └── <bindings_for_lang>/
+```
 
 ## Required dependencies
 Must have `protoc` installed.
