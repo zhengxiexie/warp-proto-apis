@@ -83,20 +83,20 @@ message Message {
 
   // The type of message with its specific content
   oneof message {
-    UserQueryMessage user_query = 2;
-    AgentOutputMessage agent_output = 3;
-    ToolCallMessage tool_call = 4;
-    ToolCallResultMessage tool_call_result = 5;
+    UserQuery user_query = 2;
+    AgentOutput agent_output = 3;
+    ToolCall tool_call = 4;
+    ToolCallResult tool_call_result = 5;
   }
 
   // User query message type
-  message UserQueryMessage { string query = 1; }
+  message UserQuery { string query = 1; }
 
   // Agent output message type
-  message AgentOutputMessage { string text = 1; }
+  message AgentOutput { string text = 1; }
 
   // Tool call message type
-  message ToolCallMessage {
+  message ToolCall {
     string tool_call_id = 1;
 
     // The specific tool being called
@@ -117,7 +117,7 @@ message Message {
   }
 
   // Entry in the message log representing the result of a tool call.
-  message ToolCallResultMessage {
+  message ToolCallResult {
     string tool_call_id = 1;
 
     oneof result {

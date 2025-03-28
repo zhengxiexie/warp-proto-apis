@@ -120,27 +120,27 @@ pub struct Message {
 pub mod message {
     /// User query message type
     #[derive(Clone, PartialEq, ::prost::Message)]
-    pub struct UserQueryMessage {
+    pub struct UserQuery {
         #[prost(string, tag="1")]
         pub query: ::prost::alloc::string::String,
     }
     /// Agent output message type
     #[derive(Clone, PartialEq, ::prost::Message)]
-    pub struct AgentOutputMessage {
+    pub struct AgentOutput {
         #[prost(string, tag="1")]
         pub text: ::prost::alloc::string::String,
     }
     /// Tool call message type
     #[derive(Clone, PartialEq, ::prost::Message)]
-    pub struct ToolCallMessage {
+    pub struct ToolCall {
         #[prost(string, tag="1")]
         pub tool_call_id: ::prost::alloc::string::String,
         /// The specific tool being called
-        #[prost(oneof="tool_call_message::Tool", tags="2, 3, 4")]
-        pub tool: ::core::option::Option<tool_call_message::Tool>,
+        #[prost(oneof="tool_call::Tool", tags="2, 3, 4")]
+        pub tool: ::core::option::Option<tool_call::Tool>,
     }
-    /// Nested message and enum types in `ToolCallMessage`.
-    pub mod tool_call_message {
+    /// Nested message and enum types in `ToolCall`.
+    pub mod tool_call {
         /// run_command tool call.
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct RunCommand {
@@ -172,14 +172,14 @@ pub mod message {
     }
     /// Entry in the message log representing the result of a tool call.
     #[derive(Clone, PartialEq, ::prost::Message)]
-    pub struct ToolCallResultMessage {
+    pub struct ToolCallResult {
         #[prost(string, tag="1")]
         pub tool_call_id: ::prost::alloc::string::String,
-        #[prost(oneof="tool_call_result_message::Result", tags="2, 3, 4")]
-        pub result: ::core::option::Option<tool_call_result_message::Result>,
+        #[prost(oneof="tool_call_result::Result", tags="2, 3, 4")]
+        pub result: ::core::option::Option<tool_call_result::Result>,
     }
-    /// Nested message and enum types in `ToolCallResultMessage`.
-    pub mod tool_call_result_message {
+    /// Nested message and enum types in `ToolCallResult`.
+    pub mod tool_call_result {
         /// Result of a server-side tool call.
         /// Provided by the server to simply roundtrip.
         #[derive(Clone, PartialEq, ::prost::Message)]
@@ -201,13 +201,13 @@ pub mod message {
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Message {
         #[prost(message, tag="2")]
-        UserQuery(UserQueryMessage),
+        UserQuery(UserQuery),
         #[prost(message, tag="3")]
-        AgentOutput(AgentOutputMessage),
+        AgentOutput(AgentOutput),
         #[prost(message, tag="4")]
-        ToolCall(ToolCallMessage),
+        ToolCall(ToolCall),
         #[prost(message, tag="5")]
-        ToolCallResult(ToolCallResultMessage),
+        ToolCallResult(ToolCallResult),
     }
 }
 /// Result of a run_command tool call.
