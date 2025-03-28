@@ -1,8 +1,7 @@
 syntax = "proto3";
 
-package mulit_agent;
+package multi_agent;
 
-option go_package = "github.com/warpdotdev/warp-server/proto/multiagent/maa";
 import "google/protobuf/field_mask.proto";
 
 // Main Request message for the API
