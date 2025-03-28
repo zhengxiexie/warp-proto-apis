@@ -15,7 +15,7 @@ warp-server-apis/
 ```
 
 ## Required dependencies
-Must have `protoc` installed.
+Must have `protoc` installed. See here on how to install for your platform: https://protobuf.dev/installation/.
 
 ### Go 
 From the directory that contains the API's `.proto` file, Go bindings can be generated using:
@@ -27,7 +27,7 @@ Workflow: https://staging.warp.dev/drive/workflow/Generate-Go-bindings-from-Prot
 
 ### Rust
 Generating Rust bindings is a little bit more involved:
-1. Install `protoc-gen-prost` and `protoc-gen-prost-crate`. See [here](https://github.com/neoeinstein/protoc-gen-prost/tree/main).
+1. Install `protoc-gen-prost` and `protoc-gen-prost-crate`: `cargo install protoc-gen-prost protoc-gen-prost-crate`. 
 1. Create a bare library crate under `gen/rust`.
 1. From the directory that contains the API's `.proto` file, Rust bindings can be generated using:
     ```

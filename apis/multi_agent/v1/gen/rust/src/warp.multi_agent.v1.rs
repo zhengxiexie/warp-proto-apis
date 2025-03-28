@@ -5,20 +5,30 @@
 pub struct Request {
     /// Context provides the state of tasks and active task
     #[prost(message, optional, tag="1")]
-    pub context: ::core::option::Option<Context>,
+    pub context: ::core::option::Option<request::Context>,
     /// Input from user or tool call result
     #[prost(message, optional, tag="2")]
     pub input: ::core::option::Option<Input>,
 }
-/// Context contains the current state of tasks and which task is active
+/// Nested message and enum types in `Request`.
+pub mod request {
+    /// Context contains the current state of tasks and which task is active
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct Context {
+        /// List of all tasks
+        #[prost(message, repeated, tag="1")]
+        pub tasks: ::prost::alloc::vec::Vec<super::Task>,
+        /// Currently active task ID, if there is one.
+        #[prost(string, tag="2")]
+        pub active_task_id: ::prost::alloc::string::String,
+    }
+}
+/// Main Response message for the API
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct Context {
-    /// List of all tasks
+pub struct Response {
+    /// List of actions to be performed by the client
     #[prost(message, repeated, tag="1")]
-    pub tasks: ::prost::alloc::vec::Vec<Task>,
-    /// Currently active task ID, if there is one.
-    #[prost(string, tag="2")]
-    pub active_task_id: ::prost::alloc::string::String,
+    pub client_actions: ::prost::alloc::vec::Vec<ClientAction>,
 }
 /// A task represents a unit of work with messages
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -31,7 +41,7 @@ pub struct Task {
     pub description: ::prost::alloc::string::String,
     /// Dependencies for task hierarchy and execution order.
     #[prost(message, optional, tag="3")]
-    pub dependencies: ::core::option::Option<Dependencies>,
+    pub dependencies: ::core::option::Option<task::Dependencies>,
     /// Current status of the task.
     #[prost(message, optional, tag="4")]
     pub status: ::core::option::Option<TaskStatus>,
@@ -39,18 +49,22 @@ pub struct Task {
     #[prost(message, repeated, tag="5")]
     pub messages: ::prost::alloc::vec::Vec<Message>,
 }
-/// Dependencies for task hierarchy and execution order.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct Dependencies {
-    /// ID of the parent task, may be null for root tasks.  This task cannot
-    /// start executing until the parent has started executing.
-    #[prost(string, tag="1")]
-    pub parent_task_id: ::prost::alloc::string::String,
-    /// List of siblings that this task depends on.  This task cannot start
-    /// executing until all listed siblings have completed executing.
-    #[prost(string, repeated, tag="2")]
-    pub sibling_dependencies: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+/// Nested message and enum types in `Task`.
+pub mod task {
+    /// Dependencies for task hierarchy and execution order.
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct Dependencies {
+        /// ID of the parent task, may be null for root tasks.  This task cannot
+        /// start executing until the parent has started executing.
+        #[prost(string, tag="1")]
+        pub parent_task_id: ::prost::alloc::string::String,
+        /// List of siblings that this task depends on.  This task cannot start
+        /// executing until all listed siblings have completed executing.
+        #[prost(string, repeated, tag="2")]
+        pub sibling_dependencies: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    }
 }
+/// A status for a task.
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct TaskStatus {
     #[prost(oneof="task_status::Status", tags="1, 2, 3, 4, 5, 6")]
@@ -104,89 +118,96 @@ pub struct Message {
 }
 /// Nested message and enum types in `Message`.
 pub mod message {
+    /// User query message type
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct UserQueryMessage {
+        #[prost(string, tag="1")]
+        pub query: ::prost::alloc::string::String,
+    }
+    /// Agent output message type
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct AgentOutputMessage {
+        #[prost(string, tag="1")]
+        pub text: ::prost::alloc::string::String,
+    }
+    /// Tool call message type
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct ToolCallMessage {
+        #[prost(string, tag="1")]
+        pub tool_call_id: ::prost::alloc::string::String,
+        /// The specific tool being called
+        #[prost(oneof="tool_call_message::Tool", tags="2, 3, 4")]
+        pub tool: ::core::option::Option<tool_call_message::Tool>,
+    }
+    /// Nested message and enum types in `ToolCallMessage`.
+    pub mod tool_call_message {
+        /// run_command tool call.
+        #[derive(Clone, PartialEq, ::prost::Message)]
+        pub struct RunCommand {
+            #[prost(string, tag="1")]
+            pub command: ::prost::alloc::string::String,
+        }
+        /// search_codebase tool call.
+        #[derive(Clone, PartialEq, ::prost::Message)]
+        pub struct SearchCodebase {
+            #[prost(string, tag="1")]
+            pub query: ::prost::alloc::string::String,
+        }
+        /// Server-side tool call.
+        #[derive(Clone, PartialEq, ::prost::Message)]
+        pub struct Server {
+            #[prost(string, tag="1")]
+            pub serialized_call: ::prost::alloc::string::String,
+        }
+        /// The specific tool being called
+        #[derive(Clone, PartialEq, ::prost::Oneof)]
+        pub enum Tool {
+            #[prost(message, tag="2")]
+            RunCommand(RunCommand),
+            #[prost(message, tag="3")]
+            SearchCodebase(SearchCodebase),
+            #[prost(message, tag="4")]
+            Server(Server),
+        }
+    }
+    /// Entry in the message log representing the result of a tool call.
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct ToolCallResultMessage {
+        #[prost(string, tag="1")]
+        pub tool_call_id: ::prost::alloc::string::String,
+        #[prost(oneof="tool_call_result_message::Result", tags="2, 3, 4")]
+        pub result: ::core::option::Option<tool_call_result_message::Result>,
+    }
+    /// Nested message and enum types in `ToolCallResultMessage`.
+    pub mod tool_call_result_message {
+        /// Result of a server-side tool call.
+        /// Provided by the server to simply roundtrip.
+        #[derive(Clone, PartialEq, ::prost::Message)]
+        pub struct ServerResult {
+            #[prost(string, tag="1")]
+            pub serialized_result: ::prost::alloc::string::String,
+        }
+        #[derive(Clone, PartialEq, ::prost::Oneof)]
+        pub enum Result {
+            #[prost(message, tag="2")]
+            RunCommand(super::super::RunCommandResult),
+            #[prost(message, tag="3")]
+            SearchCodebase(super::super::SearchCodebaseResult),
+            #[prost(message, tag="4")]
+            Server(ServerResult),
+        }
+    }
     /// The type of message with its specific content
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Message {
         #[prost(message, tag="2")]
-        UserQuery(super::UserQueryMessage),
+        UserQuery(UserQueryMessage),
         #[prost(message, tag="3")]
-        AgentOutput(super::AgentOutputMessage),
+        AgentOutput(AgentOutputMessage),
         #[prost(message, tag="4")]
-        ToolCall(super::ToolCallMessage),
+        ToolCall(ToolCallMessage),
         #[prost(message, tag="5")]
-        ToolCallResult(super::ToolCallResultMessage),
-    }
-}
-/// User query message type
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct UserQueryMessage {
-    #[prost(string, tag="1")]
-    pub query: ::prost::alloc::string::String,
-}
-/// Agent output message type
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct AgentOutputMessage {
-    #[prost(string, tag="1")]
-    pub text: ::prost::alloc::string::String,
-}
-/// Tool call message type
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ToolCallMessage {
-    #[prost(string, tag="1")]
-    pub tool_call_id: ::prost::alloc::string::String,
-    /// The specific tool being called
-    #[prost(oneof="tool_call_message::Tool", tags="2, 3, 4")]
-    pub tool: ::core::option::Option<tool_call_message::Tool>,
-}
-/// Nested message and enum types in `ToolCallMessage`.
-pub mod tool_call_message {
-    /// run_command tool call.
-    #[derive(Clone, PartialEq, ::prost::Message)]
-    pub struct RunCommand {
-        #[prost(string, tag="1")]
-        pub command: ::prost::alloc::string::String,
-    }
-    /// search_codebase tool call.
-    #[derive(Clone, PartialEq, ::prost::Message)]
-    pub struct SearchCodebase {
-        #[prost(string, tag="1")]
-        pub query: ::prost::alloc::string::String,
-    }
-    /// Server-side tool call.
-    #[derive(Clone, PartialEq, ::prost::Message)]
-    pub struct Server {
-        #[prost(string, tag="1")]
-        pub serialized_call: ::prost::alloc::string::String,
-    }
-    /// The specific tool being called
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
-    pub enum Tool {
-        #[prost(message, tag="2")]
-        RunCommand(RunCommand),
-        #[prost(message, tag="3")]
-        SearchCodebase(SearchCodebase),
-        #[prost(message, tag="4")]
-        Server(Server),
-    }
-}
-/// Entry in the message log representing the result of a tool call.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ToolCallResultMessage {
-    #[prost(string, tag="1")]
-    pub tool_call_id: ::prost::alloc::string::String,
-    #[prost(oneof="tool_call_result_message::Result", tags="2, 3, 4")]
-    pub result: ::core::option::Option<tool_call_result_message::Result>,
-}
-/// Nested message and enum types in `ToolCallResultMessage`.
-pub mod tool_call_result_message {
-    #[derive(Clone, PartialEq, ::prost::Oneof)]
-    pub enum Result {
-        #[prost(message, tag="2")]
-        RunCommand(super::RunCommandResult),
-        #[prost(message, tag="3")]
-        SearchCodebase(super::SearchCodebaseResult),
-        #[prost(message, tag="4")]
-        Server(super::ServerResult),
+        ToolCallResult(ToolCallResultMessage),
     }
 }
 /// Result of a run_command tool call.
@@ -203,26 +224,21 @@ pub struct SearchCodebaseResult {
     #[prost(string, repeated, tag="1")]
     pub files: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
-/// Result of a server-side tool call.
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ServerResult {
-    #[prost(string, tag="1")]
-    pub serialized_result: ::prost::alloc::string::String,
-}
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
-pub struct InputContext {
-}
 /// Input for the Request
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Input {
     #[prost(message, optional, tag="1")]
-    pub context: ::core::option::Option<InputContext>,
+    pub context: ::core::option::Option<input::Context>,
     /// Type of input
     #[prost(oneof="input::Type", tags="2, 3")]
     pub r#type: ::core::option::Option<input::Type>,
 }
 /// Nested message and enum types in `Input`.
 pub mod input {
+    /// Client context associated to the input.
+    #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    pub struct Context {
+    }
     /// User query
     #[derive(Clone, PartialEq, ::prost::Message)]
     pub struct UserQuery {
@@ -256,13 +272,6 @@ pub mod input {
         ToolCallResult(ToolCallResult),
     }
 }
-/// Main Response message for the API
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct Response {
-    /// List of actions to be performed by the client
-    #[prost(message, repeated, tag="1")]
-    pub client_actions: ::prost::alloc::vec::Vec<ClientAction>,
-}
 /// Client actions that can be requested in a response
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ClientAction {
@@ -271,57 +280,57 @@ pub struct ClientAction {
 }
 /// Nested message and enum types in `ClientAction`.
 pub mod client_action {
+    /// Create task action
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct CreateTask {
+        #[prost(message, optional, tag="1")]
+        pub task: ::core::option::Option<super::Task>,
+    }
+    /// Update task status action
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct UpdateTaskStatus {
+        #[prost(string, tag="1")]
+        pub task_id: ::prost::alloc::string::String,
+        #[prost(message, optional, tag="2")]
+        pub task_status: ::core::option::Option<super::TaskStatus>,
+    }
+    /// Add message to task action
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct AddMessagesToTask {
+        #[prost(string, tag="1")]
+        pub task_id: ::prost::alloc::string::String,
+        #[prost(message, repeated, tag="2")]
+        pub message: ::prost::alloc::vec::Vec<super::Message>,
+    }
+    /// Update task message action
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct UpdateTaskMessage {
+        #[prost(message, optional, tag="1")]
+        pub message: ::core::option::Option<super::Message>,
+        #[prost(message, optional, tag="2")]
+        pub mask: ::core::option::Option<::prost_types::FieldMask>,
+    }
+    /// Append to message content action
+    #[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct AppendToMessageContent {
+        #[prost(message, optional, tag="1")]
+        pub message: ::core::option::Option<super::Message>,
+        /// Fields in mask must be of type string; content is appended
+        #[prost(message, optional, tag="2")]
+        pub mask: ::core::option::Option<::prost_types::FieldMask>,
+    }
     #[derive(Clone, PartialEq, ::prost::Oneof)]
     pub enum Action {
         #[prost(message, tag="1")]
-        CreateTask(super::CreateTaskAction),
+        CreateTask(CreateTask),
         #[prost(message, tag="2")]
-        UpdateTaskStatus(super::UpdateTaskStatusAction),
+        UpdateTaskStatus(UpdateTaskStatus),
         #[prost(message, tag="3")]
-        AddMessagesToTask(super::AddMessagesToTaskAction),
+        AddMessagesToTask(AddMessagesToTask),
         #[prost(message, tag="4")]
-        UpdateTaskMessage(super::UpdateTaskMessageAction),
+        UpdateTaskMessage(UpdateTaskMessage),
         #[prost(message, tag="5")]
-        AppendToMessageContent(super::AppendToMessageContentAction),
+        AppendToMessageContent(AppendToMessageContent),
     }
-}
-/// Create task action
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct CreateTaskAction {
-    #[prost(message, optional, tag="1")]
-    pub task: ::core::option::Option<Task>,
-}
-/// Update task status action
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct UpdateTaskStatusAction {
-    #[prost(string, tag="1")]
-    pub task_id: ::prost::alloc::string::String,
-    #[prost(message, optional, tag="2")]
-    pub task_status: ::core::option::Option<TaskStatus>,
-}
-/// Add message to task action
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct AddMessagesToTaskAction {
-    #[prost(string, tag="1")]
-    pub task_id: ::prost::alloc::string::String,
-    #[prost(message, repeated, tag="2")]
-    pub message: ::prost::alloc::vec::Vec<Message>,
-}
-/// Update task message action
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct UpdateTaskMessageAction {
-    #[prost(message, optional, tag="1")]
-    pub message: ::core::option::Option<Message>,
-    #[prost(message, optional, tag="2")]
-    pub mask: ::core::option::Option<::prost_types::FieldMask>,
-}
-/// Append to message content action
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct AppendToMessageContentAction {
-    #[prost(message, optional, tag="1")]
-    pub message: ::core::option::Option<Message>,
-    /// Fields in mask must be of type string; content is appended
-    #[prost(message, optional, tag="2")]
-    pub mask: ::core::option::Option<::prost_types::FieldMask>,
 }
 // @@protoc_insertion_point(module)
