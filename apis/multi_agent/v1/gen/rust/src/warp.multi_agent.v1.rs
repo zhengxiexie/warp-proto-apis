@@ -136,38 +136,86 @@ pub mod message {
         #[prost(string, tag="1")]
         pub tool_call_id: ::prost::alloc::string::String,
         /// The specific tool being called
-        #[prost(oneof="tool_call::Tool", tags="2, 3, 4")]
+        #[prost(oneof="tool_call::Tool", tags="2, 3, 4, 5, 6")]
         pub tool: ::core::option::Option<tool_call::Tool>,
     }
     /// Nested message and enum types in `ToolCall`.
     pub mod tool_call {
-        /// run_command tool call.
+        /// A tool call that is totally resolved server-side and hence opaque to clients.
+        /// It's included in the message history for bookkeeping purposes.
         #[derive(Clone, PartialEq, ::prost::Message)]
-        pub struct RunCommand {
+        pub struct Server {
+            #[prost(bytes="vec", tag="1")]
+            pub payload: ::prost::alloc::vec::Vec<u8>,
+        }
+        /// A tool call to run a shell command.
+        #[derive(Clone, PartialEq, ::prost::Message)]
+        pub struct RunShellCommand {
             #[prost(string, tag="1")]
             pub command: ::prost::alloc::string::String,
+            #[prost(bool, tag="2")]
+            pub is_read_only: bool,
         }
-        /// search_codebase tool call.
+        /// A tool call to read files.
+        #[derive(Clone, PartialEq, ::prost::Message)]
+        pub struct ReadFiles {
+            #[prost(message, repeated, tag="1")]
+            pub files: ::prost::alloc::vec::Vec<read_files::File>,
+        }
+        /// Nested message and enum types in `ReadFiles`.
+        pub mod read_files {
+            #[derive(Clone, PartialEq, ::prost::Message)]
+            pub struct File {
+                #[prost(string, tag="1")]
+                pub name: ::prost::alloc::string::String,
+                /// If empty, the entire file is retrieved.
+                #[prost(message, repeated, tag="2")]
+                pub line_ranges: ::prost::alloc::vec::Vec<super::super::super::FileContentLineRange>,
+            }
+        }
+        /// A tool call to search a codebase.
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct SearchCodebase {
             #[prost(string, tag="1")]
             pub query: ::prost::alloc::string::String,
+            #[prost(string, repeated, tag="2")]
+            pub path_filters: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
         }
-        /// Server-side tool call.
+        /// A tool call to apply diffs to files.
         #[derive(Clone, PartialEq, ::prost::Message)]
-        pub struct Server {
+        pub struct ApplyFileDiffs {
             #[prost(string, tag="1")]
-            pub serialized_call: ::prost::alloc::string::String,
+            pub summary: ::prost::alloc::string::String,
+            #[prost(message, repeated, tag="2")]
+            pub diffs: ::prost::alloc::vec::Vec<apply_file_diffs::FileDiff>,
+        }
+        /// Nested message and enum types in `ApplyFileDiffs`.
+        pub mod apply_file_diffs {
+            #[derive(Clone, PartialEq, ::prost::Message)]
+            pub struct FileDiff {
+                #[prost(string, tag="1")]
+                pub file_path: ::prost::alloc::string::String,
+                /// The content to be replaced.
+                #[prost(string, tag="2")]
+                pub search: ::prost::alloc::string::String,
+                /// The content that replaces `search`.
+                #[prost(string, tag="3")]
+                pub replace: ::prost::alloc::string::String,
+            }
         }
         /// The specific tool being called
         #[derive(Clone, PartialEq, ::prost::Oneof)]
         pub enum Tool {
             #[prost(message, tag="2")]
-            RunCommand(RunCommand),
-            #[prost(message, tag="3")]
-            SearchCodebase(SearchCodebase),
-            #[prost(message, tag="4")]
             Server(Server),
+            #[prost(message, tag="3")]
+            RunCommand(RunShellCommand),
+            #[prost(message, tag="4")]
+            ReadFiles(ReadFiles),
+            #[prost(message, tag="5")]
+            SearchCodebase(SearchCodebase),
+            #[prost(message, tag="6")]
+            ApplyCodeDiffs(ApplyFileDiffs),
         }
     }
     /// Entry in the message log representing the result of a tool call.
@@ -175,7 +223,7 @@ pub mod message {
     pub struct ToolCallResult {
         #[prost(string, tag="1")]
         pub tool_call_id: ::prost::alloc::string::String,
-        #[prost(oneof="tool_call_result::Result", tags="2, 3, 4")]
+        #[prost(oneof="tool_call_result::Result", tags="2, 3, 4, 5, 6")]
         pub result: ::core::option::Option<tool_call_result::Result>,
     }
     /// Nested message and enum types in `ToolCallResult`.
@@ -184,17 +232,21 @@ pub mod message {
         /// Provided by the server to simply roundtrip.
         #[derive(Clone, PartialEq, ::prost::Message)]
         pub struct ServerResult {
-            #[prost(string, tag="1")]
-            pub serialized_result: ::prost::alloc::string::String,
+            #[prost(bytes="vec", tag="1")]
+            pub serialized_result: ::prost::alloc::vec::Vec<u8>,
         }
         #[derive(Clone, PartialEq, ::prost::Oneof)]
         pub enum Result {
             #[prost(message, tag="2")]
-            RunCommand(super::super::RunCommandResult),
-            #[prost(message, tag="3")]
-            SearchCodebase(super::super::SearchCodebaseResult),
-            #[prost(message, tag="4")]
             Server(ServerResult),
+            #[prost(message, tag="3")]
+            RunCommand(super::super::RunShellCommandResult),
+            #[prost(message, tag="4")]
+            ReadFile(super::super::ReadFilesResult),
+            #[prost(message, tag="5")]
+            SearchCodebase(super::super::SearchCodebaseResult),
+            #[prost(message, tag="6")]
+            ApplyCodeDiffs(super::super::ApplyFileDiffsResult),
         }
     }
     /// The type of message with its specific content
@@ -210,19 +262,49 @@ pub mod message {
         ToolCallResult(ToolCallResult),
     }
 }
-/// Result of a run_command tool call.
+/// A range of lines \[start, end\] that situate content in a file, 0-indexed.
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+pub struct FileContentLineRange {
+    #[prost(int32, tag="1")]
+    pub start: i32,
+    #[prost(int32, tag="2")]
+    pub end: i32,
+}
+/// A representation of raw content within a file.
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct RunCommandResult {
+pub struct FileContent {
+    #[prost(string, tag="1")]
+    pub file_path: ::prost::alloc::string::String,
+    #[prost(string, tag="2")]
+    pub content: ::prost::alloc::string::String,
+    #[prost(message, optional, tag="3")]
+    pub line_range: ::core::option::Option<FileContentLineRange>,
+}
+/// Result of a `RunShellCommand` tool call.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct RunShellCommandResult {
     #[prost(string, tag="1")]
     pub output: ::prost::alloc::string::String,
     #[prost(int32, tag="2")]
     pub exit_code: i32,
 }
-/// Result of a search_codebase tool call.
+/// Result of a `ReadFiles` tool call.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ReadFilesResult {
+    #[prost(message, repeated, tag="1")]
+    pub files: ::prost::alloc::vec::Vec<FileContent>,
+}
+/// Result of a `SearchCodebase` tool call.
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct SearchCodebaseResult {
-    #[prost(string, repeated, tag="1")]
-    pub files: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    #[prost(message, repeated, tag="1")]
+    pub files: ::prost::alloc::vec::Vec<FileContent>,
+}
+/// Result of a `ApplyFileDiffs` tool call.
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ApplyFileDiffsResult {
+    #[prost(message, repeated, tag="1")]
+    pub updated_files: ::prost::alloc::vec::Vec<FileContent>,
 }
 /// Input for the Request
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -250,7 +332,7 @@ pub mod input {
     pub struct ToolCallResult {
         #[prost(string, tag="1")]
         pub tool_call_id: ::prost::alloc::string::String,
-        #[prost(oneof="tool_call_result::Result", tags="2, 3")]
+        #[prost(oneof="tool_call_result::Result", tags="2, 3, 4, 5")]
         pub result: ::core::option::Option<tool_call_result::Result>,
     }
     /// Nested message and enum types in `ToolCallResult`.
@@ -258,9 +340,13 @@ pub mod input {
         #[derive(Clone, PartialEq, ::prost::Oneof)]
         pub enum Result {
             #[prost(message, tag="2")]
-            RunCommand(super::super::RunCommandResult),
+            RunCommand(super::super::RunShellCommandResult),
             #[prost(message, tag="3")]
+            ReadFiles(super::super::ReadFilesResult),
+            #[prost(message, tag="4")]
             SearchCodebase(super::super::SearchCodebaseResult),
+            #[prost(message, tag="5")]
+            ApplyCodeDiffs(super::super::ApplyFileDiffsResult),
         }
     }
     /// Type of input
@@ -300,7 +386,7 @@ pub mod client_action {
         #[prost(string, tag="1")]
         pub task_id: ::prost::alloc::string::String,
         #[prost(message, repeated, tag="2")]
-        pub message: ::prost::alloc::vec::Vec<super::Message>,
+        pub messages: ::prost::alloc::vec::Vec<super::Message>,
     }
     /// Update task message action
     #[derive(Clone, PartialEq, ::prost::Message)]
