@@ -120,7 +120,7 @@ message Message {
 
     // A tool call that is totally resolved server-side and hence opaque to clients.
     // It's included in the message history for bookkeeping purposes.
-    message Server { bytes payload = 1; }
+    message Server { string payload = 1; }
 
     // A tool call to run a shell command.
     message RunShellCommand { 
@@ -173,7 +173,7 @@ message Message {
 
     // Result of a server-side tool call.
     // Provided by the server to simply roundtrip.
-    message ServerResult { bytes serialized_result = 1; }
+    message ServerResult { string serialized_result = 1; }
   }
 }
 

@@ -3345,7 +3345,7 @@ func (*message_ToolCallResult_ApplyFileDiffs) isMessage_ToolCallResult_Result() 
 // It's included in the message history for bookkeeping purposes.
 type Message_ToolCall_Server struct {
 	state                  protoimpl.MessageState `protogen:"opaque.v1"`
-	xxx_hidden_Payload     []byte                 `protobuf:"bytes,1,opt,name=payload"`
+	xxx_hidden_Payload     *string                `protobuf:"bytes,1,opt,name=payload"`
 	XXX_raceDetectHookData protoimpl.RaceDetectHookData
 	XXX_presence           [1]uint32
 	unknownFields          protoimpl.UnknownFields
@@ -3377,18 +3377,18 @@ func (x *Message_ToolCall_Server) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-func (x *Message_ToolCall_Server) GetPayload() []byte {
+func (x *Message_ToolCall_Server) GetPayload() string {
 	if x != nil {
-		return x.xxx_hidden_Payload
+		if x.xxx_hidden_Payload != nil {
+			return *x.xxx_hidden_Payload
+		}
+		return ""
 	}
-	return nil
+	return ""
 }
 
-func (x *Message_ToolCall_Server) SetPayload(v []byte) {
-	if v == nil {
-		v = []byte{}
-	}
-	x.xxx_hidden_Payload = v
+func (x *Message_ToolCall_Server) SetPayload(v string) {
+	x.xxx_hidden_Payload = &v
 	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 0, 1)
 }
 
@@ -3407,7 +3407,7 @@ func (x *Message_ToolCall_Server) ClearPayload() {
 type Message_ToolCall_Server_builder struct {
 	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
 
-	Payload []byte
+	Payload *string
 }
 
 func (b0 Message_ToolCall_Server_builder) Build() *Message_ToolCall_Server {
@@ -4023,7 +4023,7 @@ func (b0 Message_ToolCall_ApplyFileDiffs_FileDiff_builder) Build() *Message_Tool
 // Provided by the server to simply roundtrip.
 type Message_ToolCallResult_ServerResult struct {
 	state                       protoimpl.MessageState `protogen:"opaque.v1"`
-	xxx_hidden_SerializedResult []byte                 `protobuf:"bytes,1,opt,name=serialized_result,json=serializedResult"`
+	xxx_hidden_SerializedResult *string                `protobuf:"bytes,1,opt,name=serialized_result,json=serializedResult"`
 	XXX_raceDetectHookData      protoimpl.RaceDetectHookData
 	XXX_presence                [1]uint32
 	unknownFields               protoimpl.UnknownFields
@@ -4055,18 +4055,18 @@ func (x *Message_ToolCallResult_ServerResult) ProtoReflect() protoreflect.Messag
 	return mi.MessageOf(x)
 }
 
-func (x *Message_ToolCallResult_ServerResult) GetSerializedResult() []byte {
+func (x *Message_ToolCallResult_ServerResult) GetSerializedResult() string {
 	if x != nil {
-		return x.xxx_hidden_SerializedResult
+		if x.xxx_hidden_SerializedResult != nil {
+			return *x.xxx_hidden_SerializedResult
+		}
+		return ""
 	}
-	return nil
+	return ""
 }
 
-func (x *Message_ToolCallResult_ServerResult) SetSerializedResult(v []byte) {
-	if v == nil {
-		v = []byte{}
-	}
-	x.xxx_hidden_SerializedResult = v
+func (x *Message_ToolCallResult_ServerResult) SetSerializedResult(v string) {
+	x.xxx_hidden_SerializedResult = &v
 	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 0, 1)
 }
 
@@ -4085,7 +4085,7 @@ func (x *Message_ToolCallResult_ServerResult) ClearSerializedResult() {
 type Message_ToolCallResult_ServerResult_builder struct {
 	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
 
-	SerializedResult []byte
+	SerializedResult *string
 }
 
 func (b0 Message_ToolCallResult_ServerResult_builder) Build() *Message_ToolCallResult_ServerResult {
@@ -5034,7 +5034,7 @@ const file_multi_agent_proto_rawDesc = "" +
 	"read_files\x18\x05 \x01(\v2/.warp.multi_agent.v1.Message.ToolCall.ReadFilesH\x00R\treadFiles\x12`\n" +
 	"\x10apply_file_diffs\x18\x06 \x01(\v24.warp.multi_agent.v1.Message.ToolCall.ApplyFileDiffsH\x00R\x0eapplyFileDiffs\x1a\"\n" +
 	"\x06Server\x12\x18\n" +
-	"\apayload\x18\x01 \x01(\fR\apayload\x1aM\n" +
+	"\apayload\x18\x01 \x01(\tR\apayload\x1aM\n" +
 	"\x0fRunShellCommand\x12\x18\n" +
 	"\acommand\x18\x01 \x01(\tR\acommand\x12 \n" +
 	"\fis_read_only\x18\x02 \x01(\bR\n" +
@@ -5066,7 +5066,7 @@ const file_multi_agent_proto_rawDesc = "" +
 	"read_files\x18\x05 \x01(\v2$.warp.multi_agent.v1.ReadFilesResultH\x00R\treadFiles\x12U\n" +
 	"\x10apply_file_diffs\x18\x06 \x01(\v2).warp.multi_agent.v1.ApplyFileDiffsResultH\x00R\x0eapplyFileDiffs\x1a;\n" +
 	"\fServerResult\x12+\n" +
-	"\x11serialized_result\x18\x01 \x01(\fR\x10serializedResultB\b\n" +
+	"\x11serialized_result\x18\x01 \x01(\tR\x10serializedResultB\b\n" +
 	"\x06resultB\t\n" +
 	"\amessage\">\n" +
 	"\x14FileContentLineRange\x12\x14\n" +
