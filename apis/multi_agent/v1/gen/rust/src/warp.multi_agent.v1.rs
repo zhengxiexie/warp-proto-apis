@@ -207,13 +207,13 @@ pub mod message {
         #[derive(Clone, PartialEq, ::prost::Oneof)]
         pub enum Tool {
             #[prost(message, tag="2")]
-            Server(Server),
+            RunShellCommand(RunShellCommand),
             #[prost(message, tag="3")]
-            RunCommand(RunShellCommand),
-            #[prost(message, tag="4")]
-            ReadFiles(ReadFiles),
-            #[prost(message, tag="5")]
             SearchCodebase(SearchCodebase),
+            #[prost(message, tag="4")]
+            Server(Server),
+            #[prost(message, tag="5")]
+            ReadFiles(ReadFiles),
             #[prost(message, tag="6")]
             ApplyFileDiffs(ApplyFileDiffs),
         }
@@ -238,13 +238,13 @@ pub mod message {
         #[derive(Clone, PartialEq, ::prost::Oneof)]
         pub enum Result {
             #[prost(message, tag="2")]
-            Server(ServerResult),
+            RunShellCommand(super::super::RunShellCommandResult),
             #[prost(message, tag="3")]
-            RunCommand(super::super::RunShellCommandResult),
-            #[prost(message, tag="4")]
-            ReadFile(super::super::ReadFilesResult),
-            #[prost(message, tag="5")]
             SearchCodebase(super::super::SearchCodebaseResult),
+            #[prost(message, tag="4")]
+            Server(ServerResult),
+            #[prost(message, tag="5")]
+            ReadFiles(super::super::ReadFilesResult),
             #[prost(message, tag="6")]
             ApplyFileDiffs(super::super::ApplyFileDiffsResult),
         }
@@ -340,7 +340,7 @@ pub mod input {
         #[derive(Clone, PartialEq, ::prost::Oneof)]
         pub enum Result {
             #[prost(message, tag="2")]
-            RunCommand(super::super::RunShellCommandResult),
+            RunShellCommand(super::super::RunShellCommandResult),
             #[prost(message, tag="3")]
             ReadFiles(super::super::ReadFilesResult),
             #[prost(message, tag="4")]

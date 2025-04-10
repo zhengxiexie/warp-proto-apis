@@ -111,10 +111,10 @@ message Message {
 
     // The specific tool being called
     oneof tool {
-      Server server = 2;
-      RunShellCommand run_command = 3;
-      ReadFiles read_files = 4;
-      SearchCodebase search_codebase = 5;
+      RunShellCommand run_shell_command = 2;
+      SearchCodebase search_codebase = 3;
+      Server server = 4;
+      ReadFiles read_files = 5;
       ApplyFileDiffs apply_file_diffs = 6;
     }
 
@@ -164,10 +164,10 @@ message Message {
     string tool_call_id = 1;
 
     oneof result {
-      ServerResult server = 2;
-      RunShellCommandResult run_command = 3;
-      ReadFilesResult read_file = 4;
-      SearchCodebaseResult search_codebase = 5;
+      RunShellCommandResult run_shell_command = 2;
+      SearchCodebaseResult search_codebase = 3;
+      ServerResult server = 4;
+      ReadFilesResult read_files = 5;
       ApplyFileDiffsResult apply_file_diffs = 6;
     }
 
@@ -232,7 +232,7 @@ message Input {
     string tool_call_id = 1;
 
     oneof result {
-      RunShellCommandResult run_command = 2;
+      RunShellCommandResult run_shell_command = 2;
       ReadFilesResult read_files = 3;
       SearchCodebaseResult search_codebase = 4;
       ApplyFileDiffsResult apply_file_diffs = 5;
