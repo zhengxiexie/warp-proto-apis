@@ -1,3 +1,10 @@
+// The API definition for the Warp's multi-agent API.
+//
+// TODO: the library we use to generate client stubs for Rust doesn't
+// support the "edition" feature: https://github.com/tokio-rs/prost/issues/1031.
+// So to generate Rust stubs in the meantime, we need to use
+// `syntax = "proto3"` in place of the `edition` line and remove the
+// API_OPAQUE feature (which relies on `edition` support).
 edition = "2023";
 
 package warp.multi_agent.v1;
@@ -104,19 +111,52 @@ message Message {
 
     // The specific tool being called
     oneof tool {
-      RunCommand run_command = 2;
+      RunShellCommand run_shell_command = 2;
       SearchCodebase search_codebase = 3;
       Server server = 4;
+      ReadFiles read_files = 5;
+      ApplyFileDiffs apply_file_diffs = 6;
     }
 
-    // run_command tool call.
-    message RunCommand { string command = 1; }
+    // A tool call that is totally resolved server-side and hence opaque to clients.
+    // It's included in the message history for bookkeeping purposes.
+    message Server { string payload = 1; }
 
-    // search_codebase tool call.
-    message SearchCodebase { string query = 1; }
+    // A tool call to run a shell command.
+    message RunShellCommand { 
+      string command = 1; 
+      bool is_read_only = 2;
+    }
 
-    // Server-side tool call.
-    message Server { string serialized_call = 1; }
+    // A tool call to read files.
+    message ReadFiles { 
+      repeated File files = 1;
+      message File {
+        string name = 1;
+        // If empty, the entire file is retrieved.
+        repeated FileContentLineRange line_ranges = 2;
+      }
+    }
+
+    // A tool call to search a codebase.
+    message SearchCodebase {
+      string query = 1;
+      repeated string path_filters = 2;
+    }
+
+    // A tool call to apply diffs to files.
+    message ApplyFileDiffs {
+      string summary = 1;
+      repeated FileDiff diffs = 2;
+
+      message FileDiff {
+        string file_path = 1;
+        // The content to be replaced.
+        string search = 2;
+        // The content that replaces `search`.
+        string replace = 3;
+      }
+    }
   }
 
   // Entry in the message log representing the result of a tool call.
@@ -124,9 +164,11 @@ message Message {
     string tool_call_id = 1;
 
     oneof result {
-      RunCommandResult run_command = 2;
+      RunShellCommandResult run_shell_command = 2;
       SearchCodebaseResult search_codebase = 3;
       ServerResult server = 4;
+      ReadFilesResult read_files = 5;
+      ApplyFileDiffsResult apply_file_diffs = 6;
     }
 
     // Result of a server-side tool call.
@@ -135,14 +177,39 @@ message Message {
   }
 }
 
-// Result of a run_command tool call.
-message RunCommandResult {
+// A range of lines [start, end] that situate content in a file, 0-indexed.
+message FileContentLineRange {
+  int32 start = 1;
+  int32 end = 2;
+}
+
+// A representation of raw content within a file.
+message FileContent {
+  string file_path = 1;
+  string content = 2;
+  FileContentLineRange line_range = 3;
+}
+
+// Result of a `RunShellCommand` tool call.
+message RunShellCommandResult {
   string output = 1;
   int32 exit_code = 2;
 }
 
-// Result of a search_codebase tool call.
-message SearchCodebaseResult { repeated string files = 1; }
+// Result of a `ReadFiles` tool call.
+message ReadFilesResult {
+  repeated FileContent files = 1;
+}
+
+// Result of a `SearchCodebase` tool call.
+message SearchCodebaseResult {
+  repeated FileContent files = 1;
+}
+
+// Result of a `ApplyFileDiffs` tool call.
+message ApplyFileDiffsResult {
+  repeated FileContent updated_files = 1;
+}
 
 // Input for the Request
 message Input {
@@ -165,8 +232,10 @@ message Input {
     string tool_call_id = 1;
 
     oneof result {
-      RunCommandResult run_command = 2;
-      SearchCodebaseResult search_codebase = 3;
+      RunShellCommandResult run_shell_command = 2;
+      ReadFilesResult read_files = 3;
+      SearchCodebaseResult search_codebase = 4;
+      ApplyFileDiffsResult apply_file_diffs = 5;
     }
   }
 }
@@ -193,7 +262,7 @@ message ClientAction {
   // Add message to task action
   message AddMessagesToTask {
     string task_id = 1;
-    repeated Message message = 2;
+    repeated Message messages = 2;
   }
 
   // Update task message action
