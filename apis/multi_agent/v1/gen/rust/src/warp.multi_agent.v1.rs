@@ -215,7 +215,7 @@ pub mod message {
             #[prost(message, tag="5")]
             SearchCodebase(SearchCodebase),
             #[prost(message, tag="6")]
-            ApplyCodeDiffs(ApplyFileDiffs),
+            ApplyFileDiffs(ApplyFileDiffs),
         }
     }
     /// Entry in the message log representing the result of a tool call.
@@ -246,7 +246,7 @@ pub mod message {
             #[prost(message, tag="5")]
             SearchCodebase(super::super::SearchCodebaseResult),
             #[prost(message, tag="6")]
-            ApplyCodeDiffs(super::super::ApplyFileDiffsResult),
+            ApplyFileDiffs(super::super::ApplyFileDiffsResult),
         }
     }
     /// The type of message with its specific content
@@ -346,7 +346,7 @@ pub mod input {
             #[prost(message, tag="4")]
             SearchCodebase(super::super::SearchCodebaseResult),
             #[prost(message, tag="5")]
-            ApplyCodeDiffs(super::super::ApplyFileDiffsResult),
+            ApplyFileDiffs(super::super::ApplyFileDiffsResult),
         }
     }
     /// Type of input

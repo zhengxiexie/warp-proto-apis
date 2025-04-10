@@ -2735,10 +2735,10 @@ func (x *Message_ToolCall) GetSearchCodebase() *Message_ToolCall_SearchCodebase 
 	return nil
 }
 
-func (x *Message_ToolCall) GetApplyCodeDiffs() *Message_ToolCall_ApplyFileDiffs {
+func (x *Message_ToolCall) GetApplyFileDiffs() *Message_ToolCall_ApplyFileDiffs {
 	if x != nil {
-		if x, ok := x.xxx_hidden_Tool.(*message_ToolCall_ApplyCodeDiffs); ok {
-			return x.ApplyCodeDiffs
+		if x, ok := x.xxx_hidden_Tool.(*message_ToolCall_ApplyFileDiffs_); ok {
+			return x.ApplyFileDiffs
 		}
 	}
 	return nil
@@ -2781,12 +2781,12 @@ func (x *Message_ToolCall) SetSearchCodebase(v *Message_ToolCall_SearchCodebase)
 	x.xxx_hidden_Tool = &message_ToolCall_SearchCodebase_{v}
 }
 
-func (x *Message_ToolCall) SetApplyCodeDiffs(v *Message_ToolCall_ApplyFileDiffs) {
+func (x *Message_ToolCall) SetApplyFileDiffs(v *Message_ToolCall_ApplyFileDiffs) {
 	if v == nil {
 		x.xxx_hidden_Tool = nil
 		return
 	}
-	x.xxx_hidden_Tool = &message_ToolCall_ApplyCodeDiffs{v}
+	x.xxx_hidden_Tool = &message_ToolCall_ApplyFileDiffs_{v}
 }
 
 func (x *Message_ToolCall) HasToolCallId() bool {
@@ -2835,11 +2835,11 @@ func (x *Message_ToolCall) HasSearchCodebase() bool {
 	return ok
 }
 
-func (x *Message_ToolCall) HasApplyCodeDiffs() bool {
+func (x *Message_ToolCall) HasApplyFileDiffs() bool {
 	if x == nil {
 		return false
 	}
-	_, ok := x.xxx_hidden_Tool.(*message_ToolCall_ApplyCodeDiffs)
+	_, ok := x.xxx_hidden_Tool.(*message_ToolCall_ApplyFileDiffs_)
 	return ok
 }
 
@@ -2876,8 +2876,8 @@ func (x *Message_ToolCall) ClearSearchCodebase() {
 	}
 }
 
-func (x *Message_ToolCall) ClearApplyCodeDiffs() {
-	if _, ok := x.xxx_hidden_Tool.(*message_ToolCall_ApplyCodeDiffs); ok {
+func (x *Message_ToolCall) ClearApplyFileDiffs() {
+	if _, ok := x.xxx_hidden_Tool.(*message_ToolCall_ApplyFileDiffs_); ok {
 		x.xxx_hidden_Tool = nil
 	}
 }
@@ -2887,7 +2887,7 @@ const Message_ToolCall_Server_case case_Message_ToolCall_Tool = 2
 const Message_ToolCall_RunCommand_case case_Message_ToolCall_Tool = 3
 const Message_ToolCall_ReadFiles_case case_Message_ToolCall_Tool = 4
 const Message_ToolCall_SearchCodebase_case case_Message_ToolCall_Tool = 5
-const Message_ToolCall_ApplyCodeDiffs_case case_Message_ToolCall_Tool = 6
+const Message_ToolCall_ApplyFileDiffs_case case_Message_ToolCall_Tool = 6
 
 func (x *Message_ToolCall) WhichTool() case_Message_ToolCall_Tool {
 	if x == nil {
@@ -2902,8 +2902,8 @@ func (x *Message_ToolCall) WhichTool() case_Message_ToolCall_Tool {
 		return Message_ToolCall_ReadFiles_case
 	case *message_ToolCall_SearchCodebase_:
 		return Message_ToolCall_SearchCodebase_case
-	case *message_ToolCall_ApplyCodeDiffs:
-		return Message_ToolCall_ApplyCodeDiffs_case
+	case *message_ToolCall_ApplyFileDiffs_:
+		return Message_ToolCall_ApplyFileDiffs_case
 	default:
 		return Message_ToolCall_Tool_not_set_case
 	}
@@ -2920,7 +2920,7 @@ type Message_ToolCall_builder struct {
 	RunCommand     *Message_ToolCall_RunShellCommand
 	ReadFiles      *Message_ToolCall_ReadFiles
 	SearchCodebase *Message_ToolCall_SearchCodebase
-	ApplyCodeDiffs *Message_ToolCall_ApplyFileDiffs
+	ApplyFileDiffs *Message_ToolCall_ApplyFileDiffs
 	// -- end of xxx_hidden_Tool
 }
 
@@ -2944,8 +2944,8 @@ func (b0 Message_ToolCall_builder) Build() *Message_ToolCall {
 	if b.SearchCodebase != nil {
 		x.xxx_hidden_Tool = &message_ToolCall_SearchCodebase_{b.SearchCodebase}
 	}
-	if b.ApplyCodeDiffs != nil {
-		x.xxx_hidden_Tool = &message_ToolCall_ApplyCodeDiffs{b.ApplyCodeDiffs}
+	if b.ApplyFileDiffs != nil {
+		x.xxx_hidden_Tool = &message_ToolCall_ApplyFileDiffs_{b.ApplyFileDiffs}
 	}
 	return m0
 }
@@ -2980,8 +2980,8 @@ type message_ToolCall_SearchCodebase_ struct {
 	SearchCodebase *Message_ToolCall_SearchCodebase `protobuf:"bytes,5,opt,name=search_codebase,json=searchCodebase,oneof"`
 }
 
-type message_ToolCall_ApplyCodeDiffs struct {
-	ApplyCodeDiffs *Message_ToolCall_ApplyFileDiffs `protobuf:"bytes,6,opt,name=apply_code_diffs,json=applyCodeDiffs,oneof"`
+type message_ToolCall_ApplyFileDiffs_ struct {
+	ApplyFileDiffs *Message_ToolCall_ApplyFileDiffs `protobuf:"bytes,6,opt,name=apply_file_diffs,json=applyFileDiffs,oneof"`
 }
 
 func (*message_ToolCall_Server_) isMessage_ToolCall_Tool() {}
@@ -2992,7 +2992,7 @@ func (*message_ToolCall_ReadFiles_) isMessage_ToolCall_Tool() {}
 
 func (*message_ToolCall_SearchCodebase_) isMessage_ToolCall_Tool() {}
 
-func (*message_ToolCall_ApplyCodeDiffs) isMessage_ToolCall_Tool() {}
+func (*message_ToolCall_ApplyFileDiffs_) isMessage_ToolCall_Tool() {}
 
 // Entry in the message log representing the result of a tool call.
 type Message_ToolCallResult struct {
@@ -3076,10 +3076,10 @@ func (x *Message_ToolCallResult) GetSearchCodebase() *SearchCodebaseResult {
 	return nil
 }
 
-func (x *Message_ToolCallResult) GetApplyCodeDiffs() *ApplyFileDiffsResult {
+func (x *Message_ToolCallResult) GetApplyFileDiffs() *ApplyFileDiffsResult {
 	if x != nil {
-		if x, ok := x.xxx_hidden_Result.(*message_ToolCallResult_ApplyCodeDiffs); ok {
-			return x.ApplyCodeDiffs
+		if x, ok := x.xxx_hidden_Result.(*message_ToolCallResult_ApplyFileDiffs); ok {
+			return x.ApplyFileDiffs
 		}
 	}
 	return nil
@@ -3122,12 +3122,12 @@ func (x *Message_ToolCallResult) SetSearchCodebase(v *SearchCodebaseResult) {
 	x.xxx_hidden_Result = &message_ToolCallResult_SearchCodebase{v}
 }
 
-func (x *Message_ToolCallResult) SetApplyCodeDiffs(v *ApplyFileDiffsResult) {
+func (x *Message_ToolCallResult) SetApplyFileDiffs(v *ApplyFileDiffsResult) {
 	if v == nil {
 		x.xxx_hidden_Result = nil
 		return
 	}
-	x.xxx_hidden_Result = &message_ToolCallResult_ApplyCodeDiffs{v}
+	x.xxx_hidden_Result = &message_ToolCallResult_ApplyFileDiffs{v}
 }
 
 func (x *Message_ToolCallResult) HasToolCallId() bool {
@@ -3176,11 +3176,11 @@ func (x *Message_ToolCallResult) HasSearchCodebase() bool {
 	return ok
 }
 
-func (x *Message_ToolCallResult) HasApplyCodeDiffs() bool {
+func (x *Message_ToolCallResult) HasApplyFileDiffs() bool {
 	if x == nil {
 		return false
 	}
-	_, ok := x.xxx_hidden_Result.(*message_ToolCallResult_ApplyCodeDiffs)
+	_, ok := x.xxx_hidden_Result.(*message_ToolCallResult_ApplyFileDiffs)
 	return ok
 }
 
@@ -3217,8 +3217,8 @@ func (x *Message_ToolCallResult) ClearSearchCodebase() {
 	}
 }
 
-func (x *Message_ToolCallResult) ClearApplyCodeDiffs() {
-	if _, ok := x.xxx_hidden_Result.(*message_ToolCallResult_ApplyCodeDiffs); ok {
+func (x *Message_ToolCallResult) ClearApplyFileDiffs() {
+	if _, ok := x.xxx_hidden_Result.(*message_ToolCallResult_ApplyFileDiffs); ok {
 		x.xxx_hidden_Result = nil
 	}
 }
@@ -3228,7 +3228,7 @@ const Message_ToolCallResult_Server_case case_Message_ToolCallResult_Result = 2
 const Message_ToolCallResult_RunCommand_case case_Message_ToolCallResult_Result = 3
 const Message_ToolCallResult_ReadFile_case case_Message_ToolCallResult_Result = 4
 const Message_ToolCallResult_SearchCodebase_case case_Message_ToolCallResult_Result = 5
-const Message_ToolCallResult_ApplyCodeDiffs_case case_Message_ToolCallResult_Result = 6
+const Message_ToolCallResult_ApplyFileDiffs_case case_Message_ToolCallResult_Result = 6
 
 func (x *Message_ToolCallResult) WhichResult() case_Message_ToolCallResult_Result {
 	if x == nil {
@@ -3243,8 +3243,8 @@ func (x *Message_ToolCallResult) WhichResult() case_Message_ToolCallResult_Resul
 		return Message_ToolCallResult_ReadFile_case
 	case *message_ToolCallResult_SearchCodebase:
 		return Message_ToolCallResult_SearchCodebase_case
-	case *message_ToolCallResult_ApplyCodeDiffs:
-		return Message_ToolCallResult_ApplyCodeDiffs_case
+	case *message_ToolCallResult_ApplyFileDiffs:
+		return Message_ToolCallResult_ApplyFileDiffs_case
 	default:
 		return Message_ToolCallResult_Result_not_set_case
 	}
@@ -3259,7 +3259,7 @@ type Message_ToolCallResult_builder struct {
 	RunCommand     *RunShellCommandResult
 	ReadFile       *ReadFilesResult
 	SearchCodebase *SearchCodebaseResult
-	ApplyCodeDiffs *ApplyFileDiffsResult
+	ApplyFileDiffs *ApplyFileDiffsResult
 	// -- end of xxx_hidden_Result
 }
 
@@ -3283,8 +3283,8 @@ func (b0 Message_ToolCallResult_builder) Build() *Message_ToolCallResult {
 	if b.SearchCodebase != nil {
 		x.xxx_hidden_Result = &message_ToolCallResult_SearchCodebase{b.SearchCodebase}
 	}
-	if b.ApplyCodeDiffs != nil {
-		x.xxx_hidden_Result = &message_ToolCallResult_ApplyCodeDiffs{b.ApplyCodeDiffs}
+	if b.ApplyFileDiffs != nil {
+		x.xxx_hidden_Result = &message_ToolCallResult_ApplyFileDiffs{b.ApplyFileDiffs}
 	}
 	return m0
 }
@@ -3319,8 +3319,8 @@ type message_ToolCallResult_SearchCodebase struct {
 	SearchCodebase *SearchCodebaseResult `protobuf:"bytes,5,opt,name=search_codebase,json=searchCodebase,oneof"`
 }
 
-type message_ToolCallResult_ApplyCodeDiffs struct {
-	ApplyCodeDiffs *ApplyFileDiffsResult `protobuf:"bytes,6,opt,name=apply_code_diffs,json=applyCodeDiffs,oneof"`
+type message_ToolCallResult_ApplyFileDiffs struct {
+	ApplyFileDiffs *ApplyFileDiffsResult `protobuf:"bytes,6,opt,name=apply_file_diffs,json=applyFileDiffs,oneof"`
 }
 
 func (*message_ToolCallResult_Server) isMessage_ToolCallResult_Result() {}
@@ -3331,7 +3331,7 @@ func (*message_ToolCallResult_ReadFile) isMessage_ToolCallResult_Result() {}
 
 func (*message_ToolCallResult_SearchCodebase) isMessage_ToolCallResult_Result() {}
 
-func (*message_ToolCallResult_ApplyCodeDiffs) isMessage_ToolCallResult_Result() {}
+func (*message_ToolCallResult_ApplyFileDiffs) isMessage_ToolCallResult_Result() {}
 
 // A tool call that is totally resolved server-side and hence opaque to clients.
 // It's included in the message history for bookkeeping purposes.
@@ -4287,10 +4287,10 @@ func (x *Input_ToolCallResult) GetSearchCodebase() *SearchCodebaseResult {
 	return nil
 }
 
-func (x *Input_ToolCallResult) GetApplyCodeDiffs() *ApplyFileDiffsResult {
+func (x *Input_ToolCallResult) GetApplyFileDiffs() *ApplyFileDiffsResult {
 	if x != nil {
-		if x, ok := x.xxx_hidden_Result.(*input_ToolCallResult_ApplyCodeDiffs); ok {
-			return x.ApplyCodeDiffs
+		if x, ok := x.xxx_hidden_Result.(*input_ToolCallResult_ApplyFileDiffs); ok {
+			return x.ApplyFileDiffs
 		}
 	}
 	return nil
@@ -4325,12 +4325,12 @@ func (x *Input_ToolCallResult) SetSearchCodebase(v *SearchCodebaseResult) {
 	x.xxx_hidden_Result = &input_ToolCallResult_SearchCodebase{v}
 }
 
-func (x *Input_ToolCallResult) SetApplyCodeDiffs(v *ApplyFileDiffsResult) {
+func (x *Input_ToolCallResult) SetApplyFileDiffs(v *ApplyFileDiffsResult) {
 	if v == nil {
 		x.xxx_hidden_Result = nil
 		return
 	}
-	x.xxx_hidden_Result = &input_ToolCallResult_ApplyCodeDiffs{v}
+	x.xxx_hidden_Result = &input_ToolCallResult_ApplyFileDiffs{v}
 }
 
 func (x *Input_ToolCallResult) HasToolCallId() bool {
@@ -4371,11 +4371,11 @@ func (x *Input_ToolCallResult) HasSearchCodebase() bool {
 	return ok
 }
 
-func (x *Input_ToolCallResult) HasApplyCodeDiffs() bool {
+func (x *Input_ToolCallResult) HasApplyFileDiffs() bool {
 	if x == nil {
 		return false
 	}
-	_, ok := x.xxx_hidden_Result.(*input_ToolCallResult_ApplyCodeDiffs)
+	_, ok := x.xxx_hidden_Result.(*input_ToolCallResult_ApplyFileDiffs)
 	return ok
 }
 
@@ -4406,8 +4406,8 @@ func (x *Input_ToolCallResult) ClearSearchCodebase() {
 	}
 }
 
-func (x *Input_ToolCallResult) ClearApplyCodeDiffs() {
-	if _, ok := x.xxx_hidden_Result.(*input_ToolCallResult_ApplyCodeDiffs); ok {
+func (x *Input_ToolCallResult) ClearApplyFileDiffs() {
+	if _, ok := x.xxx_hidden_Result.(*input_ToolCallResult_ApplyFileDiffs); ok {
 		x.xxx_hidden_Result = nil
 	}
 }
@@ -4416,7 +4416,7 @@ const Input_ToolCallResult_Result_not_set_case case_Input_ToolCallResult_Result 
 const Input_ToolCallResult_RunCommand_case case_Input_ToolCallResult_Result = 2
 const Input_ToolCallResult_ReadFiles_case case_Input_ToolCallResult_Result = 3
 const Input_ToolCallResult_SearchCodebase_case case_Input_ToolCallResult_Result = 4
-const Input_ToolCallResult_ApplyCodeDiffs_case case_Input_ToolCallResult_Result = 5
+const Input_ToolCallResult_ApplyFileDiffs_case case_Input_ToolCallResult_Result = 5
 
 func (x *Input_ToolCallResult) WhichResult() case_Input_ToolCallResult_Result {
 	if x == nil {
@@ -4429,8 +4429,8 @@ func (x *Input_ToolCallResult) WhichResult() case_Input_ToolCallResult_Result {
 		return Input_ToolCallResult_ReadFiles_case
 	case *input_ToolCallResult_SearchCodebase:
 		return Input_ToolCallResult_SearchCodebase_case
-	case *input_ToolCallResult_ApplyCodeDiffs:
-		return Input_ToolCallResult_ApplyCodeDiffs_case
+	case *input_ToolCallResult_ApplyFileDiffs:
+		return Input_ToolCallResult_ApplyFileDiffs_case
 	default:
 		return Input_ToolCallResult_Result_not_set_case
 	}
@@ -4444,7 +4444,7 @@ type Input_ToolCallResult_builder struct {
 	RunCommand     *RunShellCommandResult
 	ReadFiles      *ReadFilesResult
 	SearchCodebase *SearchCodebaseResult
-	ApplyCodeDiffs *ApplyFileDiffsResult
+	ApplyFileDiffs *ApplyFileDiffsResult
 	// -- end of xxx_hidden_Result
 }
 
@@ -4465,8 +4465,8 @@ func (b0 Input_ToolCallResult_builder) Build() *Input_ToolCallResult {
 	if b.SearchCodebase != nil {
 		x.xxx_hidden_Result = &input_ToolCallResult_SearchCodebase{b.SearchCodebase}
 	}
-	if b.ApplyCodeDiffs != nil {
-		x.xxx_hidden_Result = &input_ToolCallResult_ApplyCodeDiffs{b.ApplyCodeDiffs}
+	if b.ApplyFileDiffs != nil {
+		x.xxx_hidden_Result = &input_ToolCallResult_ApplyFileDiffs{b.ApplyFileDiffs}
 	}
 	return m0
 }
@@ -4497,8 +4497,8 @@ type input_ToolCallResult_SearchCodebase struct {
 	SearchCodebase *SearchCodebaseResult `protobuf:"bytes,4,opt,name=search_codebase,json=searchCodebase,oneof"`
 }
 
-type input_ToolCallResult_ApplyCodeDiffs struct {
-	ApplyCodeDiffs *ApplyFileDiffsResult `protobuf:"bytes,5,opt,name=apply_code_diffs,json=applyCodeDiffs,oneof"`
+type input_ToolCallResult_ApplyFileDiffs struct {
+	ApplyFileDiffs *ApplyFileDiffsResult `protobuf:"bytes,5,opt,name=apply_file_diffs,json=applyFileDiffs,oneof"`
 }
 
 func (*input_ToolCallResult_RunCommand) isInput_ToolCallResult_Result() {}
@@ -4507,7 +4507,7 @@ func (*input_ToolCallResult_ReadFiles) isInput_ToolCallResult_Result() {}
 
 func (*input_ToolCallResult_SearchCodebase) isInput_ToolCallResult_Result() {}
 
-func (*input_ToolCallResult_ApplyCodeDiffs) isInput_ToolCallResult_Result() {}
+func (*input_ToolCallResult_ApplyFileDiffs) isInput_ToolCallResult_Result() {}
 
 // Create task action
 type ClientAction_CreateTask struct {
@@ -5025,7 +5025,7 @@ const file_multi_agent_proto_rawDesc = "" +
 	"\n" +
 	"read_files\x18\x04 \x01(\v2/.warp.multi_agent.v1.Message.ToolCall.ReadFilesH\x00R\treadFiles\x12_\n" +
 	"\x0fsearch_codebase\x18\x05 \x01(\v24.warp.multi_agent.v1.Message.ToolCall.SearchCodebaseH\x00R\x0esearchCodebase\x12`\n" +
-	"\x10apply_code_diffs\x18\x06 \x01(\v24.warp.multi_agent.v1.Message.ToolCall.ApplyFileDiffsH\x00R\x0eapplyCodeDiffs\x1a\"\n" +
+	"\x10apply_file_diffs\x18\x06 \x01(\v24.warp.multi_agent.v1.Message.ToolCall.ApplyFileDiffsH\x00R\x0eapplyFileDiffs\x1a\"\n" +
 	"\x06Server\x12\x18\n" +
 	"\apayload\x18\x01 \x01(\fR\apayload\x1aM\n" +
 	"\x0fRunShellCommand\x12\x18\n" +
@@ -5057,7 +5057,7 @@ const file_multi_agent_proto_rawDesc = "" +
 	"runCommand\x12C\n" +
 	"\tread_file\x18\x04 \x01(\v2$.warp.multi_agent.v1.ReadFilesResultH\x00R\breadFile\x12T\n" +
 	"\x0fsearch_codebase\x18\x05 \x01(\v2).warp.multi_agent.v1.SearchCodebaseResultH\x00R\x0esearchCodebase\x12U\n" +
-	"\x10apply_code_diffs\x18\x06 \x01(\v2).warp.multi_agent.v1.ApplyFileDiffsResultH\x00R\x0eapplyCodeDiffs\x1a;\n" +
+	"\x10apply_file_diffs\x18\x06 \x01(\v2).warp.multi_agent.v1.ApplyFileDiffsResultH\x00R\x0eapplyFileDiffs\x1a;\n" +
 	"\fServerResult\x12+\n" +
 	"\x11serialized_result\x18\x01 \x01(\fR\x10serializedResultB\b\n" +
 	"\x06resultB\t\n" +
@@ -5095,7 +5095,7 @@ const file_multi_agent_proto_rawDesc = "" +
 	"\n" +
 	"read_files\x18\x03 \x01(\v2$.warp.multi_agent.v1.ReadFilesResultH\x00R\treadFiles\x12T\n" +
 	"\x0fsearch_codebase\x18\x04 \x01(\v2).warp.multi_agent.v1.SearchCodebaseResultH\x00R\x0esearchCodebase\x12U\n" +
-	"\x10apply_code_diffs\x18\x05 \x01(\v2).warp.multi_agent.v1.ApplyFileDiffsResultH\x00R\x0eapplyCodeDiffsB\b\n" +
+	"\x10apply_file_diffs\x18\x05 \x01(\v2).warp.multi_agent.v1.ApplyFileDiffsResultH\x00R\x0eapplyFileDiffsB\b\n" +
 	"\x06resultB\x06\n" +
 	"\x04type\"\xa7\b\n" +
 	"\fClientAction\x12O\n" +
@@ -5202,19 +5202,19 @@ var file_multi_agent_proto_depIdxs = []int32{
 	26, // 30: warp.multi_agent.v1.Message.ToolCall.run_command:type_name -> warp.multi_agent.v1.Message.ToolCall.RunShellCommand
 	27, // 31: warp.multi_agent.v1.Message.ToolCall.read_files:type_name -> warp.multi_agent.v1.Message.ToolCall.ReadFiles
 	28, // 32: warp.multi_agent.v1.Message.ToolCall.search_codebase:type_name -> warp.multi_agent.v1.Message.ToolCall.SearchCodebase
-	29, // 33: warp.multi_agent.v1.Message.ToolCall.apply_code_diffs:type_name -> warp.multi_agent.v1.Message.ToolCall.ApplyFileDiffs
+	29, // 33: warp.multi_agent.v1.Message.ToolCall.apply_file_diffs:type_name -> warp.multi_agent.v1.Message.ToolCall.ApplyFileDiffs
 	32, // 34: warp.multi_agent.v1.Message.ToolCallResult.server:type_name -> warp.multi_agent.v1.Message.ToolCallResult.ServerResult
 	7,  // 35: warp.multi_agent.v1.Message.ToolCallResult.run_command:type_name -> warp.multi_agent.v1.RunShellCommandResult
 	8,  // 36: warp.multi_agent.v1.Message.ToolCallResult.read_file:type_name -> warp.multi_agent.v1.ReadFilesResult
 	9,  // 37: warp.multi_agent.v1.Message.ToolCallResult.search_codebase:type_name -> warp.multi_agent.v1.SearchCodebaseResult
-	10, // 38: warp.multi_agent.v1.Message.ToolCallResult.apply_code_diffs:type_name -> warp.multi_agent.v1.ApplyFileDiffsResult
+	10, // 38: warp.multi_agent.v1.Message.ToolCallResult.apply_file_diffs:type_name -> warp.multi_agent.v1.ApplyFileDiffsResult
 	30, // 39: warp.multi_agent.v1.Message.ToolCall.ReadFiles.files:type_name -> warp.multi_agent.v1.Message.ToolCall.ReadFiles.File
 	31, // 40: warp.multi_agent.v1.Message.ToolCall.ApplyFileDiffs.diffs:type_name -> warp.multi_agent.v1.Message.ToolCall.ApplyFileDiffs.FileDiff
 	5,  // 41: warp.multi_agent.v1.Message.ToolCall.ReadFiles.File.line_ranges:type_name -> warp.multi_agent.v1.FileContentLineRange
 	7,  // 42: warp.multi_agent.v1.Input.ToolCallResult.run_command:type_name -> warp.multi_agent.v1.RunShellCommandResult
 	8,  // 43: warp.multi_agent.v1.Input.ToolCallResult.read_files:type_name -> warp.multi_agent.v1.ReadFilesResult
 	9,  // 44: warp.multi_agent.v1.Input.ToolCallResult.search_codebase:type_name -> warp.multi_agent.v1.SearchCodebaseResult
-	10, // 45: warp.multi_agent.v1.Input.ToolCallResult.apply_code_diffs:type_name -> warp.multi_agent.v1.ApplyFileDiffsResult
+	10, // 45: warp.multi_agent.v1.Input.ToolCallResult.apply_file_diffs:type_name -> warp.multi_agent.v1.ApplyFileDiffsResult
 	2,  // 46: warp.multi_agent.v1.ClientAction.CreateTask.task:type_name -> warp.multi_agent.v1.Task
 	3,  // 47: warp.multi_agent.v1.ClientAction.UpdateTaskStatus.task_status:type_name -> warp.multi_agent.v1.TaskStatus
 	4,  // 48: warp.multi_agent.v1.ClientAction.AddMessagesToTask.messages:type_name -> warp.multi_agent.v1.Message
@@ -5264,20 +5264,20 @@ func file_multi_agent_proto_init() {
 		(*message_ToolCall_RunCommand)(nil),
 		(*message_ToolCall_ReadFiles_)(nil),
 		(*message_ToolCall_SearchCodebase_)(nil),
-		(*message_ToolCall_ApplyCodeDiffs)(nil),
+		(*message_ToolCall_ApplyFileDiffs_)(nil),
 	}
 	file_multi_agent_proto_msgTypes[24].OneofWrappers = []any{
 		(*message_ToolCallResult_Server)(nil),
 		(*message_ToolCallResult_RunCommand)(nil),
 		(*message_ToolCallResult_ReadFile)(nil),
 		(*message_ToolCallResult_SearchCodebase)(nil),
-		(*message_ToolCallResult_ApplyCodeDiffs)(nil),
+		(*message_ToolCallResult_ApplyFileDiffs)(nil),
 	}
 	file_multi_agent_proto_msgTypes[35].OneofWrappers = []any{
 		(*input_ToolCallResult_RunCommand)(nil),
 		(*input_ToolCallResult_ReadFiles)(nil),
 		(*input_ToolCallResult_SearchCodebase)(nil),
-		(*input_ToolCallResult_ApplyCodeDiffs)(nil),
+		(*input_ToolCallResult_ApplyFileDiffs)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

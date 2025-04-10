@@ -1,3 +1,10 @@
+// The API definition for the Warp's multi-agent API.
+//
+// TODO: the library we use to generate client stubs for Rust doesn't
+// support the "edition" feature: https://github.com/tokio-rs/prost/issues/1031.
+// So to generate Rust stubs in the meantime, we need to use
+// `syntax = "proto3"` in place of the `edition` line and remove the
+// API_OPAQUE feature (which relies on `edition` support).
 edition = "2023";
 
 package warp.multi_agent.v1;
@@ -108,7 +115,7 @@ message Message {
       RunShellCommand run_command = 3;
       ReadFiles read_files = 4;
       SearchCodebase search_codebase = 5;
-      ApplyFileDiffs apply_code_diffs = 6;
+      ApplyFileDiffs apply_file_diffs = 6;
     }
 
     // A tool call that is totally resolved server-side and hence opaque to clients.
@@ -161,7 +168,7 @@ message Message {
       RunShellCommandResult run_command = 3;
       ReadFilesResult read_file = 4;
       SearchCodebaseResult search_codebase = 5;
-      ApplyFileDiffsResult apply_code_diffs = 6;
+      ApplyFileDiffsResult apply_file_diffs = 6;
     }
 
     // Result of a server-side tool call.
@@ -228,7 +235,7 @@ message Input {
       RunShellCommandResult run_command = 2;
       ReadFilesResult read_files = 3;
       SearchCodebaseResult search_codebase = 4;
-      ApplyFileDiffsResult apply_code_diffs = 5;
+      ApplyFileDiffsResult apply_file_diffs = 5;
     }
   }
 }
