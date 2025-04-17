@@ -1,0 +1,78 @@
+#!/bin/bash
+
+set -x
+set -e
+
+API=""
+VERSION="v1"
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -a|--api)
+      API="$2"
+      shift 2
+      ;;
+    -v|--version)
+      VERSION="$2"
+      shift 2
+      ;;
+    *)
+      echo "Unknown option: $1"
+      exit 1
+      ;;
+  esac
+done
+
+if [ -z "$API" ]; then
+  # Print out that API is required, and provide a list of APIs based on
+  # directories under the ./apis directory.
+  echo "Error: API is required"
+  echo "Available APIs:"
+  APIS=($(ls -1 apis))
+  for api in "${APIS[@]}"; do
+    echo " - $api"
+  done
+  exit 1
+fi
+
+if [ -z "$VERSION" ]; then
+  echo "Error: Version is required"
+  exit 1
+fi
+
+echo "Generating bindings for $API $VERSION..."
+
+echo "Source protos:"
+PROTO_PATH="apis/$API/$VERSION"
+PROTO_FILES=($(cd "$PROTO_PATH" && ls -1 *.proto))
+for proto in "${PROTO_FILES[@]}"; do
+  echo " - $PROTO_PATH/$proto"
+done
+
+echo -e "\n➡️  Generating Go bindings..."
+protoc --go_out="$PROTO_PATH/gen/go" --go_opt="module=github.com/warp/warp-proto-apis/$API/$VERSION" --proto_path="$(realpath "$PROTO_PATH")" "${PROTO_FILES[@]}"
+echo "✅️ Done generating Go bindings"
+
+# For Rust, prost doesn't yet support editions, so we need to do a bit
+# of preprocessing on the files before passing them to the compiler.
+cleanup_temp() {
+    rm -rf "$TEMP"
+}
+TEMP="$(mktemp -d)"
+trap cleanup_temp EXIT
+
+mkdir -p "$TEMP/$PROTO_PATH"
+cp "$PROTO_PATH"/*.proto "$TEMP/$PROTO_PATH"
+# Replace `edition = "2023";` with `syntax = "proto3";` in all proto files,
+# remove `option features.*`, and remove "unused" feature proto imports.
+find "$TEMP" \
+  -name "*.proto" \
+  -exec sed -i '' \
+    -e 's/edition = "2023";/syntax = "proto3";/g' \
+    -e 's/option features.*//g' \
+    -e 's/import "google\/protobuf\/go_features.proto";//g' \
+    {} \;
+
+echo -e "\n➡️  Generating Rust bindings..."
+protoc --prost_out="$PROTO_PATH/gen/rust/src" --proto_path="$(realpath "$TEMP")" "${PROTO_FILES[@]}"
+echo "✅️ Done generating Rust bindings"
