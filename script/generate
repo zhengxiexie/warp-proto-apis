@@ -1,0 +1,91 @@
+#!/bin/bash
+#
+# Script to generate language bindings for a proto API.
+#
+# Usage:
+#   ./script/generate -a <api> [-v <version>]
+#
+# Options:
+#   -a, --api <api>     The API to generate bindings for
+#   -v, --version <version> The version of the API to generate bindings for
+#
+# Example:
+#   ./script/generate -a multi_agent -v v1
+
+set -e
+
+API=""
+VERSION="v1"
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -a|--api)
+      API="$2"
+      shift 2
+      ;;
+    -v|--version)
+      VERSION="$2"
+      shift 2
+      ;;
+    *)
+      echo "Unknown option: $1"
+      exit 1
+      ;;
+  esac
+done
+
+if [ -z "$API" ]; then
+  echo "Error: API (-a|--api) is required"
+  echo "Available APIs:"
+  APIS=($(ls -1 apis))
+  for api in "${APIS[@]}"; do
+    echo " - $api"
+  done
+  exit 1
+fi
+
+if [ -z "$VERSION" ]; then
+  echo "Error: Version (-v|--version) is required"
+  exit 1
+fi
+
+echo "Generating bindings for $API $VERSION..."
+
+echo "Source protos:"
+API_PATH="apis/$API/$VERSION"
+PROTO_FILES=($(cd "$API_PATH" && ls -1 *.proto))
+for proto in "${PROTO_FILES[@]}"; do
+  echo " - $API_PATH/$proto"
+done
+
+echo -e "\n➡️  Generating Go bindings..."
+protoc --go_out="$API_PATH/gen/go" --go_opt="module=github.com/warp/warp-proto-apis/$API/$VERSION" --proto_path="$(realpath "$API_PATH")" "${PROTO_FILES[@]}"
+pushd "$API_PATH/gen/go" >/dev/null 2>&1
+go mod tidy
+popd >/dev/null 2>&1
+
+echo "✅️ Done generating Go bindings"
+
+# For Rust, prost doesn't yet support editions, so we need to do a bit
+# of preprocessing on the files before passing them to the compiler.
+cleanup_temp() {
+    rm -rf "$TEMP"
+}
+TEMP="$(mktemp -d)"
+trap cleanup_temp EXIT
+
+mkdir -p "$TEMP/$API_PATH"
+cp "$API_PATH"/*.proto "$TEMP/$API_PATH"
+# Replace `edition = "2023";` with `syntax = "proto3";` in all proto files,
+# remove `option features.*`, and remove "unused" feature proto imports.
+find "$TEMP" \
+  -name "*.proto" \
+  -exec sed -i '' \
+    -e 's/edition = "2023";/syntax = "proto3";/g' \
+    -e 's/option features.*//g' \
+    -e 's/import "google\/protobuf\/go_features.proto";//g' \
+    {} \;
+
+echo -e "\n➡️  Generating Rust bindings..."
+protoc --prost_out="$API_PATH/gen/rust/src" --proto_path="$(realpath "$TEMP/$API_PATH")" "${PROTO_FILES[@]}"
+echo "✅️ Done generating Rust bindings"
