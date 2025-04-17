@@ -552,6 +552,836 @@ func (*taskStatus_Failed_) isTaskStatus_Status() {}
 
 func (*taskStatus_Aborted_) isTaskStatus_Status() {}
 
+// A message within a task
+type Message struct {
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Id          *string                `protobuf:"bytes,1,opt,name=id"`
+	xxx_hidden_Message     isMessage_Message      `protobuf_oneof:"message"`
+	XXX_raceDetectHookData protoimpl.RaceDetectHookData
+	XXX_presence           [1]uint32
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *Message) Reset() {
+	*x = Message{}
+	mi := &file_task_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Message) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Message) ProtoMessage() {}
+
+func (x *Message) ProtoReflect() protoreflect.Message {
+	mi := &file_task_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *Message) GetId() string {
+	if x != nil {
+		if x.xxx_hidden_Id != nil {
+			return *x.xxx_hidden_Id
+		}
+		return ""
+	}
+	return ""
+}
+
+func (x *Message) GetUserQuery() *Message_UserQuery {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Message.(*message_UserQuery_); ok {
+			return x.UserQuery
+		}
+	}
+	return nil
+}
+
+func (x *Message) GetAgentOutput() *Message_AgentOutput {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Message.(*message_AgentOutput_); ok {
+			return x.AgentOutput
+		}
+	}
+	return nil
+}
+
+func (x *Message) GetToolCall() *Message_ToolCall {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Message.(*message_ToolCall_); ok {
+			return x.ToolCall
+		}
+	}
+	return nil
+}
+
+func (x *Message) GetToolCallResult() *Message_ToolCallResult {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Message.(*message_ToolCallResult_); ok {
+			return x.ToolCallResult
+		}
+	}
+	return nil
+}
+
+func (x *Message) SetId(v string) {
+	x.xxx_hidden_Id = &v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 0, 2)
+}
+
+func (x *Message) SetUserQuery(v *Message_UserQuery) {
+	if v == nil {
+		x.xxx_hidden_Message = nil
+		return
+	}
+	x.xxx_hidden_Message = &message_UserQuery_{v}
+}
+
+func (x *Message) SetAgentOutput(v *Message_AgentOutput) {
+	if v == nil {
+		x.xxx_hidden_Message = nil
+		return
+	}
+	x.xxx_hidden_Message = &message_AgentOutput_{v}
+}
+
+func (x *Message) SetToolCall(v *Message_ToolCall) {
+	if v == nil {
+		x.xxx_hidden_Message = nil
+		return
+	}
+	x.xxx_hidden_Message = &message_ToolCall_{v}
+}
+
+func (x *Message) SetToolCallResult(v *Message_ToolCallResult) {
+	if v == nil {
+		x.xxx_hidden_Message = nil
+		return
+	}
+	x.xxx_hidden_Message = &message_ToolCallResult_{v}
+}
+
+func (x *Message) HasId() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 0)
+}
+
+func (x *Message) HasMessage() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_Message != nil
+}
+
+func (x *Message) HasUserQuery() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Message.(*message_UserQuery_)
+	return ok
+}
+
+func (x *Message) HasAgentOutput() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Message.(*message_AgentOutput_)
+	return ok
+}
+
+func (x *Message) HasToolCall() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Message.(*message_ToolCall_)
+	return ok
+}
+
+func (x *Message) HasToolCallResult() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Message.(*message_ToolCallResult_)
+	return ok
+}
+
+func (x *Message) ClearId() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 0)
+	x.xxx_hidden_Id = nil
+}
+
+func (x *Message) ClearMessage() {
+	x.xxx_hidden_Message = nil
+}
+
+func (x *Message) ClearUserQuery() {
+	if _, ok := x.xxx_hidden_Message.(*message_UserQuery_); ok {
+		x.xxx_hidden_Message = nil
+	}
+}
+
+func (x *Message) ClearAgentOutput() {
+	if _, ok := x.xxx_hidden_Message.(*message_AgentOutput_); ok {
+		x.xxx_hidden_Message = nil
+	}
+}
+
+func (x *Message) ClearToolCall() {
+	if _, ok := x.xxx_hidden_Message.(*message_ToolCall_); ok {
+		x.xxx_hidden_Message = nil
+	}
+}
+
+func (x *Message) ClearToolCallResult() {
+	if _, ok := x.xxx_hidden_Message.(*message_ToolCallResult_); ok {
+		x.xxx_hidden_Message = nil
+	}
+}
+
+const Message_Message_not_set_case case_Message_Message = 0
+const Message_UserQuery_case case_Message_Message = 2
+const Message_AgentOutput_case case_Message_Message = 3
+const Message_ToolCall_case case_Message_Message = 4
+const Message_ToolCallResult_case case_Message_Message = 5
+
+func (x *Message) WhichMessage() case_Message_Message {
+	if x == nil {
+		return Message_Message_not_set_case
+	}
+	switch x.xxx_hidden_Message.(type) {
+	case *message_UserQuery_:
+		return Message_UserQuery_case
+	case *message_AgentOutput_:
+		return Message_AgentOutput_case
+	case *message_ToolCall_:
+		return Message_ToolCall_case
+	case *message_ToolCallResult_:
+		return Message_ToolCallResult_case
+	default:
+		return Message_Message_not_set_case
+	}
+}
+
+type Message_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	// Globally-unique identifier for the message.
+	Id *string
+	// The type of message with its specific content
+
+	// Fields of oneof xxx_hidden_Message:
+	UserQuery      *Message_UserQuery
+	AgentOutput    *Message_AgentOutput
+	ToolCall       *Message_ToolCall
+	ToolCallResult *Message_ToolCallResult
+	// -- end of xxx_hidden_Message
+}
+
+func (b0 Message_builder) Build() *Message {
+	m0 := &Message{}
+	b, x := &b0, m0
+	_, _ = b, x
+	if b.Id != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 0, 2)
+		x.xxx_hidden_Id = b.Id
+	}
+	if b.UserQuery != nil {
+		x.xxx_hidden_Message = &message_UserQuery_{b.UserQuery}
+	}
+	if b.AgentOutput != nil {
+		x.xxx_hidden_Message = &message_AgentOutput_{b.AgentOutput}
+	}
+	if b.ToolCall != nil {
+		x.xxx_hidden_Message = &message_ToolCall_{b.ToolCall}
+	}
+	if b.ToolCallResult != nil {
+		x.xxx_hidden_Message = &message_ToolCallResult_{b.ToolCallResult}
+	}
+	return m0
+}
+
+type case_Message_Message protoreflect.FieldNumber
+
+func (x case_Message_Message) String() string {
+	md := file_task_proto_msgTypes[2].Descriptor()
+	if x == 0 {
+		return "not set"
+	}
+	return protoimpl.X.MessageFieldStringOf(md, protoreflect.FieldNumber(x))
+}
+
+type isMessage_Message interface {
+	isMessage_Message()
+}
+
+type message_UserQuery_ struct {
+	UserQuery *Message_UserQuery `protobuf:"bytes,2,opt,name=user_query,json=userQuery,oneof"`
+}
+
+type message_AgentOutput_ struct {
+	AgentOutput *Message_AgentOutput `protobuf:"bytes,3,opt,name=agent_output,json=agentOutput,oneof"`
+}
+
+type message_ToolCall_ struct {
+	ToolCall *Message_ToolCall `protobuf:"bytes,4,opt,name=tool_call,json=toolCall,oneof"`
+}
+
+type message_ToolCallResult_ struct {
+	ToolCallResult *Message_ToolCallResult `protobuf:"bytes,5,opt,name=tool_call_result,json=toolCallResult,oneof"`
+}
+
+func (*message_UserQuery_) isMessage_Message() {}
+
+func (*message_AgentOutput_) isMessage_Message() {}
+
+func (*message_ToolCall_) isMessage_Message() {}
+
+func (*message_ToolCallResult_) isMessage_Message() {}
+
+// Result of a `RunShellCommand` tool call.
+type RunShellCommandResult struct {
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Output      *string                `protobuf:"bytes,1,opt,name=output"`
+	xxx_hidden_ExitCode    int32                  `protobuf:"varint,2,opt,name=exit_code,json=exitCode"`
+	XXX_raceDetectHookData protoimpl.RaceDetectHookData
+	XXX_presence           [1]uint32
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *RunShellCommandResult) Reset() {
+	*x = RunShellCommandResult{}
+	mi := &file_task_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RunShellCommandResult) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RunShellCommandResult) ProtoMessage() {}
+
+func (x *RunShellCommandResult) ProtoReflect() protoreflect.Message {
+	mi := &file_task_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *RunShellCommandResult) GetOutput() string {
+	if x != nil {
+		if x.xxx_hidden_Output != nil {
+			return *x.xxx_hidden_Output
+		}
+		return ""
+	}
+	return ""
+}
+
+func (x *RunShellCommandResult) GetExitCode() int32 {
+	if x != nil {
+		return x.xxx_hidden_ExitCode
+	}
+	return 0
+}
+
+func (x *RunShellCommandResult) SetOutput(v string) {
+	x.xxx_hidden_Output = &v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 0, 2)
+}
+
+func (x *RunShellCommandResult) SetExitCode(v int32) {
+	x.xxx_hidden_ExitCode = v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 1, 2)
+}
+
+func (x *RunShellCommandResult) HasOutput() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 0)
+}
+
+func (x *RunShellCommandResult) HasExitCode() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 1)
+}
+
+func (x *RunShellCommandResult) ClearOutput() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 0)
+	x.xxx_hidden_Output = nil
+}
+
+func (x *RunShellCommandResult) ClearExitCode() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 1)
+	x.xxx_hidden_ExitCode = 0
+}
+
+type RunShellCommandResult_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Output   *string
+	ExitCode *int32
+}
+
+func (b0 RunShellCommandResult_builder) Build() *RunShellCommandResult {
+	m0 := &RunShellCommandResult{}
+	b, x := &b0, m0
+	_, _ = b, x
+	if b.Output != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 0, 2)
+		x.xxx_hidden_Output = b.Output
+	}
+	if b.ExitCode != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 1, 2)
+		x.xxx_hidden_ExitCode = *b.ExitCode
+	}
+	return m0
+}
+
+// Result of a `ReadFiles` tool call.
+type ReadFilesResult struct {
+	state            protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Files *[]*FileContent        `protobuf:"bytes,1,rep,name=files"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *ReadFilesResult) Reset() {
+	*x = ReadFilesResult{}
+	mi := &file_task_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ReadFilesResult) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReadFilesResult) ProtoMessage() {}
+
+func (x *ReadFilesResult) ProtoReflect() protoreflect.Message {
+	mi := &file_task_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *ReadFilesResult) GetFiles() []*FileContent {
+	if x != nil {
+		if x.xxx_hidden_Files != nil {
+			return *x.xxx_hidden_Files
+		}
+	}
+	return nil
+}
+
+func (x *ReadFilesResult) SetFiles(v []*FileContent) {
+	x.xxx_hidden_Files = &v
+}
+
+type ReadFilesResult_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Files []*FileContent
+}
+
+func (b0 ReadFilesResult_builder) Build() *ReadFilesResult {
+	m0 := &ReadFilesResult{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_Files = &b.Files
+	return m0
+}
+
+// Result of a `SearchCodebase` tool call.
+type SearchCodebaseResult struct {
+	state            protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Files *[]*FileContent        `protobuf:"bytes,1,rep,name=files"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *SearchCodebaseResult) Reset() {
+	*x = SearchCodebaseResult{}
+	mi := &file_task_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SearchCodebaseResult) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SearchCodebaseResult) ProtoMessage() {}
+
+func (x *SearchCodebaseResult) ProtoReflect() protoreflect.Message {
+	mi := &file_task_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *SearchCodebaseResult) GetFiles() []*FileContent {
+	if x != nil {
+		if x.xxx_hidden_Files != nil {
+			return *x.xxx_hidden_Files
+		}
+	}
+	return nil
+}
+
+func (x *SearchCodebaseResult) SetFiles(v []*FileContent) {
+	x.xxx_hidden_Files = &v
+}
+
+type SearchCodebaseResult_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Files []*FileContent
+}
+
+func (b0 SearchCodebaseResult_builder) Build() *SearchCodebaseResult {
+	m0 := &SearchCodebaseResult{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_Files = &b.Files
+	return m0
+}
+
+// Result of a `ApplyFileDiffs` tool call.
+type ApplyFileDiffsResult struct {
+	state                   protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_UpdatedFiles *[]*FileContent        `protobuf:"bytes,1,rep,name=updated_files,json=updatedFiles"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
+}
+
+func (x *ApplyFileDiffsResult) Reset() {
+	*x = ApplyFileDiffsResult{}
+	mi := &file_task_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ApplyFileDiffsResult) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ApplyFileDiffsResult) ProtoMessage() {}
+
+func (x *ApplyFileDiffsResult) ProtoReflect() protoreflect.Message {
+	mi := &file_task_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *ApplyFileDiffsResult) GetUpdatedFiles() []*FileContent {
+	if x != nil {
+		if x.xxx_hidden_UpdatedFiles != nil {
+			return *x.xxx_hidden_UpdatedFiles
+		}
+	}
+	return nil
+}
+
+func (x *ApplyFileDiffsResult) SetUpdatedFiles(v []*FileContent) {
+	x.xxx_hidden_UpdatedFiles = &v
+}
+
+type ApplyFileDiffsResult_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	UpdatedFiles []*FileContent
+}
+
+func (b0 ApplyFileDiffsResult_builder) Build() *ApplyFileDiffsResult {
+	m0 := &ApplyFileDiffsResult{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_UpdatedFiles = &b.UpdatedFiles
+	return m0
+}
+
+// A range of lines [start, end] that situate content in a file, 0-indexed.
+type FileContentLineRange struct {
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Start       int32                  `protobuf:"varint,1,opt,name=start"`
+	xxx_hidden_End         int32                  `protobuf:"varint,2,opt,name=end"`
+	XXX_raceDetectHookData protoimpl.RaceDetectHookData
+	XXX_presence           [1]uint32
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *FileContentLineRange) Reset() {
+	*x = FileContentLineRange{}
+	mi := &file_task_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FileContentLineRange) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FileContentLineRange) ProtoMessage() {}
+
+func (x *FileContentLineRange) ProtoReflect() protoreflect.Message {
+	mi := &file_task_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *FileContentLineRange) GetStart() int32 {
+	if x != nil {
+		return x.xxx_hidden_Start
+	}
+	return 0
+}
+
+func (x *FileContentLineRange) GetEnd() int32 {
+	if x != nil {
+		return x.xxx_hidden_End
+	}
+	return 0
+}
+
+func (x *FileContentLineRange) SetStart(v int32) {
+	x.xxx_hidden_Start = v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 0, 2)
+}
+
+func (x *FileContentLineRange) SetEnd(v int32) {
+	x.xxx_hidden_End = v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 1, 2)
+}
+
+func (x *FileContentLineRange) HasStart() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 0)
+}
+
+func (x *FileContentLineRange) HasEnd() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 1)
+}
+
+func (x *FileContentLineRange) ClearStart() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 0)
+	x.xxx_hidden_Start = 0
+}
+
+func (x *FileContentLineRange) ClearEnd() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 1)
+	x.xxx_hidden_End = 0
+}
+
+type FileContentLineRange_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Start *int32
+	End   *int32
+}
+
+func (b0 FileContentLineRange_builder) Build() *FileContentLineRange {
+	m0 := &FileContentLineRange{}
+	b, x := &b0, m0
+	_, _ = b, x
+	if b.Start != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 0, 2)
+		x.xxx_hidden_Start = *b.Start
+	}
+	if b.End != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 1, 2)
+		x.xxx_hidden_End = *b.End
+	}
+	return m0
+}
+
+// A representation of raw content within a file.
+type FileContent struct {
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_FilePath    *string                `protobuf:"bytes,1,opt,name=file_path,json=filePath"`
+	xxx_hidden_Content     *string                `protobuf:"bytes,2,opt,name=content"`
+	xxx_hidden_LineRange   *FileContentLineRange  `protobuf:"bytes,3,opt,name=line_range,json=lineRange"`
+	XXX_raceDetectHookData protoimpl.RaceDetectHookData
+	XXX_presence           [1]uint32
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *FileContent) Reset() {
+	*x = FileContent{}
+	mi := &file_task_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FileContent) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FileContent) ProtoMessage() {}
+
+func (x *FileContent) ProtoReflect() protoreflect.Message {
+	mi := &file_task_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *FileContent) GetFilePath() string {
+	if x != nil {
+		if x.xxx_hidden_FilePath != nil {
+			return *x.xxx_hidden_FilePath
+		}
+		return ""
+	}
+	return ""
+}
+
+func (x *FileContent) GetContent() string {
+	if x != nil {
+		if x.xxx_hidden_Content != nil {
+			return *x.xxx_hidden_Content
+		}
+		return ""
+	}
+	return ""
+}
+
+func (x *FileContent) GetLineRange() *FileContentLineRange {
+	if x != nil {
+		return x.xxx_hidden_LineRange
+	}
+	return nil
+}
+
+func (x *FileContent) SetFilePath(v string) {
+	x.xxx_hidden_FilePath = &v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 0, 3)
+}
+
+func (x *FileContent) SetContent(v string) {
+	x.xxx_hidden_Content = &v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 1, 3)
+}
+
+func (x *FileContent) SetLineRange(v *FileContentLineRange) {
+	x.xxx_hidden_LineRange = v
+}
+
+func (x *FileContent) HasFilePath() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 0)
+}
+
+func (x *FileContent) HasContent() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 1)
+}
+
+func (x *FileContent) HasLineRange() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_LineRange != nil
+}
+
+func (x *FileContent) ClearFilePath() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 0)
+	x.xxx_hidden_FilePath = nil
+}
+
+func (x *FileContent) ClearContent() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 1)
+	x.xxx_hidden_Content = nil
+}
+
+func (x *FileContent) ClearLineRange() {
+	x.xxx_hidden_LineRange = nil
+}
+
+type FileContent_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	FilePath  *string
+	Content   *string
+	LineRange *FileContentLineRange
+}
+
+func (b0 FileContent_builder) Build() *FileContent {
+	m0 := &FileContent{}
+	b, x := &b0, m0
+	_, _ = b, x
+	if b.FilePath != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 0, 3)
+		x.xxx_hidden_FilePath = b.FilePath
+	}
+	if b.Content != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 1, 3)
+		x.xxx_hidden_Content = b.Content
+	}
+	x.xxx_hidden_LineRange = b.LineRange
+	return m0
+}
+
 // Dependencies for task hierarchy and execution order.
 type Task_Dependencies struct {
 	state                          protoimpl.MessageState `protogen:"opaque.v1"`
@@ -565,7 +1395,7 @@ type Task_Dependencies struct {
 
 func (x *Task_Dependencies) Reset() {
 	*x = Task_Dependencies{}
-	mi := &file_task_proto_msgTypes[2]
+	mi := &file_task_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -577,7 +1407,7 @@ func (x *Task_Dependencies) String() string {
 func (*Task_Dependencies) ProtoMessage() {}
 
 func (x *Task_Dependencies) ProtoReflect() protoreflect.Message {
-	mi := &file_task_proto_msgTypes[2]
+	mi := &file_task_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -657,7 +1487,7 @@ type TaskStatus_Pending struct {
 
 func (x *TaskStatus_Pending) Reset() {
 	*x = TaskStatus_Pending{}
-	mi := &file_task_proto_msgTypes[3]
+	mi := &file_task_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -669,7 +1499,7 @@ func (x *TaskStatus_Pending) String() string {
 func (*TaskStatus_Pending) ProtoMessage() {}
 
 func (x *TaskStatus_Pending) ProtoReflect() protoreflect.Message {
-	mi := &file_task_proto_msgTypes[3]
+	mi := &file_task_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -700,7 +1530,7 @@ type TaskStatus_InProgress struct {
 
 func (x *TaskStatus_InProgress) Reset() {
 	*x = TaskStatus_InProgress{}
-	mi := &file_task_proto_msgTypes[4]
+	mi := &file_task_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -712,7 +1542,7 @@ func (x *TaskStatus_InProgress) String() string {
 func (*TaskStatus_InProgress) ProtoMessage() {}
 
 func (x *TaskStatus_InProgress) ProtoReflect() protoreflect.Message {
-	mi := &file_task_proto_msgTypes[4]
+	mi := &file_task_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -743,7 +1573,7 @@ type TaskStatus_Blocked struct {
 
 func (x *TaskStatus_Blocked) Reset() {
 	*x = TaskStatus_Blocked{}
-	mi := &file_task_proto_msgTypes[5]
+	mi := &file_task_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -755,7 +1585,7 @@ func (x *TaskStatus_Blocked) String() string {
 func (*TaskStatus_Blocked) ProtoMessage() {}
 
 func (x *TaskStatus_Blocked) ProtoReflect() protoreflect.Message {
-	mi := &file_task_proto_msgTypes[5]
+	mi := &file_task_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -786,7 +1616,7 @@ type TaskStatus_Succeeded struct {
 
 func (x *TaskStatus_Succeeded) Reset() {
 	*x = TaskStatus_Succeeded{}
-	mi := &file_task_proto_msgTypes[6]
+	mi := &file_task_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -798,7 +1628,7 @@ func (x *TaskStatus_Succeeded) String() string {
 func (*TaskStatus_Succeeded) ProtoMessage() {}
 
 func (x *TaskStatus_Succeeded) ProtoReflect() protoreflect.Message {
-	mi := &file_task_proto_msgTypes[6]
+	mi := &file_task_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -829,7 +1659,7 @@ type TaskStatus_Failed struct {
 
 func (x *TaskStatus_Failed) Reset() {
 	*x = TaskStatus_Failed{}
-	mi := &file_task_proto_msgTypes[7]
+	mi := &file_task_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -841,7 +1671,7 @@ func (x *TaskStatus_Failed) String() string {
 func (*TaskStatus_Failed) ProtoMessage() {}
 
 func (x *TaskStatus_Failed) ProtoReflect() protoreflect.Message {
-	mi := &file_task_proto_msgTypes[7]
+	mi := &file_task_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -872,7 +1702,7 @@ type TaskStatus_Aborted struct {
 
 func (x *TaskStatus_Aborted) Reset() {
 	*x = TaskStatus_Aborted{}
-	mi := &file_task_proto_msgTypes[8]
+	mi := &file_task_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -884,7 +1714,7 @@ func (x *TaskStatus_Aborted) String() string {
 func (*TaskStatus_Aborted) ProtoMessage() {}
 
 func (x *TaskStatus_Aborted) ProtoReflect() protoreflect.Message {
-	mi := &file_task_proto_msgTypes[8]
+	mi := &file_task_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -907,12 +1737,1749 @@ func (b0 TaskStatus_Aborted_builder) Build() *TaskStatus_Aborted {
 	return m0
 }
 
+// User query message type
+type Message_UserQuery struct {
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Query       *string                `protobuf:"bytes,1,opt,name=query"`
+	XXX_raceDetectHookData protoimpl.RaceDetectHookData
+	XXX_presence           [1]uint32
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *Message_UserQuery) Reset() {
+	*x = Message_UserQuery{}
+	mi := &file_task_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Message_UserQuery) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Message_UserQuery) ProtoMessage() {}
+
+func (x *Message_UserQuery) ProtoReflect() protoreflect.Message {
+	mi := &file_task_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *Message_UserQuery) GetQuery() string {
+	if x != nil {
+		if x.xxx_hidden_Query != nil {
+			return *x.xxx_hidden_Query
+		}
+		return ""
+	}
+	return ""
+}
+
+func (x *Message_UserQuery) SetQuery(v string) {
+	x.xxx_hidden_Query = &v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 0, 1)
+}
+
+func (x *Message_UserQuery) HasQuery() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 0)
+}
+
+func (x *Message_UserQuery) ClearQuery() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 0)
+	x.xxx_hidden_Query = nil
+}
+
+type Message_UserQuery_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Query *string
+}
+
+func (b0 Message_UserQuery_builder) Build() *Message_UserQuery {
+	m0 := &Message_UserQuery{}
+	b, x := &b0, m0
+	_, _ = b, x
+	if b.Query != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 0, 1)
+		x.xxx_hidden_Query = b.Query
+	}
+	return m0
+}
+
+// Agent output message type
+type Message_AgentOutput struct {
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Text        *string                `protobuf:"bytes,1,opt,name=text"`
+	XXX_raceDetectHookData protoimpl.RaceDetectHookData
+	XXX_presence           [1]uint32
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *Message_AgentOutput) Reset() {
+	*x = Message_AgentOutput{}
+	mi := &file_task_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Message_AgentOutput) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Message_AgentOutput) ProtoMessage() {}
+
+func (x *Message_AgentOutput) ProtoReflect() protoreflect.Message {
+	mi := &file_task_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *Message_AgentOutput) GetText() string {
+	if x != nil {
+		if x.xxx_hidden_Text != nil {
+			return *x.xxx_hidden_Text
+		}
+		return ""
+	}
+	return ""
+}
+
+func (x *Message_AgentOutput) SetText(v string) {
+	x.xxx_hidden_Text = &v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 0, 1)
+}
+
+func (x *Message_AgentOutput) HasText() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 0)
+}
+
+func (x *Message_AgentOutput) ClearText() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 0)
+	x.xxx_hidden_Text = nil
+}
+
+type Message_AgentOutput_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Text *string
+}
+
+func (b0 Message_AgentOutput_builder) Build() *Message_AgentOutput {
+	m0 := &Message_AgentOutput{}
+	b, x := &b0, m0
+	_, _ = b, x
+	if b.Text != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 0, 1)
+		x.xxx_hidden_Text = b.Text
+	}
+	return m0
+}
+
+// Tool call message type
+type Message_ToolCall struct {
+	state                  protoimpl.MessageState  `protogen:"opaque.v1"`
+	xxx_hidden_ToolCallId  *string                 `protobuf:"bytes,1,opt,name=tool_call_id,json=toolCallId"`
+	xxx_hidden_Tool        isMessage_ToolCall_Tool `protobuf_oneof:"tool"`
+	XXX_raceDetectHookData protoimpl.RaceDetectHookData
+	XXX_presence           [1]uint32
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *Message_ToolCall) Reset() {
+	*x = Message_ToolCall{}
+	mi := &file_task_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Message_ToolCall) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Message_ToolCall) ProtoMessage() {}
+
+func (x *Message_ToolCall) ProtoReflect() protoreflect.Message {
+	mi := &file_task_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *Message_ToolCall) GetToolCallId() string {
+	if x != nil {
+		if x.xxx_hidden_ToolCallId != nil {
+			return *x.xxx_hidden_ToolCallId
+		}
+		return ""
+	}
+	return ""
+}
+
+func (x *Message_ToolCall) GetRunShellCommand() *Message_ToolCall_RunShellCommand {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Tool.(*message_ToolCall_RunShellCommand_); ok {
+			return x.RunShellCommand
+		}
+	}
+	return nil
+}
+
+func (x *Message_ToolCall) GetSearchCodebase() *Message_ToolCall_SearchCodebase {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Tool.(*message_ToolCall_SearchCodebase_); ok {
+			return x.SearchCodebase
+		}
+	}
+	return nil
+}
+
+func (x *Message_ToolCall) GetServer() *Message_ToolCall_Server {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Tool.(*message_ToolCall_Server_); ok {
+			return x.Server
+		}
+	}
+	return nil
+}
+
+func (x *Message_ToolCall) GetReadFiles() *Message_ToolCall_ReadFiles {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Tool.(*message_ToolCall_ReadFiles_); ok {
+			return x.ReadFiles
+		}
+	}
+	return nil
+}
+
+func (x *Message_ToolCall) GetApplyFileDiffs() *Message_ToolCall_ApplyFileDiffs {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Tool.(*message_ToolCall_ApplyFileDiffs_); ok {
+			return x.ApplyFileDiffs
+		}
+	}
+	return nil
+}
+
+func (x *Message_ToolCall) GetSuggestPlan() *Message_ToolCall_SuggestPlan {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Tool.(*message_ToolCall_SuggestPlan_); ok {
+			return x.SuggestPlan
+		}
+	}
+	return nil
+}
+
+func (x *Message_ToolCall) SetToolCallId(v string) {
+	x.xxx_hidden_ToolCallId = &v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 0, 2)
+}
+
+func (x *Message_ToolCall) SetRunShellCommand(v *Message_ToolCall_RunShellCommand) {
+	if v == nil {
+		x.xxx_hidden_Tool = nil
+		return
+	}
+	x.xxx_hidden_Tool = &message_ToolCall_RunShellCommand_{v}
+}
+
+func (x *Message_ToolCall) SetSearchCodebase(v *Message_ToolCall_SearchCodebase) {
+	if v == nil {
+		x.xxx_hidden_Tool = nil
+		return
+	}
+	x.xxx_hidden_Tool = &message_ToolCall_SearchCodebase_{v}
+}
+
+func (x *Message_ToolCall) SetServer(v *Message_ToolCall_Server) {
+	if v == nil {
+		x.xxx_hidden_Tool = nil
+		return
+	}
+	x.xxx_hidden_Tool = &message_ToolCall_Server_{v}
+}
+
+func (x *Message_ToolCall) SetReadFiles(v *Message_ToolCall_ReadFiles) {
+	if v == nil {
+		x.xxx_hidden_Tool = nil
+		return
+	}
+	x.xxx_hidden_Tool = &message_ToolCall_ReadFiles_{v}
+}
+
+func (x *Message_ToolCall) SetApplyFileDiffs(v *Message_ToolCall_ApplyFileDiffs) {
+	if v == nil {
+		x.xxx_hidden_Tool = nil
+		return
+	}
+	x.xxx_hidden_Tool = &message_ToolCall_ApplyFileDiffs_{v}
+}
+
+func (x *Message_ToolCall) SetSuggestPlan(v *Message_ToolCall_SuggestPlan) {
+	if v == nil {
+		x.xxx_hidden_Tool = nil
+		return
+	}
+	x.xxx_hidden_Tool = &message_ToolCall_SuggestPlan_{v}
+}
+
+func (x *Message_ToolCall) HasToolCallId() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 0)
+}
+
+func (x *Message_ToolCall) HasTool() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_Tool != nil
+}
+
+func (x *Message_ToolCall) HasRunShellCommand() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Tool.(*message_ToolCall_RunShellCommand_)
+	return ok
+}
+
+func (x *Message_ToolCall) HasSearchCodebase() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Tool.(*message_ToolCall_SearchCodebase_)
+	return ok
+}
+
+func (x *Message_ToolCall) HasServer() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Tool.(*message_ToolCall_Server_)
+	return ok
+}
+
+func (x *Message_ToolCall) HasReadFiles() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Tool.(*message_ToolCall_ReadFiles_)
+	return ok
+}
+
+func (x *Message_ToolCall) HasApplyFileDiffs() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Tool.(*message_ToolCall_ApplyFileDiffs_)
+	return ok
+}
+
+func (x *Message_ToolCall) HasSuggestPlan() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Tool.(*message_ToolCall_SuggestPlan_)
+	return ok
+}
+
+func (x *Message_ToolCall) ClearToolCallId() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 0)
+	x.xxx_hidden_ToolCallId = nil
+}
+
+func (x *Message_ToolCall) ClearTool() {
+	x.xxx_hidden_Tool = nil
+}
+
+func (x *Message_ToolCall) ClearRunShellCommand() {
+	if _, ok := x.xxx_hidden_Tool.(*message_ToolCall_RunShellCommand_); ok {
+		x.xxx_hidden_Tool = nil
+	}
+}
+
+func (x *Message_ToolCall) ClearSearchCodebase() {
+	if _, ok := x.xxx_hidden_Tool.(*message_ToolCall_SearchCodebase_); ok {
+		x.xxx_hidden_Tool = nil
+	}
+}
+
+func (x *Message_ToolCall) ClearServer() {
+	if _, ok := x.xxx_hidden_Tool.(*message_ToolCall_Server_); ok {
+		x.xxx_hidden_Tool = nil
+	}
+}
+
+func (x *Message_ToolCall) ClearReadFiles() {
+	if _, ok := x.xxx_hidden_Tool.(*message_ToolCall_ReadFiles_); ok {
+		x.xxx_hidden_Tool = nil
+	}
+}
+
+func (x *Message_ToolCall) ClearApplyFileDiffs() {
+	if _, ok := x.xxx_hidden_Tool.(*message_ToolCall_ApplyFileDiffs_); ok {
+		x.xxx_hidden_Tool = nil
+	}
+}
+
+func (x *Message_ToolCall) ClearSuggestPlan() {
+	if _, ok := x.xxx_hidden_Tool.(*message_ToolCall_SuggestPlan_); ok {
+		x.xxx_hidden_Tool = nil
+	}
+}
+
+const Message_ToolCall_Tool_not_set_case case_Message_ToolCall_Tool = 0
+const Message_ToolCall_RunShellCommand_case case_Message_ToolCall_Tool = 2
+const Message_ToolCall_SearchCodebase_case case_Message_ToolCall_Tool = 3
+const Message_ToolCall_Server_case case_Message_ToolCall_Tool = 4
+const Message_ToolCall_ReadFiles_case case_Message_ToolCall_Tool = 5
+const Message_ToolCall_ApplyFileDiffs_case case_Message_ToolCall_Tool = 6
+const Message_ToolCall_SuggestPlan_case case_Message_ToolCall_Tool = 7
+
+func (x *Message_ToolCall) WhichTool() case_Message_ToolCall_Tool {
+	if x == nil {
+		return Message_ToolCall_Tool_not_set_case
+	}
+	switch x.xxx_hidden_Tool.(type) {
+	case *message_ToolCall_RunShellCommand_:
+		return Message_ToolCall_RunShellCommand_case
+	case *message_ToolCall_SearchCodebase_:
+		return Message_ToolCall_SearchCodebase_case
+	case *message_ToolCall_Server_:
+		return Message_ToolCall_Server_case
+	case *message_ToolCall_ReadFiles_:
+		return Message_ToolCall_ReadFiles_case
+	case *message_ToolCall_ApplyFileDiffs_:
+		return Message_ToolCall_ApplyFileDiffs_case
+	case *message_ToolCall_SuggestPlan_:
+		return Message_ToolCall_SuggestPlan_case
+	default:
+		return Message_ToolCall_Tool_not_set_case
+	}
+}
+
+type Message_ToolCall_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	ToolCallId *string
+	// The specific tool being called
+
+	// Fields of oneof xxx_hidden_Tool:
+	RunShellCommand *Message_ToolCall_RunShellCommand
+	SearchCodebase  *Message_ToolCall_SearchCodebase
+	Server          *Message_ToolCall_Server
+	ReadFiles       *Message_ToolCall_ReadFiles
+	ApplyFileDiffs  *Message_ToolCall_ApplyFileDiffs
+	SuggestPlan     *Message_ToolCall_SuggestPlan
+	// -- end of xxx_hidden_Tool
+}
+
+func (b0 Message_ToolCall_builder) Build() *Message_ToolCall {
+	m0 := &Message_ToolCall{}
+	b, x := &b0, m0
+	_, _ = b, x
+	if b.ToolCallId != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 0, 2)
+		x.xxx_hidden_ToolCallId = b.ToolCallId
+	}
+	if b.RunShellCommand != nil {
+		x.xxx_hidden_Tool = &message_ToolCall_RunShellCommand_{b.RunShellCommand}
+	}
+	if b.SearchCodebase != nil {
+		x.xxx_hidden_Tool = &message_ToolCall_SearchCodebase_{b.SearchCodebase}
+	}
+	if b.Server != nil {
+		x.xxx_hidden_Tool = &message_ToolCall_Server_{b.Server}
+	}
+	if b.ReadFiles != nil {
+		x.xxx_hidden_Tool = &message_ToolCall_ReadFiles_{b.ReadFiles}
+	}
+	if b.ApplyFileDiffs != nil {
+		x.xxx_hidden_Tool = &message_ToolCall_ApplyFileDiffs_{b.ApplyFileDiffs}
+	}
+	if b.SuggestPlan != nil {
+		x.xxx_hidden_Tool = &message_ToolCall_SuggestPlan_{b.SuggestPlan}
+	}
+	return m0
+}
+
+type case_Message_ToolCall_Tool protoreflect.FieldNumber
+
+func (x case_Message_ToolCall_Tool) String() string {
+	md := file_task_proto_msgTypes[18].Descriptor()
+	if x == 0 {
+		return "not set"
+	}
+	return protoimpl.X.MessageFieldStringOf(md, protoreflect.FieldNumber(x))
+}
+
+type isMessage_ToolCall_Tool interface {
+	isMessage_ToolCall_Tool()
+}
+
+type message_ToolCall_RunShellCommand_ struct {
+	RunShellCommand *Message_ToolCall_RunShellCommand `protobuf:"bytes,2,opt,name=run_shell_command,json=runShellCommand,oneof"`
+}
+
+type message_ToolCall_SearchCodebase_ struct {
+	SearchCodebase *Message_ToolCall_SearchCodebase `protobuf:"bytes,3,opt,name=search_codebase,json=searchCodebase,oneof"`
+}
+
+type message_ToolCall_Server_ struct {
+	Server *Message_ToolCall_Server `protobuf:"bytes,4,opt,name=server,oneof"`
+}
+
+type message_ToolCall_ReadFiles_ struct {
+	ReadFiles *Message_ToolCall_ReadFiles `protobuf:"bytes,5,opt,name=read_files,json=readFiles,oneof"`
+}
+
+type message_ToolCall_ApplyFileDiffs_ struct {
+	ApplyFileDiffs *Message_ToolCall_ApplyFileDiffs `protobuf:"bytes,6,opt,name=apply_file_diffs,json=applyFileDiffs,oneof"`
+}
+
+type message_ToolCall_SuggestPlan_ struct {
+	SuggestPlan *Message_ToolCall_SuggestPlan `protobuf:"bytes,7,opt,name=suggest_plan,json=suggestPlan,oneof"`
+}
+
+func (*message_ToolCall_RunShellCommand_) isMessage_ToolCall_Tool() {}
+
+func (*message_ToolCall_SearchCodebase_) isMessage_ToolCall_Tool() {}
+
+func (*message_ToolCall_Server_) isMessage_ToolCall_Tool() {}
+
+func (*message_ToolCall_ReadFiles_) isMessage_ToolCall_Tool() {}
+
+func (*message_ToolCall_ApplyFileDiffs_) isMessage_ToolCall_Tool() {}
+
+func (*message_ToolCall_SuggestPlan_) isMessage_ToolCall_Tool() {}
+
+// Entry in the message log representing the result of a tool call.
+type Message_ToolCallResult struct {
+	state                  protoimpl.MessageState          `protogen:"opaque.v1"`
+	xxx_hidden_ToolCallId  *string                         `protobuf:"bytes,1,opt,name=tool_call_id,json=toolCallId"`
+	xxx_hidden_Result      isMessage_ToolCallResult_Result `protobuf_oneof:"result"`
+	XXX_raceDetectHookData protoimpl.RaceDetectHookData
+	XXX_presence           [1]uint32
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *Message_ToolCallResult) Reset() {
+	*x = Message_ToolCallResult{}
+	mi := &file_task_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Message_ToolCallResult) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Message_ToolCallResult) ProtoMessage() {}
+
+func (x *Message_ToolCallResult) ProtoReflect() protoreflect.Message {
+	mi := &file_task_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *Message_ToolCallResult) GetToolCallId() string {
+	if x != nil {
+		if x.xxx_hidden_ToolCallId != nil {
+			return *x.xxx_hidden_ToolCallId
+		}
+		return ""
+	}
+	return ""
+}
+
+func (x *Message_ToolCallResult) GetRunShellCommand() *RunShellCommandResult {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Result.(*message_ToolCallResult_RunShellCommand); ok {
+			return x.RunShellCommand
+		}
+	}
+	return nil
+}
+
+func (x *Message_ToolCallResult) GetSearchCodebase() *SearchCodebaseResult {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Result.(*message_ToolCallResult_SearchCodebase); ok {
+			return x.SearchCodebase
+		}
+	}
+	return nil
+}
+
+func (x *Message_ToolCallResult) GetServer() *Message_ToolCallResult_ServerResult {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Result.(*message_ToolCallResult_Server); ok {
+			return x.Server
+		}
+	}
+	return nil
+}
+
+func (x *Message_ToolCallResult) GetReadFiles() *ReadFilesResult {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Result.(*message_ToolCallResult_ReadFiles); ok {
+			return x.ReadFiles
+		}
+	}
+	return nil
+}
+
+func (x *Message_ToolCallResult) GetApplyFileDiffs() *ApplyFileDiffsResult {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Result.(*message_ToolCallResult_ApplyFileDiffs); ok {
+			return x.ApplyFileDiffs
+		}
+	}
+	return nil
+}
+
+func (x *Message_ToolCallResult) SetToolCallId(v string) {
+	x.xxx_hidden_ToolCallId = &v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 0, 2)
+}
+
+func (x *Message_ToolCallResult) SetRunShellCommand(v *RunShellCommandResult) {
+	if v == nil {
+		x.xxx_hidden_Result = nil
+		return
+	}
+	x.xxx_hidden_Result = &message_ToolCallResult_RunShellCommand{v}
+}
+
+func (x *Message_ToolCallResult) SetSearchCodebase(v *SearchCodebaseResult) {
+	if v == nil {
+		x.xxx_hidden_Result = nil
+		return
+	}
+	x.xxx_hidden_Result = &message_ToolCallResult_SearchCodebase{v}
+}
+
+func (x *Message_ToolCallResult) SetServer(v *Message_ToolCallResult_ServerResult) {
+	if v == nil {
+		x.xxx_hidden_Result = nil
+		return
+	}
+	x.xxx_hidden_Result = &message_ToolCallResult_Server{v}
+}
+
+func (x *Message_ToolCallResult) SetReadFiles(v *ReadFilesResult) {
+	if v == nil {
+		x.xxx_hidden_Result = nil
+		return
+	}
+	x.xxx_hidden_Result = &message_ToolCallResult_ReadFiles{v}
+}
+
+func (x *Message_ToolCallResult) SetApplyFileDiffs(v *ApplyFileDiffsResult) {
+	if v == nil {
+		x.xxx_hidden_Result = nil
+		return
+	}
+	x.xxx_hidden_Result = &message_ToolCallResult_ApplyFileDiffs{v}
+}
+
+func (x *Message_ToolCallResult) HasToolCallId() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 0)
+}
+
+func (x *Message_ToolCallResult) HasResult() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_Result != nil
+}
+
+func (x *Message_ToolCallResult) HasRunShellCommand() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Result.(*message_ToolCallResult_RunShellCommand)
+	return ok
+}
+
+func (x *Message_ToolCallResult) HasSearchCodebase() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Result.(*message_ToolCallResult_SearchCodebase)
+	return ok
+}
+
+func (x *Message_ToolCallResult) HasServer() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Result.(*message_ToolCallResult_Server)
+	return ok
+}
+
+func (x *Message_ToolCallResult) HasReadFiles() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Result.(*message_ToolCallResult_ReadFiles)
+	return ok
+}
+
+func (x *Message_ToolCallResult) HasApplyFileDiffs() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Result.(*message_ToolCallResult_ApplyFileDiffs)
+	return ok
+}
+
+func (x *Message_ToolCallResult) ClearToolCallId() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 0)
+	x.xxx_hidden_ToolCallId = nil
+}
+
+func (x *Message_ToolCallResult) ClearResult() {
+	x.xxx_hidden_Result = nil
+}
+
+func (x *Message_ToolCallResult) ClearRunShellCommand() {
+	if _, ok := x.xxx_hidden_Result.(*message_ToolCallResult_RunShellCommand); ok {
+		x.xxx_hidden_Result = nil
+	}
+}
+
+func (x *Message_ToolCallResult) ClearSearchCodebase() {
+	if _, ok := x.xxx_hidden_Result.(*message_ToolCallResult_SearchCodebase); ok {
+		x.xxx_hidden_Result = nil
+	}
+}
+
+func (x *Message_ToolCallResult) ClearServer() {
+	if _, ok := x.xxx_hidden_Result.(*message_ToolCallResult_Server); ok {
+		x.xxx_hidden_Result = nil
+	}
+}
+
+func (x *Message_ToolCallResult) ClearReadFiles() {
+	if _, ok := x.xxx_hidden_Result.(*message_ToolCallResult_ReadFiles); ok {
+		x.xxx_hidden_Result = nil
+	}
+}
+
+func (x *Message_ToolCallResult) ClearApplyFileDiffs() {
+	if _, ok := x.xxx_hidden_Result.(*message_ToolCallResult_ApplyFileDiffs); ok {
+		x.xxx_hidden_Result = nil
+	}
+}
+
+const Message_ToolCallResult_Result_not_set_case case_Message_ToolCallResult_Result = 0
+const Message_ToolCallResult_RunShellCommand_case case_Message_ToolCallResult_Result = 2
+const Message_ToolCallResult_SearchCodebase_case case_Message_ToolCallResult_Result = 3
+const Message_ToolCallResult_Server_case case_Message_ToolCallResult_Result = 4
+const Message_ToolCallResult_ReadFiles_case case_Message_ToolCallResult_Result = 5
+const Message_ToolCallResult_ApplyFileDiffs_case case_Message_ToolCallResult_Result = 6
+
+func (x *Message_ToolCallResult) WhichResult() case_Message_ToolCallResult_Result {
+	if x == nil {
+		return Message_ToolCallResult_Result_not_set_case
+	}
+	switch x.xxx_hidden_Result.(type) {
+	case *message_ToolCallResult_RunShellCommand:
+		return Message_ToolCallResult_RunShellCommand_case
+	case *message_ToolCallResult_SearchCodebase:
+		return Message_ToolCallResult_SearchCodebase_case
+	case *message_ToolCallResult_Server:
+		return Message_ToolCallResult_Server_case
+	case *message_ToolCallResult_ReadFiles:
+		return Message_ToolCallResult_ReadFiles_case
+	case *message_ToolCallResult_ApplyFileDiffs:
+		return Message_ToolCallResult_ApplyFileDiffs_case
+	default:
+		return Message_ToolCallResult_Result_not_set_case
+	}
+}
+
+type Message_ToolCallResult_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	ToolCallId *string
+	// Fields of oneof xxx_hidden_Result:
+	RunShellCommand *RunShellCommandResult
+	SearchCodebase  *SearchCodebaseResult
+	Server          *Message_ToolCallResult_ServerResult
+	ReadFiles       *ReadFilesResult
+	ApplyFileDiffs  *ApplyFileDiffsResult
+	// -- end of xxx_hidden_Result
+}
+
+func (b0 Message_ToolCallResult_builder) Build() *Message_ToolCallResult {
+	m0 := &Message_ToolCallResult{}
+	b, x := &b0, m0
+	_, _ = b, x
+	if b.ToolCallId != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 0, 2)
+		x.xxx_hidden_ToolCallId = b.ToolCallId
+	}
+	if b.RunShellCommand != nil {
+		x.xxx_hidden_Result = &message_ToolCallResult_RunShellCommand{b.RunShellCommand}
+	}
+	if b.SearchCodebase != nil {
+		x.xxx_hidden_Result = &message_ToolCallResult_SearchCodebase{b.SearchCodebase}
+	}
+	if b.Server != nil {
+		x.xxx_hidden_Result = &message_ToolCallResult_Server{b.Server}
+	}
+	if b.ReadFiles != nil {
+		x.xxx_hidden_Result = &message_ToolCallResult_ReadFiles{b.ReadFiles}
+	}
+	if b.ApplyFileDiffs != nil {
+		x.xxx_hidden_Result = &message_ToolCallResult_ApplyFileDiffs{b.ApplyFileDiffs}
+	}
+	return m0
+}
+
+type case_Message_ToolCallResult_Result protoreflect.FieldNumber
+
+func (x case_Message_ToolCallResult_Result) String() string {
+	md := file_task_proto_msgTypes[19].Descriptor()
+	if x == 0 {
+		return "not set"
+	}
+	return protoimpl.X.MessageFieldStringOf(md, protoreflect.FieldNumber(x))
+}
+
+type isMessage_ToolCallResult_Result interface {
+	isMessage_ToolCallResult_Result()
+}
+
+type message_ToolCallResult_RunShellCommand struct {
+	RunShellCommand *RunShellCommandResult `protobuf:"bytes,2,opt,name=run_shell_command,json=runShellCommand,oneof"`
+}
+
+type message_ToolCallResult_SearchCodebase struct {
+	SearchCodebase *SearchCodebaseResult `protobuf:"bytes,3,opt,name=search_codebase,json=searchCodebase,oneof"`
+}
+
+type message_ToolCallResult_Server struct {
+	Server *Message_ToolCallResult_ServerResult `protobuf:"bytes,4,opt,name=server,oneof"`
+}
+
+type message_ToolCallResult_ReadFiles struct {
+	ReadFiles *ReadFilesResult `protobuf:"bytes,5,opt,name=read_files,json=readFiles,oneof"`
+}
+
+type message_ToolCallResult_ApplyFileDiffs struct {
+	ApplyFileDiffs *ApplyFileDiffsResult `protobuf:"bytes,6,opt,name=apply_file_diffs,json=applyFileDiffs,oneof"`
+}
+
+func (*message_ToolCallResult_RunShellCommand) isMessage_ToolCallResult_Result() {}
+
+func (*message_ToolCallResult_SearchCodebase) isMessage_ToolCallResult_Result() {}
+
+func (*message_ToolCallResult_Server) isMessage_ToolCallResult_Result() {}
+
+func (*message_ToolCallResult_ReadFiles) isMessage_ToolCallResult_Result() {}
+
+func (*message_ToolCallResult_ApplyFileDiffs) isMessage_ToolCallResult_Result() {}
+
+// A tool call that is totally resolved server-side and hence opaque to
+// clients. It's included in the message history for bookkeeping purposes.
+type Message_ToolCall_Server struct {
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Payload     *string                `protobuf:"bytes,1,opt,name=payload"`
+	XXX_raceDetectHookData protoimpl.RaceDetectHookData
+	XXX_presence           [1]uint32
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *Message_ToolCall_Server) Reset() {
+	*x = Message_ToolCall_Server{}
+	mi := &file_task_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Message_ToolCall_Server) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Message_ToolCall_Server) ProtoMessage() {}
+
+func (x *Message_ToolCall_Server) ProtoReflect() protoreflect.Message {
+	mi := &file_task_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *Message_ToolCall_Server) GetPayload() string {
+	if x != nil {
+		if x.xxx_hidden_Payload != nil {
+			return *x.xxx_hidden_Payload
+		}
+		return ""
+	}
+	return ""
+}
+
+func (x *Message_ToolCall_Server) SetPayload(v string) {
+	x.xxx_hidden_Payload = &v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 0, 1)
+}
+
+func (x *Message_ToolCall_Server) HasPayload() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 0)
+}
+
+func (x *Message_ToolCall_Server) ClearPayload() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 0)
+	x.xxx_hidden_Payload = nil
+}
+
+type Message_ToolCall_Server_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Payload *string
+}
+
+func (b0 Message_ToolCall_Server_builder) Build() *Message_ToolCall_Server {
+	m0 := &Message_ToolCall_Server{}
+	b, x := &b0, m0
+	_, _ = b, x
+	if b.Payload != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 0, 1)
+		x.xxx_hidden_Payload = b.Payload
+	}
+	return m0
+}
+
+// A tool call to run a shell command.
+type Message_ToolCall_RunShellCommand struct {
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Command     *string                `protobuf:"bytes,1,opt,name=command"`
+	xxx_hidden_IsReadOnly  bool                   `protobuf:"varint,2,opt,name=is_read_only,json=isReadOnly"`
+	XXX_raceDetectHookData protoimpl.RaceDetectHookData
+	XXX_presence           [1]uint32
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *Message_ToolCall_RunShellCommand) Reset() {
+	*x = Message_ToolCall_RunShellCommand{}
+	mi := &file_task_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Message_ToolCall_RunShellCommand) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Message_ToolCall_RunShellCommand) ProtoMessage() {}
+
+func (x *Message_ToolCall_RunShellCommand) ProtoReflect() protoreflect.Message {
+	mi := &file_task_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *Message_ToolCall_RunShellCommand) GetCommand() string {
+	if x != nil {
+		if x.xxx_hidden_Command != nil {
+			return *x.xxx_hidden_Command
+		}
+		return ""
+	}
+	return ""
+}
+
+func (x *Message_ToolCall_RunShellCommand) GetIsReadOnly() bool {
+	if x != nil {
+		return x.xxx_hidden_IsReadOnly
+	}
+	return false
+}
+
+func (x *Message_ToolCall_RunShellCommand) SetCommand(v string) {
+	x.xxx_hidden_Command = &v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 0, 2)
+}
+
+func (x *Message_ToolCall_RunShellCommand) SetIsReadOnly(v bool) {
+	x.xxx_hidden_IsReadOnly = v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 1, 2)
+}
+
+func (x *Message_ToolCall_RunShellCommand) HasCommand() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 0)
+}
+
+func (x *Message_ToolCall_RunShellCommand) HasIsReadOnly() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 1)
+}
+
+func (x *Message_ToolCall_RunShellCommand) ClearCommand() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 0)
+	x.xxx_hidden_Command = nil
+}
+
+func (x *Message_ToolCall_RunShellCommand) ClearIsReadOnly() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 1)
+	x.xxx_hidden_IsReadOnly = false
+}
+
+type Message_ToolCall_RunShellCommand_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Command    *string
+	IsReadOnly *bool
+}
+
+func (b0 Message_ToolCall_RunShellCommand_builder) Build() *Message_ToolCall_RunShellCommand {
+	m0 := &Message_ToolCall_RunShellCommand{}
+	b, x := &b0, m0
+	_, _ = b, x
+	if b.Command != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 0, 2)
+		x.xxx_hidden_Command = b.Command
+	}
+	if b.IsReadOnly != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 1, 2)
+		x.xxx_hidden_IsReadOnly = *b.IsReadOnly
+	}
+	return m0
+}
+
+// A tool call to read files.
+type Message_ToolCall_ReadFiles struct {
+	state            protoimpl.MessageState              `protogen:"opaque.v1"`
+	xxx_hidden_Files *[]*Message_ToolCall_ReadFiles_File `protobuf:"bytes,1,rep,name=files"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *Message_ToolCall_ReadFiles) Reset() {
+	*x = Message_ToolCall_ReadFiles{}
+	mi := &file_task_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Message_ToolCall_ReadFiles) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Message_ToolCall_ReadFiles) ProtoMessage() {}
+
+func (x *Message_ToolCall_ReadFiles) ProtoReflect() protoreflect.Message {
+	mi := &file_task_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *Message_ToolCall_ReadFiles) GetFiles() []*Message_ToolCall_ReadFiles_File {
+	if x != nil {
+		if x.xxx_hidden_Files != nil {
+			return *x.xxx_hidden_Files
+		}
+	}
+	return nil
+}
+
+func (x *Message_ToolCall_ReadFiles) SetFiles(v []*Message_ToolCall_ReadFiles_File) {
+	x.xxx_hidden_Files = &v
+}
+
+type Message_ToolCall_ReadFiles_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Files []*Message_ToolCall_ReadFiles_File
+}
+
+func (b0 Message_ToolCall_ReadFiles_builder) Build() *Message_ToolCall_ReadFiles {
+	m0 := &Message_ToolCall_ReadFiles{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_Files = &b.Files
+	return m0
+}
+
+// A tool call to search a codebase.
+type Message_ToolCall_SearchCodebase struct {
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Query       *string                `protobuf:"bytes,1,opt,name=query"`
+	xxx_hidden_PathFilters []string               `protobuf:"bytes,2,rep,name=path_filters,json=pathFilters"`
+	XXX_raceDetectHookData protoimpl.RaceDetectHookData
+	XXX_presence           [1]uint32
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *Message_ToolCall_SearchCodebase) Reset() {
+	*x = Message_ToolCall_SearchCodebase{}
+	mi := &file_task_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Message_ToolCall_SearchCodebase) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Message_ToolCall_SearchCodebase) ProtoMessage() {}
+
+func (x *Message_ToolCall_SearchCodebase) ProtoReflect() protoreflect.Message {
+	mi := &file_task_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *Message_ToolCall_SearchCodebase) GetQuery() string {
+	if x != nil {
+		if x.xxx_hidden_Query != nil {
+			return *x.xxx_hidden_Query
+		}
+		return ""
+	}
+	return ""
+}
+
+func (x *Message_ToolCall_SearchCodebase) GetPathFilters() []string {
+	if x != nil {
+		return x.xxx_hidden_PathFilters
+	}
+	return nil
+}
+
+func (x *Message_ToolCall_SearchCodebase) SetQuery(v string) {
+	x.xxx_hidden_Query = &v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 0, 2)
+}
+
+func (x *Message_ToolCall_SearchCodebase) SetPathFilters(v []string) {
+	x.xxx_hidden_PathFilters = v
+}
+
+func (x *Message_ToolCall_SearchCodebase) HasQuery() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 0)
+}
+
+func (x *Message_ToolCall_SearchCodebase) ClearQuery() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 0)
+	x.xxx_hidden_Query = nil
+}
+
+type Message_ToolCall_SearchCodebase_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Query       *string
+	PathFilters []string
+}
+
+func (b0 Message_ToolCall_SearchCodebase_builder) Build() *Message_ToolCall_SearchCodebase {
+	m0 := &Message_ToolCall_SearchCodebase{}
+	b, x := &b0, m0
+	_, _ = b, x
+	if b.Query != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 0, 2)
+		x.xxx_hidden_Query = b.Query
+	}
+	x.xxx_hidden_PathFilters = b.PathFilters
+	return m0
+}
+
+// A tool call to apply diffs to files.
+type Message_ToolCall_ApplyFileDiffs struct {
+	state                  protoimpl.MessageState                       `protogen:"opaque.v1"`
+	xxx_hidden_Summary     *string                                      `protobuf:"bytes,1,opt,name=summary"`
+	xxx_hidden_Diffs       *[]*Message_ToolCall_ApplyFileDiffs_FileDiff `protobuf:"bytes,2,rep,name=diffs"`
+	XXX_raceDetectHookData protoimpl.RaceDetectHookData
+	XXX_presence           [1]uint32
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *Message_ToolCall_ApplyFileDiffs) Reset() {
+	*x = Message_ToolCall_ApplyFileDiffs{}
+	mi := &file_task_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Message_ToolCall_ApplyFileDiffs) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Message_ToolCall_ApplyFileDiffs) ProtoMessage() {}
+
+func (x *Message_ToolCall_ApplyFileDiffs) ProtoReflect() protoreflect.Message {
+	mi := &file_task_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *Message_ToolCall_ApplyFileDiffs) GetSummary() string {
+	if x != nil {
+		if x.xxx_hidden_Summary != nil {
+			return *x.xxx_hidden_Summary
+		}
+		return ""
+	}
+	return ""
+}
+
+func (x *Message_ToolCall_ApplyFileDiffs) GetDiffs() []*Message_ToolCall_ApplyFileDiffs_FileDiff {
+	if x != nil {
+		if x.xxx_hidden_Diffs != nil {
+			return *x.xxx_hidden_Diffs
+		}
+	}
+	return nil
+}
+
+func (x *Message_ToolCall_ApplyFileDiffs) SetSummary(v string) {
+	x.xxx_hidden_Summary = &v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 0, 2)
+}
+
+func (x *Message_ToolCall_ApplyFileDiffs) SetDiffs(v []*Message_ToolCall_ApplyFileDiffs_FileDiff) {
+	x.xxx_hidden_Diffs = &v
+}
+
+func (x *Message_ToolCall_ApplyFileDiffs) HasSummary() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 0)
+}
+
+func (x *Message_ToolCall_ApplyFileDiffs) ClearSummary() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 0)
+	x.xxx_hidden_Summary = nil
+}
+
+type Message_ToolCall_ApplyFileDiffs_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Summary *string
+	Diffs   []*Message_ToolCall_ApplyFileDiffs_FileDiff
+}
+
+func (b0 Message_ToolCall_ApplyFileDiffs_builder) Build() *Message_ToolCall_ApplyFileDiffs {
+	m0 := &Message_ToolCall_ApplyFileDiffs{}
+	b, x := &b0, m0
+	_, _ = b, x
+	if b.Summary != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 0, 2)
+		x.xxx_hidden_Summary = b.Summary
+	}
+	x.xxx_hidden_Diffs = &b.Diffs
+	return m0
+}
+
+// A tool call to suggest a plan.
+type Message_ToolCall_SuggestPlan struct {
+	state                    protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Summary       *string                `protobuf:"bytes,1,opt,name=summary"`
+	xxx_hidden_ProposedTasks *[]*Task               `protobuf:"bytes,2,rep,name=proposed_tasks,json=proposedTasks"`
+	XXX_raceDetectHookData   protoimpl.RaceDetectHookData
+	XXX_presence             [1]uint32
+	unknownFields            protoimpl.UnknownFields
+	sizeCache                protoimpl.SizeCache
+}
+
+func (x *Message_ToolCall_SuggestPlan) Reset() {
+	*x = Message_ToolCall_SuggestPlan{}
+	mi := &file_task_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Message_ToolCall_SuggestPlan) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Message_ToolCall_SuggestPlan) ProtoMessage() {}
+
+func (x *Message_ToolCall_SuggestPlan) ProtoReflect() protoreflect.Message {
+	mi := &file_task_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *Message_ToolCall_SuggestPlan) GetSummary() string {
+	if x != nil {
+		if x.xxx_hidden_Summary != nil {
+			return *x.xxx_hidden_Summary
+		}
+		return ""
+	}
+	return ""
+}
+
+func (x *Message_ToolCall_SuggestPlan) GetProposedTasks() []*Task {
+	if x != nil {
+		if x.xxx_hidden_ProposedTasks != nil {
+			return *x.xxx_hidden_ProposedTasks
+		}
+	}
+	return nil
+}
+
+func (x *Message_ToolCall_SuggestPlan) SetSummary(v string) {
+	x.xxx_hidden_Summary = &v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 0, 2)
+}
+
+func (x *Message_ToolCall_SuggestPlan) SetProposedTasks(v []*Task) {
+	x.xxx_hidden_ProposedTasks = &v
+}
+
+func (x *Message_ToolCall_SuggestPlan) HasSummary() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 0)
+}
+
+func (x *Message_ToolCall_SuggestPlan) ClearSummary() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 0)
+	x.xxx_hidden_Summary = nil
+}
+
+type Message_ToolCall_SuggestPlan_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	// A high-level summary.
+	Summary *string
+	// A set of tasks that form the proposed execution plan.
+	ProposedTasks []*Task
+}
+
+func (b0 Message_ToolCall_SuggestPlan_builder) Build() *Message_ToolCall_SuggestPlan {
+	m0 := &Message_ToolCall_SuggestPlan{}
+	b, x := &b0, m0
+	_, _ = b, x
+	if b.Summary != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 0, 2)
+		x.xxx_hidden_Summary = b.Summary
+	}
+	x.xxx_hidden_ProposedTasks = &b.ProposedTasks
+	return m0
+}
+
+type Message_ToolCall_ReadFiles_File struct {
+	state                  protoimpl.MessageState   `protogen:"opaque.v1"`
+	xxx_hidden_Name        *string                  `protobuf:"bytes,1,opt,name=name"`
+	xxx_hidden_LineRanges  *[]*FileContentLineRange `protobuf:"bytes,2,rep,name=line_ranges,json=lineRanges"`
+	XXX_raceDetectHookData protoimpl.RaceDetectHookData
+	XXX_presence           [1]uint32
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *Message_ToolCall_ReadFiles_File) Reset() {
+	*x = Message_ToolCall_ReadFiles_File{}
+	mi := &file_task_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Message_ToolCall_ReadFiles_File) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Message_ToolCall_ReadFiles_File) ProtoMessage() {}
+
+func (x *Message_ToolCall_ReadFiles_File) ProtoReflect() protoreflect.Message {
+	mi := &file_task_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *Message_ToolCall_ReadFiles_File) GetName() string {
+	if x != nil {
+		if x.xxx_hidden_Name != nil {
+			return *x.xxx_hidden_Name
+		}
+		return ""
+	}
+	return ""
+}
+
+func (x *Message_ToolCall_ReadFiles_File) GetLineRanges() []*FileContentLineRange {
+	if x != nil {
+		if x.xxx_hidden_LineRanges != nil {
+			return *x.xxx_hidden_LineRanges
+		}
+	}
+	return nil
+}
+
+func (x *Message_ToolCall_ReadFiles_File) SetName(v string) {
+	x.xxx_hidden_Name = &v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 0, 2)
+}
+
+func (x *Message_ToolCall_ReadFiles_File) SetLineRanges(v []*FileContentLineRange) {
+	x.xxx_hidden_LineRanges = &v
+}
+
+func (x *Message_ToolCall_ReadFiles_File) HasName() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 0)
+}
+
+func (x *Message_ToolCall_ReadFiles_File) ClearName() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 0)
+	x.xxx_hidden_Name = nil
+}
+
+type Message_ToolCall_ReadFiles_File_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Name *string
+	// If empty, the entire file is retrieved.
+	LineRanges []*FileContentLineRange
+}
+
+func (b0 Message_ToolCall_ReadFiles_File_builder) Build() *Message_ToolCall_ReadFiles_File {
+	m0 := &Message_ToolCall_ReadFiles_File{}
+	b, x := &b0, m0
+	_, _ = b, x
+	if b.Name != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 0, 2)
+		x.xxx_hidden_Name = b.Name
+	}
+	x.xxx_hidden_LineRanges = &b.LineRanges
+	return m0
+}
+
+type Message_ToolCall_ApplyFileDiffs_FileDiff struct {
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_FilePath    *string                `protobuf:"bytes,1,opt,name=file_path,json=filePath"`
+	xxx_hidden_Search      *string                `protobuf:"bytes,2,opt,name=search"`
+	xxx_hidden_Replace     *string                `protobuf:"bytes,3,opt,name=replace"`
+	XXX_raceDetectHookData protoimpl.RaceDetectHookData
+	XXX_presence           [1]uint32
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *Message_ToolCall_ApplyFileDiffs_FileDiff) Reset() {
+	*x = Message_ToolCall_ApplyFileDiffs_FileDiff{}
+	mi := &file_task_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Message_ToolCall_ApplyFileDiffs_FileDiff) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Message_ToolCall_ApplyFileDiffs_FileDiff) ProtoMessage() {}
+
+func (x *Message_ToolCall_ApplyFileDiffs_FileDiff) ProtoReflect() protoreflect.Message {
+	mi := &file_task_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *Message_ToolCall_ApplyFileDiffs_FileDiff) GetFilePath() string {
+	if x != nil {
+		if x.xxx_hidden_FilePath != nil {
+			return *x.xxx_hidden_FilePath
+		}
+		return ""
+	}
+	return ""
+}
+
+func (x *Message_ToolCall_ApplyFileDiffs_FileDiff) GetSearch() string {
+	if x != nil {
+		if x.xxx_hidden_Search != nil {
+			return *x.xxx_hidden_Search
+		}
+		return ""
+	}
+	return ""
+}
+
+func (x *Message_ToolCall_ApplyFileDiffs_FileDiff) GetReplace() string {
+	if x != nil {
+		if x.xxx_hidden_Replace != nil {
+			return *x.xxx_hidden_Replace
+		}
+		return ""
+	}
+	return ""
+}
+
+func (x *Message_ToolCall_ApplyFileDiffs_FileDiff) SetFilePath(v string) {
+	x.xxx_hidden_FilePath = &v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 0, 3)
+}
+
+func (x *Message_ToolCall_ApplyFileDiffs_FileDiff) SetSearch(v string) {
+	x.xxx_hidden_Search = &v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 1, 3)
+}
+
+func (x *Message_ToolCall_ApplyFileDiffs_FileDiff) SetReplace(v string) {
+	x.xxx_hidden_Replace = &v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 2, 3)
+}
+
+func (x *Message_ToolCall_ApplyFileDiffs_FileDiff) HasFilePath() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 0)
+}
+
+func (x *Message_ToolCall_ApplyFileDiffs_FileDiff) HasSearch() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 1)
+}
+
+func (x *Message_ToolCall_ApplyFileDiffs_FileDiff) HasReplace() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 2)
+}
+
+func (x *Message_ToolCall_ApplyFileDiffs_FileDiff) ClearFilePath() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 0)
+	x.xxx_hidden_FilePath = nil
+}
+
+func (x *Message_ToolCall_ApplyFileDiffs_FileDiff) ClearSearch() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 1)
+	x.xxx_hidden_Search = nil
+}
+
+func (x *Message_ToolCall_ApplyFileDiffs_FileDiff) ClearReplace() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 2)
+	x.xxx_hidden_Replace = nil
+}
+
+type Message_ToolCall_ApplyFileDiffs_FileDiff_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	FilePath *string
+	// The content to be replaced.
+	Search *string
+	// The content that replaces `search`.
+	Replace *string
+}
+
+func (b0 Message_ToolCall_ApplyFileDiffs_FileDiff_builder) Build() *Message_ToolCall_ApplyFileDiffs_FileDiff {
+	m0 := &Message_ToolCall_ApplyFileDiffs_FileDiff{}
+	b, x := &b0, m0
+	_, _ = b, x
+	if b.FilePath != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 0, 3)
+		x.xxx_hidden_FilePath = b.FilePath
+	}
+	if b.Search != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 1, 3)
+		x.xxx_hidden_Search = b.Search
+	}
+	if b.Replace != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 2, 3)
+		x.xxx_hidden_Replace = b.Replace
+	}
+	return m0
+}
+
+// Result of a server-side tool call.
+// Provided by the server to simply roundtrip.
+type Message_ToolCallResult_ServerResult struct {
+	state                       protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_SerializedResult *string                `protobuf:"bytes,1,opt,name=serialized_result,json=serializedResult"`
+	XXX_raceDetectHookData      protoimpl.RaceDetectHookData
+	XXX_presence                [1]uint32
+	unknownFields               protoimpl.UnknownFields
+	sizeCache                   protoimpl.SizeCache
+}
+
+func (x *Message_ToolCallResult_ServerResult) Reset() {
+	*x = Message_ToolCallResult_ServerResult{}
+	mi := &file_task_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Message_ToolCallResult_ServerResult) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Message_ToolCallResult_ServerResult) ProtoMessage() {}
+
+func (x *Message_ToolCallResult_ServerResult) ProtoReflect() protoreflect.Message {
+	mi := &file_task_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *Message_ToolCallResult_ServerResult) GetSerializedResult() string {
+	if x != nil {
+		if x.xxx_hidden_SerializedResult != nil {
+			return *x.xxx_hidden_SerializedResult
+		}
+		return ""
+	}
+	return ""
+}
+
+func (x *Message_ToolCallResult_ServerResult) SetSerializedResult(v string) {
+	x.xxx_hidden_SerializedResult = &v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 0, 1)
+}
+
+func (x *Message_ToolCallResult_ServerResult) HasSerializedResult() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 0)
+}
+
+func (x *Message_ToolCallResult_ServerResult) ClearSerializedResult() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 0)
+	x.xxx_hidden_SerializedResult = nil
+}
+
+type Message_ToolCallResult_ServerResult_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	SerializedResult *string
+}
+
+func (b0 Message_ToolCallResult_ServerResult_builder) Build() *Message_ToolCallResult_ServerResult {
+	m0 := &Message_ToolCallResult_ServerResult{}
+	b, x := &b0, m0
+	_, _ = b, x
+	if b.SerializedResult != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 0, 1)
+		x.xxx_hidden_SerializedResult = b.SerializedResult
+	}
+	return m0
+}
+
 var File_task_proto protoreflect.FileDescriptor
 
 const file_task_proto_rawDesc = "" +
 	"\n" +
 	"\n" +
-	"task.proto\x12\x13warp.multi_agent.v1\x1a!google/protobuf/go_features.proto\x1a\rmessage.proto\"\xe0\x02\n" +
+	"task.proto\x12\x13warp.multi_agent.v1\x1a!google/protobuf/go_features.proto\"\xe0\x02\n" +
 	"\x04Task\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12 \n" +
 	"\vdescription\x18\x02 \x01(\tR\vdescription\x12J\n" +
@@ -938,36 +3505,156 @@ const file_task_proto_rawDesc = "" +
 	"\tSucceeded\x1a\b\n" +
 	"\x06Failed\x1a\t\n" +
 	"\aAbortedB\b\n" +
-	"\x06statusB8Z.github.com/warp/warp-proto-apis/multi_agent/v1\x92\x03\x05\xd2>\x02\x10\x03b\beditionsp\xe8\a"
+	"\x06status\"\xd8\x11\n" +
+	"\aMessage\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12G\n" +
+	"\n" +
+	"user_query\x18\x02 \x01(\v2&.warp.multi_agent.v1.Message.UserQueryH\x00R\tuserQuery\x12M\n" +
+	"\fagent_output\x18\x03 \x01(\v2(.warp.multi_agent.v1.Message.AgentOutputH\x00R\vagentOutput\x12D\n" +
+	"\ttool_call\x18\x04 \x01(\v2%.warp.multi_agent.v1.Message.ToolCallH\x00R\btoolCall\x12W\n" +
+	"\x10tool_call_result\x18\x05 \x01(\v2+.warp.multi_agent.v1.Message.ToolCallResultH\x00R\x0etoolCallResult\x1a!\n" +
+	"\tUserQuery\x12\x14\n" +
+	"\x05query\x18\x01 \x01(\tR\x05query\x1a!\n" +
+	"\vAgentOutput\x12\x12\n" +
+	"\x04text\x18\x01 \x01(\tR\x04text\x1a\x96\n" +
+	"\n" +
+	"\bToolCall\x12 \n" +
+	"\ftool_call_id\x18\x01 \x01(\tR\n" +
+	"toolCallId\x12c\n" +
+	"\x11run_shell_command\x18\x02 \x01(\v25.warp.multi_agent.v1.Message.ToolCall.RunShellCommandH\x00R\x0frunShellCommand\x12_\n" +
+	"\x0fsearch_codebase\x18\x03 \x01(\v24.warp.multi_agent.v1.Message.ToolCall.SearchCodebaseH\x00R\x0esearchCodebase\x12F\n" +
+	"\x06server\x18\x04 \x01(\v2,.warp.multi_agent.v1.Message.ToolCall.ServerH\x00R\x06server\x12P\n" +
+	"\n" +
+	"read_files\x18\x05 \x01(\v2/.warp.multi_agent.v1.Message.ToolCall.ReadFilesH\x00R\treadFiles\x12`\n" +
+	"\x10apply_file_diffs\x18\x06 \x01(\v24.warp.multi_agent.v1.Message.ToolCall.ApplyFileDiffsH\x00R\x0eapplyFileDiffs\x12V\n" +
+	"\fsuggest_plan\x18\a \x01(\v21.warp.multi_agent.v1.Message.ToolCall.SuggestPlanH\x00R\vsuggestPlan\x1a\"\n" +
+	"\x06Server\x12\x18\n" +
+	"\apayload\x18\x01 \x01(\tR\apayload\x1aM\n" +
+	"\x0fRunShellCommand\x12\x18\n" +
+	"\acommand\x18\x01 \x01(\tR\acommand\x12 \n" +
+	"\fis_read_only\x18\x02 \x01(\bR\n" +
+	"isReadOnly\x1a\xbf\x01\n" +
+	"\tReadFiles\x12J\n" +
+	"\x05files\x18\x01 \x03(\v24.warp.multi_agent.v1.Message.ToolCall.ReadFiles.FileR\x05files\x1af\n" +
+	"\x04File\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12J\n" +
+	"\vline_ranges\x18\x02 \x03(\v2).warp.multi_agent.v1.FileContentLineRangeR\n" +
+	"lineRanges\x1aI\n" +
+	"\x0eSearchCodebase\x12\x14\n" +
+	"\x05query\x18\x01 \x01(\tR\x05query\x12!\n" +
+	"\fpath_filters\x18\x02 \x03(\tR\vpathFilters\x1a\xda\x01\n" +
+	"\x0eApplyFileDiffs\x12\x18\n" +
+	"\asummary\x18\x01 \x01(\tR\asummary\x12S\n" +
+	"\x05diffs\x18\x02 \x03(\v2=.warp.multi_agent.v1.Message.ToolCall.ApplyFileDiffs.FileDiffR\x05diffs\x1aY\n" +
+	"\bFileDiff\x12\x1b\n" +
+	"\tfile_path\x18\x01 \x01(\tR\bfilePath\x12\x16\n" +
+	"\x06search\x18\x02 \x01(\tR\x06search\x12\x18\n" +
+	"\areplace\x18\x03 \x01(\tR\areplace\x1ai\n" +
+	"\vSuggestPlan\x12\x18\n" +
+	"\asummary\x18\x01 \x01(\tR\asummary\x12@\n" +
+	"\x0eproposed_tasks\x18\x02 \x03(\v2\x19.warp.multi_agent.v1.TaskR\rproposedTasksB\x06\n" +
+	"\x04tool\x1a\x9b\x04\n" +
+	"\x0eToolCallResult\x12 \n" +
+	"\ftool_call_id\x18\x01 \x01(\tR\n" +
+	"toolCallId\x12X\n" +
+	"\x11run_shell_command\x18\x02 \x01(\v2*.warp.multi_agent.v1.RunShellCommandResultH\x00R\x0frunShellCommand\x12T\n" +
+	"\x0fsearch_codebase\x18\x03 \x01(\v2).warp.multi_agent.v1.SearchCodebaseResultH\x00R\x0esearchCodebase\x12R\n" +
+	"\x06server\x18\x04 \x01(\v28.warp.multi_agent.v1.Message.ToolCallResult.ServerResultH\x00R\x06server\x12E\n" +
+	"\n" +
+	"read_files\x18\x05 \x01(\v2$.warp.multi_agent.v1.ReadFilesResultH\x00R\treadFiles\x12U\n" +
+	"\x10apply_file_diffs\x18\x06 \x01(\v2).warp.multi_agent.v1.ApplyFileDiffsResultH\x00R\x0eapplyFileDiffs\x1a;\n" +
+	"\fServerResult\x12+\n" +
+	"\x11serialized_result\x18\x01 \x01(\tR\x10serializedResultB\b\n" +
+	"\x06resultB\t\n" +
+	"\amessage\"L\n" +
+	"\x15RunShellCommandResult\x12\x16\n" +
+	"\x06output\x18\x01 \x01(\tR\x06output\x12\x1b\n" +
+	"\texit_code\x18\x02 \x01(\x05R\bexitCode\"I\n" +
+	"\x0fReadFilesResult\x126\n" +
+	"\x05files\x18\x01 \x03(\v2 .warp.multi_agent.v1.FileContentR\x05files\"N\n" +
+	"\x14SearchCodebaseResult\x126\n" +
+	"\x05files\x18\x01 \x03(\v2 .warp.multi_agent.v1.FileContentR\x05files\"]\n" +
+	"\x14ApplyFileDiffsResult\x12E\n" +
+	"\rupdated_files\x18\x01 \x03(\v2 .warp.multi_agent.v1.FileContentR\fupdatedFiles\">\n" +
+	"\x14FileContentLineRange\x12\x14\n" +
+	"\x05start\x18\x01 \x01(\x05R\x05start\x12\x10\n" +
+	"\x03end\x18\x02 \x01(\x05R\x03end\"\x8e\x01\n" +
+	"\vFileContent\x12\x1b\n" +
+	"\tfile_path\x18\x01 \x01(\tR\bfilePath\x12\x18\n" +
+	"\acontent\x18\x02 \x01(\tR\acontent\x12H\n" +
+	"\n" +
+	"line_range\x18\x03 \x01(\v2).warp.multi_agent.v1.FileContentLineRangeR\tlineRangeB8Z.github.com/warp/warp-proto-apis/multi_agent/v1\x92\x03\x05\xd2>\x02\x10\x03b\beditionsp\xe8\a"
 
-var file_task_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_task_proto_msgTypes = make([]protoimpl.MessageInfo, 29)
 var file_task_proto_goTypes = []any{
-	(*Task)(nil),                  // 0: warp.multi_agent.v1.Task
-	(*TaskStatus)(nil),            // 1: warp.multi_agent.v1.TaskStatus
-	(*Task_Dependencies)(nil),     // 2: warp.multi_agent.v1.Task.Dependencies
-	(*TaskStatus_Pending)(nil),    // 3: warp.multi_agent.v1.TaskStatus.Pending
-	(*TaskStatus_InProgress)(nil), // 4: warp.multi_agent.v1.TaskStatus.InProgress
-	(*TaskStatus_Blocked)(nil),    // 5: warp.multi_agent.v1.TaskStatus.Blocked
-	(*TaskStatus_Succeeded)(nil),  // 6: warp.multi_agent.v1.TaskStatus.Succeeded
-	(*TaskStatus_Failed)(nil),     // 7: warp.multi_agent.v1.TaskStatus.Failed
-	(*TaskStatus_Aborted)(nil),    // 8: warp.multi_agent.v1.TaskStatus.Aborted
-	(*Message)(nil),               // 9: warp.multi_agent.v1.Message
+	(*Task)(nil),                                     // 0: warp.multi_agent.v1.Task
+	(*TaskStatus)(nil),                               // 1: warp.multi_agent.v1.TaskStatus
+	(*Message)(nil),                                  // 2: warp.multi_agent.v1.Message
+	(*RunShellCommandResult)(nil),                    // 3: warp.multi_agent.v1.RunShellCommandResult
+	(*ReadFilesResult)(nil),                          // 4: warp.multi_agent.v1.ReadFilesResult
+	(*SearchCodebaseResult)(nil),                     // 5: warp.multi_agent.v1.SearchCodebaseResult
+	(*ApplyFileDiffsResult)(nil),                     // 6: warp.multi_agent.v1.ApplyFileDiffsResult
+	(*FileContentLineRange)(nil),                     // 7: warp.multi_agent.v1.FileContentLineRange
+	(*FileContent)(nil),                              // 8: warp.multi_agent.v1.FileContent
+	(*Task_Dependencies)(nil),                        // 9: warp.multi_agent.v1.Task.Dependencies
+	(*TaskStatus_Pending)(nil),                       // 10: warp.multi_agent.v1.TaskStatus.Pending
+	(*TaskStatus_InProgress)(nil),                    // 11: warp.multi_agent.v1.TaskStatus.InProgress
+	(*TaskStatus_Blocked)(nil),                       // 12: warp.multi_agent.v1.TaskStatus.Blocked
+	(*TaskStatus_Succeeded)(nil),                     // 13: warp.multi_agent.v1.TaskStatus.Succeeded
+	(*TaskStatus_Failed)(nil),                        // 14: warp.multi_agent.v1.TaskStatus.Failed
+	(*TaskStatus_Aborted)(nil),                       // 15: warp.multi_agent.v1.TaskStatus.Aborted
+	(*Message_UserQuery)(nil),                        // 16: warp.multi_agent.v1.Message.UserQuery
+	(*Message_AgentOutput)(nil),                      // 17: warp.multi_agent.v1.Message.AgentOutput
+	(*Message_ToolCall)(nil),                         // 18: warp.multi_agent.v1.Message.ToolCall
+	(*Message_ToolCallResult)(nil),                   // 19: warp.multi_agent.v1.Message.ToolCallResult
+	(*Message_ToolCall_Server)(nil),                  // 20: warp.multi_agent.v1.Message.ToolCall.Server
+	(*Message_ToolCall_RunShellCommand)(nil),         // 21: warp.multi_agent.v1.Message.ToolCall.RunShellCommand
+	(*Message_ToolCall_ReadFiles)(nil),               // 22: warp.multi_agent.v1.Message.ToolCall.ReadFiles
+	(*Message_ToolCall_SearchCodebase)(nil),          // 23: warp.multi_agent.v1.Message.ToolCall.SearchCodebase
+	(*Message_ToolCall_ApplyFileDiffs)(nil),          // 24: warp.multi_agent.v1.Message.ToolCall.ApplyFileDiffs
+	(*Message_ToolCall_SuggestPlan)(nil),             // 25: warp.multi_agent.v1.Message.ToolCall.SuggestPlan
+	(*Message_ToolCall_ReadFiles_File)(nil),          // 26: warp.multi_agent.v1.Message.ToolCall.ReadFiles.File
+	(*Message_ToolCall_ApplyFileDiffs_FileDiff)(nil), // 27: warp.multi_agent.v1.Message.ToolCall.ApplyFileDiffs.FileDiff
+	(*Message_ToolCallResult_ServerResult)(nil),      // 28: warp.multi_agent.v1.Message.ToolCallResult.ServerResult
 }
 var file_task_proto_depIdxs = []int32{
-	2, // 0: warp.multi_agent.v1.Task.dependencies:type_name -> warp.multi_agent.v1.Task.Dependencies
-	1, // 1: warp.multi_agent.v1.Task.status:type_name -> warp.multi_agent.v1.TaskStatus
-	9, // 2: warp.multi_agent.v1.Task.messages:type_name -> warp.multi_agent.v1.Message
-	3, // 3: warp.multi_agent.v1.TaskStatus.pending:type_name -> warp.multi_agent.v1.TaskStatus.Pending
-	4, // 4: warp.multi_agent.v1.TaskStatus.in_progress:type_name -> warp.multi_agent.v1.TaskStatus.InProgress
-	5, // 5: warp.multi_agent.v1.TaskStatus.blocked:type_name -> warp.multi_agent.v1.TaskStatus.Blocked
-	6, // 6: warp.multi_agent.v1.TaskStatus.succeeded:type_name -> warp.multi_agent.v1.TaskStatus.Succeeded
-	7, // 7: warp.multi_agent.v1.TaskStatus.failed:type_name -> warp.multi_agent.v1.TaskStatus.Failed
-	8, // 8: warp.multi_agent.v1.TaskStatus.aborted:type_name -> warp.multi_agent.v1.TaskStatus.Aborted
-	9, // [9:9] is the sub-list for method output_type
-	9, // [9:9] is the sub-list for method input_type
-	9, // [9:9] is the sub-list for extension type_name
-	9, // [9:9] is the sub-list for extension extendee
-	0, // [0:9] is the sub-list for field type_name
+	9,  // 0: warp.multi_agent.v1.Task.dependencies:type_name -> warp.multi_agent.v1.Task.Dependencies
+	1,  // 1: warp.multi_agent.v1.Task.status:type_name -> warp.multi_agent.v1.TaskStatus
+	2,  // 2: warp.multi_agent.v1.Task.messages:type_name -> warp.multi_agent.v1.Message
+	10, // 3: warp.multi_agent.v1.TaskStatus.pending:type_name -> warp.multi_agent.v1.TaskStatus.Pending
+	11, // 4: warp.multi_agent.v1.TaskStatus.in_progress:type_name -> warp.multi_agent.v1.TaskStatus.InProgress
+	12, // 5: warp.multi_agent.v1.TaskStatus.blocked:type_name -> warp.multi_agent.v1.TaskStatus.Blocked
+	13, // 6: warp.multi_agent.v1.TaskStatus.succeeded:type_name -> warp.multi_agent.v1.TaskStatus.Succeeded
+	14, // 7: warp.multi_agent.v1.TaskStatus.failed:type_name -> warp.multi_agent.v1.TaskStatus.Failed
+	15, // 8: warp.multi_agent.v1.TaskStatus.aborted:type_name -> warp.multi_agent.v1.TaskStatus.Aborted
+	16, // 9: warp.multi_agent.v1.Message.user_query:type_name -> warp.multi_agent.v1.Message.UserQuery
+	17, // 10: warp.multi_agent.v1.Message.agent_output:type_name -> warp.multi_agent.v1.Message.AgentOutput
+	18, // 11: warp.multi_agent.v1.Message.tool_call:type_name -> warp.multi_agent.v1.Message.ToolCall
+	19, // 12: warp.multi_agent.v1.Message.tool_call_result:type_name -> warp.multi_agent.v1.Message.ToolCallResult
+	8,  // 13: warp.multi_agent.v1.ReadFilesResult.files:type_name -> warp.multi_agent.v1.FileContent
+	8,  // 14: warp.multi_agent.v1.SearchCodebaseResult.files:type_name -> warp.multi_agent.v1.FileContent
+	8,  // 15: warp.multi_agent.v1.ApplyFileDiffsResult.updated_files:type_name -> warp.multi_agent.v1.FileContent
+	7,  // 16: warp.multi_agent.v1.FileContent.line_range:type_name -> warp.multi_agent.v1.FileContentLineRange
+	21, // 17: warp.multi_agent.v1.Message.ToolCall.run_shell_command:type_name -> warp.multi_agent.v1.Message.ToolCall.RunShellCommand
+	23, // 18: warp.multi_agent.v1.Message.ToolCall.search_codebase:type_name -> warp.multi_agent.v1.Message.ToolCall.SearchCodebase
+	20, // 19: warp.multi_agent.v1.Message.ToolCall.server:type_name -> warp.multi_agent.v1.Message.ToolCall.Server
+	22, // 20: warp.multi_agent.v1.Message.ToolCall.read_files:type_name -> warp.multi_agent.v1.Message.ToolCall.ReadFiles
+	24, // 21: warp.multi_agent.v1.Message.ToolCall.apply_file_diffs:type_name -> warp.multi_agent.v1.Message.ToolCall.ApplyFileDiffs
+	25, // 22: warp.multi_agent.v1.Message.ToolCall.suggest_plan:type_name -> warp.multi_agent.v1.Message.ToolCall.SuggestPlan
+	3,  // 23: warp.multi_agent.v1.Message.ToolCallResult.run_shell_command:type_name -> warp.multi_agent.v1.RunShellCommandResult
+	5,  // 24: warp.multi_agent.v1.Message.ToolCallResult.search_codebase:type_name -> warp.multi_agent.v1.SearchCodebaseResult
+	28, // 25: warp.multi_agent.v1.Message.ToolCallResult.server:type_name -> warp.multi_agent.v1.Message.ToolCallResult.ServerResult
+	4,  // 26: warp.multi_agent.v1.Message.ToolCallResult.read_files:type_name -> warp.multi_agent.v1.ReadFilesResult
+	6,  // 27: warp.multi_agent.v1.Message.ToolCallResult.apply_file_diffs:type_name -> warp.multi_agent.v1.ApplyFileDiffsResult
+	26, // 28: warp.multi_agent.v1.Message.ToolCall.ReadFiles.files:type_name -> warp.multi_agent.v1.Message.ToolCall.ReadFiles.File
+	27, // 29: warp.multi_agent.v1.Message.ToolCall.ApplyFileDiffs.diffs:type_name -> warp.multi_agent.v1.Message.ToolCall.ApplyFileDiffs.FileDiff
+	0,  // 30: warp.multi_agent.v1.Message.ToolCall.SuggestPlan.proposed_tasks:type_name -> warp.multi_agent.v1.Task
+	7,  // 31: warp.multi_agent.v1.Message.ToolCall.ReadFiles.File.line_ranges:type_name -> warp.multi_agent.v1.FileContentLineRange
+	32, // [32:32] is the sub-list for method output_type
+	32, // [32:32] is the sub-list for method input_type
+	32, // [32:32] is the sub-list for extension type_name
+	32, // [32:32] is the sub-list for extension extendee
+	0,  // [0:32] is the sub-list for field type_name
 }
 
 func init() { file_task_proto_init() }
@@ -975,7 +3662,6 @@ func file_task_proto_init() {
 	if File_task_proto != nil {
 		return
 	}
-	file_message_proto_init()
 	file_task_proto_msgTypes[1].OneofWrappers = []any{
 		(*taskStatus_Pending_)(nil),
 		(*taskStatus_InProgress_)(nil),
@@ -984,13 +3670,34 @@ func file_task_proto_init() {
 		(*taskStatus_Failed_)(nil),
 		(*taskStatus_Aborted_)(nil),
 	}
+	file_task_proto_msgTypes[2].OneofWrappers = []any{
+		(*message_UserQuery_)(nil),
+		(*message_AgentOutput_)(nil),
+		(*message_ToolCall_)(nil),
+		(*message_ToolCallResult_)(nil),
+	}
+	file_task_proto_msgTypes[18].OneofWrappers = []any{
+		(*message_ToolCall_RunShellCommand_)(nil),
+		(*message_ToolCall_SearchCodebase_)(nil),
+		(*message_ToolCall_Server_)(nil),
+		(*message_ToolCall_ReadFiles_)(nil),
+		(*message_ToolCall_ApplyFileDiffs_)(nil),
+		(*message_ToolCall_SuggestPlan_)(nil),
+	}
+	file_task_proto_msgTypes[19].OneofWrappers = []any{
+		(*message_ToolCallResult_RunShellCommand)(nil),
+		(*message_ToolCallResult_SearchCodebase)(nil),
+		(*message_ToolCallResult_Server)(nil),
+		(*message_ToolCallResult_ReadFiles)(nil),
+		(*message_ToolCallResult_ApplyFileDiffs)(nil),
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_task_proto_rawDesc), len(file_task_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   9,
+			NumMessages:   29,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
