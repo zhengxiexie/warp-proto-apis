@@ -14,6 +14,10 @@ warp-server-apis/
                 └── <bindings_for_lang>/
 ```
 
+## Initial setup
+
+Run `./script/bootstrap` to install proto compiler dependencies.
+
 ## Updating generated bindings
 
 When updating the proto definitions, you will need to run the `./script/generate` script.  This will automatically update bindings for all supported languages.
@@ -29,7 +33,15 @@ Must have `protoc` installed. See here on how to install for your platform: http
 ### Go
 Requires the `protoc-gen-go` plugin: `go install google.golang.org/protobuf/cmd/protoc-gen-go@latest`.
 
+This is installed by the bootstrap script.
+
 ### Rust
-Requires  `protoc-gen-prost` and `protoc-gen-prost-crate`: `cargo install protoc-gen-prost protoc-gen-prost-crate`. 
+Requires `protoc-gen-prost` and `protoc-gen-prost-crate`: `cargo install protoc-gen-prost protoc-gen-prost-crate`. 
+
+This is installed by the bootstrap script.
+
+## Language-specific quirks
+
+### Rust
 
 When adding a new API, you will need to create a bare library crate under `gen/rust` before generating bindings.
