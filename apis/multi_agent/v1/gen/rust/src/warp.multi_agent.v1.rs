@@ -321,6 +321,89 @@ pub struct FileContent {
     #[prost(message, optional, tag="3")]
     pub line_range: ::core::option::Option<FileContentLineRange>,
 }
+/// Main Request message for the API
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Request {
+    /// Context provides the state of tasks and active task
+    #[prost(message, optional, tag="1")]
+    pub context: ::core::option::Option<request::Context>,
+    /// Input from user or tool call result
+    #[prost(message, optional, tag="2")]
+    pub input: ::core::option::Option<Input>,
+}
+/// Nested message and enum types in `Request`.
+pub mod request {
+    /// Context contains the current state of tasks and which task is active
+    #[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct Context {
+        /// List of all tasks
+        #[prost(message, repeated, tag="1")]
+        pub tasks: ::prost::alloc::vec::Vec<super::Task>,
+        /// Currently active task ID, if there is one.
+        #[prost(string, tag="2")]
+        pub active_task_id: ::prost::alloc::string::String,
+    }
+}
+/// Input for the Request
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct Input {
+    #[prost(message, optional, tag="1")]
+    pub context: ::core::option::Option<input::Context>,
+    /// Type of input
+    #[prost(oneof="input::Type", tags="2, 3")]
+    pub r#type: ::core::option::Option<input::Type>,
+}
+/// Nested message and enum types in `Input`.
+pub mod input {
+    /// Client context associated to the input.
+    #[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+    pub struct Context {
+    }
+    /// User query
+    #[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct UserQuery {
+        #[prost(string, tag="1")]
+        pub query: ::prost::alloc::string::String,
+    }
+    /// Tool call result
+    #[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+    pub struct ToolCallResult {
+        #[prost(string, tag="1")]
+        pub tool_call_id: ::prost::alloc::string::String,
+        #[prost(oneof="tool_call_result::Result", tags="2, 3, 4, 5")]
+        pub result: ::core::option::Option<tool_call_result::Result>,
+    }
+    /// Nested message and enum types in `ToolCallResult`.
+    pub mod tool_call_result {
+        #[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Oneof)]
+        pub enum Result {
+            #[prost(message, tag="2")]
+            RunShellCommand(super::super::RunShellCommandResult),
+            #[prost(message, tag="3")]
+            ReadFiles(super::super::ReadFilesResult),
+            #[prost(message, tag="4")]
+            SearchCodebase(super::super::SearchCodebaseResult),
+            #[prost(message, tag="5")]
+            ApplyFileDiffs(super::super::ApplyFileDiffsResult),
+        }
+    }
+    /// Type of input
+    #[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Oneof)]
+    pub enum Type {
+        #[prost(message, tag="2")]
+        UserQuery(UserQuery),
+        #[prost(message, tag="3")]
+        ToolCallResult(ToolCallResult),
+    }
+}
 /// A single streamed event returned by the multi-agent API.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -471,89 +554,6 @@ pub mod client_action {
         UpdateTaskMessage(UpdateTaskMessage),
         #[prost(message, tag="5")]
         AppendToMessageContent(AppendToMessageContent),
-    }
-}
-/// Main Request message for the API
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct Request {
-    /// Context provides the state of tasks and active task
-    #[prost(message, optional, tag="1")]
-    pub context: ::core::option::Option<request::Context>,
-    /// Input from user or tool call result
-    #[prost(message, optional, tag="2")]
-    pub input: ::core::option::Option<Input>,
-}
-/// Nested message and enum types in `Request`.
-pub mod request {
-    /// Context contains the current state of tasks and which task is active
-    #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-    pub struct Context {
-        /// List of all tasks
-        #[prost(message, repeated, tag="1")]
-        pub tasks: ::prost::alloc::vec::Vec<super::Task>,
-        /// Currently active task ID, if there is one.
-        #[prost(string, tag="2")]
-        pub active_task_id: ::prost::alloc::string::String,
-    }
-}
-/// Input for the Request
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct Input {
-    #[prost(message, optional, tag="1")]
-    pub context: ::core::option::Option<input::Context>,
-    /// Type of input
-    #[prost(oneof="input::Type", tags="2, 3")]
-    pub r#type: ::core::option::Option<input::Type>,
-}
-/// Nested message and enum types in `Input`.
-pub mod input {
-    /// Client context associated to the input.
-    #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, Copy, PartialEq, ::prost::Message)]
-    pub struct Context {
-    }
-    /// User query
-    #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-    pub struct UserQuery {
-        #[prost(string, tag="1")]
-        pub query: ::prost::alloc::string::String,
-    }
-    /// Tool call result
-    #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-    pub struct ToolCallResult {
-        #[prost(string, tag="1")]
-        pub tool_call_id: ::prost::alloc::string::String,
-        #[prost(oneof="tool_call_result::Result", tags="2, 3, 4, 5")]
-        pub result: ::core::option::Option<tool_call_result::Result>,
-    }
-    /// Nested message and enum types in `ToolCallResult`.
-    pub mod tool_call_result {
-        #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Oneof)]
-        pub enum Result {
-            #[prost(message, tag="2")]
-            RunShellCommand(super::super::RunShellCommandResult),
-            #[prost(message, tag="3")]
-            ReadFiles(super::super::ReadFilesResult),
-            #[prost(message, tag="4")]
-            SearchCodebase(super::super::SearchCodebaseResult),
-            #[prost(message, tag="5")]
-            ApplyFileDiffs(super::super::ApplyFileDiffsResult),
-        }
-    }
-    /// Type of input
-    #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Oneof)]
-    pub enum Type {
-        #[prost(message, tag="2")]
-        UserQuery(UserQuery),
-        #[prost(message, tag="3")]
-        ToolCallResult(ToolCallResult),
     }
 }
 // @@protoc_insertion_point(module)

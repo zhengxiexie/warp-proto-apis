@@ -1,6 +1,5 @@
 #!/bin/bash
 
-set -x
 set -e
 
 API=""
@@ -43,14 +42,18 @@ fi
 echo "Generating bindings for $API $VERSION..."
 
 echo "Source protos:"
-PROTO_PATH="apis/$API/$VERSION"
-PROTO_FILES=($(cd "$PROTO_PATH" && ls -1 *.proto))
+API_PATH="apis/$API/$VERSION"
+PROTO_FILES=($(cd "$API_PATH" && ls -1 *.proto))
 for proto in "${PROTO_FILES[@]}"; do
-  echo " - $PROTO_PATH/$proto"
+  echo " - $API_PATH/$proto"
 done
 
 echo -e "\n➡️  Generating Go bindings..."
-protoc --go_out="$PROTO_PATH/gen/go" --go_opt="module=github.com/warp/warp-proto-apis/$API/$VERSION" --proto_path="$(realpath "$PROTO_PATH")" "${PROTO_FILES[@]}"
+protoc --go_out="$API_PATH/gen/go" --go_opt="module=github.com/warp/warp-proto-apis/$API/$VERSION" --proto_path="$(realpath "$API_PATH")" "${PROTO_FILES[@]}"
+pushd "$API_PATH" >/dev/null 2>&1
+go mod tidy
+popd >/dev/null 2>&1
+
 echo "✅️ Done generating Go bindings"
 
 # For Rust, prost doesn't yet support editions, so we need to do a bit
@@ -61,8 +64,8 @@ cleanup_temp() {
 TEMP="$(mktemp -d)"
 trap cleanup_temp EXIT
 
-mkdir -p "$TEMP/$PROTO_PATH"
-cp "$PROTO_PATH"/*.proto "$TEMP/$PROTO_PATH"
+mkdir -p "$TEMP/$API_PATH"
+cp "$API_PATH"/*.proto "$TEMP/$API_PATH"
 # Replace `edition = "2023";` with `syntax = "proto3";` in all proto files,
 # remove `option features.*`, and remove "unused" feature proto imports.
 find "$TEMP" \
@@ -74,5 +77,5 @@ find "$TEMP" \
     {} \;
 
 echo -e "\n➡️  Generating Rust bindings..."
-protoc --prost_out="$PROTO_PATH/gen/rust/src" --proto_path="$(realpath "$TEMP")" "${PROTO_FILES[@]}"
+protoc --prost_out="$API_PATH/gen/rust/src" --proto_path="$(realpath "$TEMP/$API_PATH")" "${PROTO_FILES[@]}"
 echo "✅️ Done generating Rust bindings"
