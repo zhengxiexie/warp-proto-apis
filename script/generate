@@ -50,7 +50,7 @@ done
 
 echo -e "\n➡️  Generating Go bindings..."
 protoc --go_out="$API_PATH/gen/go" --go_opt="module=github.com/warp/warp-proto-apis/$API/$VERSION" --proto_path="$(realpath "$API_PATH")" "${PROTO_FILES[@]}"
-pushd "$API_PATH" >/dev/null 2>&1
+pushd "$API_PATH/gen/go" >/dev/null 2>&1
 go mod tidy
 popd >/dev/null 2>&1
 
