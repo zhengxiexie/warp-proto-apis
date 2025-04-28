@@ -42,6 +42,7 @@ message Request {
     oneof type {
       UserQuery user_query = 2;
       ToolCallResult tool_call_result = 3;
+      StaticQuery static_query = 4;
     }
 
     message Context {
@@ -110,6 +111,26 @@ message Request {
         SuggestCreatePlanResult suggest_create_plan = 7;
       }
     }
+
+    // Static queries correspond to hardcoded predefined responses from
+    // Agent Mode e.g. the zero-state chip for "Install" has a predefined 
+    // initial response asking the user for more information, before passing it
+    // off to "real AI".
+    message StaticQuery {
+      oneof type {
+        InstallStaticQuery install = 1;
+        CodeStaticQuery code = 2;
+        DeployStaticQuery deploy = 3;
+        SomethingElseStaticQuery something_else = 4;
+        CustomOnboardingRequestStaticQuery custom_onboarding_request = 5;
+      }
+    }
+
+    message InstallStaticQuery {}
+    message CodeStaticQuery {}
+    message DeployStaticQuery {}
+    message SomethingElseStaticQuery {}
+    message CustomOnboardingRequestStaticQuery {}
   }
 
   message Metadata {
