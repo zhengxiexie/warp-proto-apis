@@ -134,6 +134,9 @@ message Message {
     message SearchCodebase {
       string query = 1;
       repeated string path_filters = 2;
+      // Optional. The absolute path to the codebase that we want to search. If
+      // not provided, we will use the codebase in the user's current directory.
+      string codebase_path = 3;
     }
 
     // A tool call to apply diffs to files.
@@ -256,9 +259,7 @@ message ApplyFileDiffsResult {
 
   message Success { repeated FileContent updated_files = 1; }
 
-  message Error {
-    string message = 1 [ (sensitive) = true ];
-  }
+  message Error { string message = 1 [ (sensitive) = true ]; }
 }
 
 // Result of a `SuggestCreatePlan` tool call.
@@ -345,6 +346,7 @@ message InputContext {
   repeated ExecutedShellCommand executed_shell_commands = 5;
   repeated SelectedText selected_text = 6;
   repeated Image images = 7;
+  repeated Codebase codebases = 8;
 
   // Information about shell commands that the user has executed.
   message ExecutedShellCommand {
@@ -385,5 +387,13 @@ message InputContext {
 
     // MIME type of the image content (e.g., "image/jpeg", "image/png").
     string mime_type = 2;
+  }
+
+  // Information about a codebase on the user's machine that we can search.
+  message Codebase {
+    // The name of the codebase.
+    string name = 1;
+    // The absolute path to the codebase on the user's machine.
+    string path = 2;
   }
 }
