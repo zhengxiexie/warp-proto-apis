@@ -45,7 +45,7 @@ message Request {
     oneof type {
       UserQuery user_query = 2;
       ToolCallResult tool_call_result = 3;
-      StaticQuery static_query = 4;
+      QueryWithCannedResponse query_with_canned_response = 4;
     }
 
     message UserQuery { string query = 1 [ (sensitive) = true ]; }
@@ -71,25 +71,26 @@ message Request {
       message RefineResult { UserQuery user_query = 1; }
     }
 
-    // Static queries correspond to hardcoded predefined responses from
+    // Canned responses correspond to hardcoded predefined responses from
     // Agent Mode e.g. the zero-state chip for "Install" has a predefined
     // initial response asking the user for more information, before passing it
     // off to "real AI".
-    message StaticQuery {
+    message QueryWithCannedResponse {
+      string query = 1;
       oneof type {
-        InstallStaticQuery install = 1;
-        CodeStaticQuery code = 2;
-        DeployStaticQuery deploy = 3;
-        SomethingElseStaticQuery something_else = 4;
-        CustomOnboardingRequestStaticQuery custom_onboarding_request = 5;
+          Install install = 2;
+          Code code = 3;
+          Deploy deploy = 4;
+          SomethingElse something_else = 5;
+          CustomOnboardingRequest custom_onboarding_request = 6;
       }
-    }
 
-    message InstallStaticQuery {}
-    message CodeStaticQuery {}
-    message DeployStaticQuery {}
-    message SomethingElseStaticQuery {}
-    message CustomOnboardingRequestStaticQuery {}
+      message Install {}
+      message Code {}
+      message Deploy {}
+      message SomethingElse {}
+      message CustomOnboardingRequest {}
+    }
   }
 
   message Metadata {
