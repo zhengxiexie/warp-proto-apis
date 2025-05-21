@@ -434,6 +434,7 @@ message InputContext {
   repeated SelectedText selected_text = 6;
   repeated Image images = 7;
   repeated Codebase codebases = 8;
+  repeated File files = 9;
 
   // Information about shell commands that the user has executed.
   message ExecutedShellCommand {
@@ -482,5 +483,9 @@ message InputContext {
     string name = 1;
     // The absolute path to the codebase on the user's machine.
     string path = 2;
+  }
+
+  message File {
+    FileContent content = 1;
   }
 }

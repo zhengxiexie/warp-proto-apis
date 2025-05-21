@@ -49,6 +49,7 @@ message Request {
       UserQuery user_query = 2;
       ToolCallResult tool_call_result = 3;
       QueryWithCannedResponse query_with_canned_response = 4;
+      AutoCodeDiffQuery auto_code_diff_query = 5;
     }
 
     message UserQuery { string query = 1 [ (sensitive) = true ]; }
@@ -96,6 +97,10 @@ message Request {
       message SomethingElse {}
       message CustomOnboardingRequest {}
     }
+
+    // A query to perform an automatic code diff e.g. Warp detects compilation errors
+    // in the last run block, and surfaces relevant a code diff to show to the user.
+    message AutoCodeDiffQuery { string query = 1 [ (sensitive) = true ]; }
   }
 
   message Metadata {
