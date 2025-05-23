@@ -84,6 +84,7 @@ message Message {
     ToolCall tool_call = 4;
     ToolCallResult tool_call_result = 5;
     ServerEvent server_event = 6;
+    SystemQuery system_query = 9;
   }
 
   // User query message type
@@ -92,6 +93,21 @@ message Message {
 
     // Context that the client supplied as part of the user query input.
     InputContext context = 2;
+  }
+
+  // System queries represent prompts from the Warp client that were 
+  // not explicitly sent by the end-user e.g. automatic code diff 
+  // suggestions for errors.
+  message SystemQuery {
+    oneof type {
+      AutoCodeDiff auto_code_diff = 1;
+    }
+
+    InputContext context = 2;
+  }
+
+  message AutoCodeDiff {
+    string query = 1 [ (sensitive) = true ];
   }
 
   // Agent output message type
