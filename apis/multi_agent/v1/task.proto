@@ -175,6 +175,7 @@ message Message {
     message ApplyFileDiffs {
       string summary = 1;
       repeated FileDiff diffs = 2;
+      repeated NewFile new_files = 3;
 
       message FileDiff {
         string file_path = 1;
@@ -182,6 +183,13 @@ message Message {
         string search = 2;
         // The content that replaces `search`.
         string replace = 3;
+      }
+
+      message NewFile {
+        // Path of the file to create.
+        string file_path = 1;
+        // The new file contents.
+        string content = 2;
       }
     }
 
