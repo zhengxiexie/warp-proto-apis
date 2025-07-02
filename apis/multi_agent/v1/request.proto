@@ -6,6 +6,7 @@ package warp.multi_agent.v1;
 import "google/protobuf/go_features.proto";
 import "google/protobuf/struct.proto";
 
+import "input_context.proto";
 import "options.proto";
 import "suggestions.proto";
 import "task.proto";
@@ -41,6 +42,19 @@ message Request {
     string active_task_id = 2;
   }
 
+  message Attachment {
+    oneof value {
+      string plain_text = 1;
+      ExecutedShellCommand executed_shell_command = 2;
+      RunningShellCommand running_shell_command = 3;
+    }
+  }
+
+  message RunningShellCommand {
+    string command = 1 [ (sensitive) = true ];
+    LongRunningShellCommandSnapshot snapshot = 2;
+  }
+
   message Input {
     InputContext context = 1;
 
@@ -55,7 +69,11 @@ message Request {
       ToolCallResult tool_call_result = 3 [deprecated = true];
     }
 
-    message UserQuery { string query = 1 [ (sensitive) = true ]; }
+    message UserQuery {
+      string query = 1 [ (sensitive) = true ];
+      // An attachment referenced by key in the query text.
+      map<string, Attachment> referenced_attachments = 2;
+    }
 
     message UserInputs {
       repeated UserInput inputs = 1;
