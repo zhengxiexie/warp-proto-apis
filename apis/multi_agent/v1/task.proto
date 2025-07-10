@@ -549,3 +549,10 @@ enum ToolType {
   WRITE_TO_LONG_RUNNING_SHELL_COMMAND = 10;
   SUGGEST_NEW_CONVERSATION = 11;
 }
+
+// Wrapper for a list of tasks that can be serialized/deserialized.
+// This is used as the response type for serving the final task list 
+// after applying client actions in an MAA debug API.
+message TaskList {
+  repeated Task tasks = 1;
+}
