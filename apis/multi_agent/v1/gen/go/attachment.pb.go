@@ -80,6 +80,15 @@ func (x *Attachment) GetRunningShellCommand() *RunningShellCommand {
 	return nil
 }
 
+func (x *Attachment) GetDriveObject() *DriveObject {
+	if x != nil {
+		if x, ok := x.xxx_hidden_Value.(*attachment_DriveObject); ok {
+			return x.DriveObject
+		}
+	}
+	return nil
+}
+
 func (x *Attachment) SetPlainText(v string) {
 	x.xxx_hidden_Value = &attachment_PlainText{v}
 }
@@ -98,6 +107,14 @@ func (x *Attachment) SetRunningShellCommand(v *RunningShellCommand) {
 		return
 	}
 	x.xxx_hidden_Value = &attachment_RunningShellCommand{v}
+}
+
+func (x *Attachment) SetDriveObject(v *DriveObject) {
+	if v == nil {
+		x.xxx_hidden_Value = nil
+		return
+	}
+	x.xxx_hidden_Value = &attachment_DriveObject{v}
 }
 
 func (x *Attachment) HasValue() bool {
@@ -131,6 +148,14 @@ func (x *Attachment) HasRunningShellCommand() bool {
 	return ok
 }
 
+func (x *Attachment) HasDriveObject() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_Value.(*attachment_DriveObject)
+	return ok
+}
+
 func (x *Attachment) ClearValue() {
 	x.xxx_hidden_Value = nil
 }
@@ -153,10 +178,17 @@ func (x *Attachment) ClearRunningShellCommand() {
 	}
 }
 
+func (x *Attachment) ClearDriveObject() {
+	if _, ok := x.xxx_hidden_Value.(*attachment_DriveObject); ok {
+		x.xxx_hidden_Value = nil
+	}
+}
+
 const Attachment_Value_not_set_case case_Attachment_Value = 0
 const Attachment_PlainText_case case_Attachment_Value = 1
 const Attachment_ExecutedShellCommand_case case_Attachment_Value = 2
 const Attachment_RunningShellCommand_case case_Attachment_Value = 3
+const Attachment_DriveObject_case case_Attachment_Value = 4
 
 func (x *Attachment) WhichValue() case_Attachment_Value {
 	if x == nil {
@@ -169,6 +201,8 @@ func (x *Attachment) WhichValue() case_Attachment_Value {
 		return Attachment_ExecutedShellCommand_case
 	case *attachment_RunningShellCommand:
 		return Attachment_RunningShellCommand_case
+	case *attachment_DriveObject:
+		return Attachment_DriveObject_case
 	default:
 		return Attachment_Value_not_set_case
 	}
@@ -181,6 +215,7 @@ type Attachment_builder struct {
 	PlainText            *string
 	ExecutedShellCommand *ExecutedShellCommand
 	RunningShellCommand  *RunningShellCommand
+	DriveObject          *DriveObject
 	// -- end of xxx_hidden_Value
 }
 
@@ -196,6 +231,9 @@ func (b0 Attachment_builder) Build() *Attachment {
 	}
 	if b.RunningShellCommand != nil {
 		x.xxx_hidden_Value = &attachment_RunningShellCommand{b.RunningShellCommand}
+	}
+	if b.DriveObject != nil {
+		x.xxx_hidden_Value = &attachment_DriveObject{b.DriveObject}
 	}
 	return m0
 }
@@ -226,11 +264,17 @@ type attachment_RunningShellCommand struct {
 	RunningShellCommand *RunningShellCommand `protobuf:"bytes,3,opt,name=running_shell_command,json=runningShellCommand,oneof"`
 }
 
+type attachment_DriveObject struct {
+	DriveObject *DriveObject `protobuf:"bytes,4,opt,name=drive_object,json=driveObject,oneof"`
+}
+
 func (*attachment_PlainText) isAttachment_Value() {}
 
 func (*attachment_ExecutedShellCommand) isAttachment_Value() {}
 
 func (*attachment_RunningShellCommand) isAttachment_Value() {}
+
+func (*attachment_DriveObject) isAttachment_Value() {}
 
 // Information about shell commands that the user has executed.
 type ExecutedShellCommand struct {
@@ -557,17 +601,635 @@ func (b0 LongRunningShellCommandSnapshot_builder) Build() *LongRunningShellComma
 	return m0
 }
 
+type DriveObject struct {
+	state                    protoimpl.MessageState      `protogen:"opaque.v1"`
+	xxx_hidden_Uid           *string                     `protobuf:"bytes,1,opt,name=uid"`
+	xxx_hidden_ObjectPayload isDriveObject_ObjectPayload `protobuf_oneof:"object_payload"`
+	XXX_raceDetectHookData   protoimpl.RaceDetectHookData
+	XXX_presence             [1]uint32
+	unknownFields            protoimpl.UnknownFields
+	sizeCache                protoimpl.SizeCache
+}
+
+func (x *DriveObject) Reset() {
+	*x = DriveObject{}
+	mi := &file_attachment_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DriveObject) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DriveObject) ProtoMessage() {}
+
+func (x *DriveObject) ProtoReflect() protoreflect.Message {
+	mi := &file_attachment_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *DriveObject) GetUid() string {
+	if x != nil {
+		if x.xxx_hidden_Uid != nil {
+			return *x.xxx_hidden_Uid
+		}
+		return ""
+	}
+	return ""
+}
+
+func (x *DriveObject) GetWorkflow() *Workflow {
+	if x != nil {
+		if x, ok := x.xxx_hidden_ObjectPayload.(*driveObject_Workflow); ok {
+			return x.Workflow
+		}
+	}
+	return nil
+}
+
+func (x *DriveObject) GetNotebook() *Notebook {
+	if x != nil {
+		if x, ok := x.xxx_hidden_ObjectPayload.(*driveObject_Notebook); ok {
+			return x.Notebook
+		}
+	}
+	return nil
+}
+
+func (x *DriveObject) GetGenericStringObject() *GenericStringObject {
+	if x != nil {
+		if x, ok := x.xxx_hidden_ObjectPayload.(*driveObject_GenericStringObject); ok {
+			return x.GenericStringObject
+		}
+	}
+	return nil
+}
+
+func (x *DriveObject) SetUid(v string) {
+	x.xxx_hidden_Uid = &v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 0, 2)
+}
+
+func (x *DriveObject) SetWorkflow(v *Workflow) {
+	if v == nil {
+		x.xxx_hidden_ObjectPayload = nil
+		return
+	}
+	x.xxx_hidden_ObjectPayload = &driveObject_Workflow{v}
+}
+
+func (x *DriveObject) SetNotebook(v *Notebook) {
+	if v == nil {
+		x.xxx_hidden_ObjectPayload = nil
+		return
+	}
+	x.xxx_hidden_ObjectPayload = &driveObject_Notebook{v}
+}
+
+func (x *DriveObject) SetGenericStringObject(v *GenericStringObject) {
+	if v == nil {
+		x.xxx_hidden_ObjectPayload = nil
+		return
+	}
+	x.xxx_hidden_ObjectPayload = &driveObject_GenericStringObject{v}
+}
+
+func (x *DriveObject) HasUid() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 0)
+}
+
+func (x *DriveObject) HasObjectPayload() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_ObjectPayload != nil
+}
+
+func (x *DriveObject) HasWorkflow() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_ObjectPayload.(*driveObject_Workflow)
+	return ok
+}
+
+func (x *DriveObject) HasNotebook() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_ObjectPayload.(*driveObject_Notebook)
+	return ok
+}
+
+func (x *DriveObject) HasGenericStringObject() bool {
+	if x == nil {
+		return false
+	}
+	_, ok := x.xxx_hidden_ObjectPayload.(*driveObject_GenericStringObject)
+	return ok
+}
+
+func (x *DriveObject) ClearUid() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 0)
+	x.xxx_hidden_Uid = nil
+}
+
+func (x *DriveObject) ClearObjectPayload() {
+	x.xxx_hidden_ObjectPayload = nil
+}
+
+func (x *DriveObject) ClearWorkflow() {
+	if _, ok := x.xxx_hidden_ObjectPayload.(*driveObject_Workflow); ok {
+		x.xxx_hidden_ObjectPayload = nil
+	}
+}
+
+func (x *DriveObject) ClearNotebook() {
+	if _, ok := x.xxx_hidden_ObjectPayload.(*driveObject_Notebook); ok {
+		x.xxx_hidden_ObjectPayload = nil
+	}
+}
+
+func (x *DriveObject) ClearGenericStringObject() {
+	if _, ok := x.xxx_hidden_ObjectPayload.(*driveObject_GenericStringObject); ok {
+		x.xxx_hidden_ObjectPayload = nil
+	}
+}
+
+const DriveObject_ObjectPayload_not_set_case case_DriveObject_ObjectPayload = 0
+const DriveObject_Workflow_case case_DriveObject_ObjectPayload = 2
+const DriveObject_Notebook_case case_DriveObject_ObjectPayload = 3
+const DriveObject_GenericStringObject_case case_DriveObject_ObjectPayload = 4
+
+func (x *DriveObject) WhichObjectPayload() case_DriveObject_ObjectPayload {
+	if x == nil {
+		return DriveObject_ObjectPayload_not_set_case
+	}
+	switch x.xxx_hidden_ObjectPayload.(type) {
+	case *driveObject_Workflow:
+		return DriveObject_Workflow_case
+	case *driveObject_Notebook:
+		return DriveObject_Notebook_case
+	case *driveObject_GenericStringObject:
+		return DriveObject_GenericStringObject_case
+	default:
+		return DriveObject_ObjectPayload_not_set_case
+	}
+}
+
+type DriveObject_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Uid *string
+	// Fields of oneof xxx_hidden_ObjectPayload:
+	Workflow            *Workflow
+	Notebook            *Notebook
+	GenericStringObject *GenericStringObject
+	// -- end of xxx_hidden_ObjectPayload
+}
+
+func (b0 DriveObject_builder) Build() *DriveObject {
+	m0 := &DriveObject{}
+	b, x := &b0, m0
+	_, _ = b, x
+	if b.Uid != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 0, 2)
+		x.xxx_hidden_Uid = b.Uid
+	}
+	if b.Workflow != nil {
+		x.xxx_hidden_ObjectPayload = &driveObject_Workflow{b.Workflow}
+	}
+	if b.Notebook != nil {
+		x.xxx_hidden_ObjectPayload = &driveObject_Notebook{b.Notebook}
+	}
+	if b.GenericStringObject != nil {
+		x.xxx_hidden_ObjectPayload = &driveObject_GenericStringObject{b.GenericStringObject}
+	}
+	return m0
+}
+
+type case_DriveObject_ObjectPayload protoreflect.FieldNumber
+
+func (x case_DriveObject_ObjectPayload) String() string {
+	md := file_attachment_proto_msgTypes[4].Descriptor()
+	if x == 0 {
+		return "not set"
+	}
+	return protoimpl.X.MessageFieldStringOf(md, protoreflect.FieldNumber(x))
+}
+
+type isDriveObject_ObjectPayload interface {
+	isDriveObject_ObjectPayload()
+}
+
+type driveObject_Workflow struct {
+	Workflow *Workflow `protobuf:"bytes,2,opt,name=workflow,oneof"`
+}
+
+type driveObject_Notebook struct {
+	Notebook *Notebook `protobuf:"bytes,3,opt,name=notebook,oneof"`
+}
+
+type driveObject_GenericStringObject struct {
+	GenericStringObject *GenericStringObject `protobuf:"bytes,4,opt,name=generic_string_object,json=genericStringObject,oneof"`
+}
+
+func (*driveObject_Workflow) isDriveObject_ObjectPayload() {}
+
+func (*driveObject_Notebook) isDriveObject_ObjectPayload() {}
+
+func (*driveObject_GenericStringObject) isDriveObject_ObjectPayload() {}
+
+type Workflow struct {
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Name        *string                `protobuf:"bytes,1,opt,name=name"`
+	xxx_hidden_Description *string                `protobuf:"bytes,2,opt,name=description"`
+	xxx_hidden_Command     *string                `protobuf:"bytes,3,opt,name=command"`
+	XXX_raceDetectHookData protoimpl.RaceDetectHookData
+	XXX_presence           [1]uint32
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *Workflow) Reset() {
+	*x = Workflow{}
+	mi := &file_attachment_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Workflow) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Workflow) ProtoMessage() {}
+
+func (x *Workflow) ProtoReflect() protoreflect.Message {
+	mi := &file_attachment_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *Workflow) GetName() string {
+	if x != nil {
+		if x.xxx_hidden_Name != nil {
+			return *x.xxx_hidden_Name
+		}
+		return ""
+	}
+	return ""
+}
+
+func (x *Workflow) GetDescription() string {
+	if x != nil {
+		if x.xxx_hidden_Description != nil {
+			return *x.xxx_hidden_Description
+		}
+		return ""
+	}
+	return ""
+}
+
+func (x *Workflow) GetCommand() string {
+	if x != nil {
+		if x.xxx_hidden_Command != nil {
+			return *x.xxx_hidden_Command
+		}
+		return ""
+	}
+	return ""
+}
+
+func (x *Workflow) SetName(v string) {
+	x.xxx_hidden_Name = &v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 0, 3)
+}
+
+func (x *Workflow) SetDescription(v string) {
+	x.xxx_hidden_Description = &v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 1, 3)
+}
+
+func (x *Workflow) SetCommand(v string) {
+	x.xxx_hidden_Command = &v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 2, 3)
+}
+
+func (x *Workflow) HasName() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 0)
+}
+
+func (x *Workflow) HasDescription() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 1)
+}
+
+func (x *Workflow) HasCommand() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 2)
+}
+
+func (x *Workflow) ClearName() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 0)
+	x.xxx_hidden_Name = nil
+}
+
+func (x *Workflow) ClearDescription() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 1)
+	x.xxx_hidden_Description = nil
+}
+
+func (x *Workflow) ClearCommand() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 2)
+	x.xxx_hidden_Command = nil
+}
+
+type Workflow_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Name        *string
+	Description *string
+	Command     *string
+}
+
+func (b0 Workflow_builder) Build() *Workflow {
+	m0 := &Workflow{}
+	b, x := &b0, m0
+	_, _ = b, x
+	if b.Name != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 0, 3)
+		x.xxx_hidden_Name = b.Name
+	}
+	if b.Description != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 1, 3)
+		x.xxx_hidden_Description = b.Description
+	}
+	if b.Command != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 2, 3)
+		x.xxx_hidden_Command = b.Command
+	}
+	return m0
+}
+
+type Notebook struct {
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Title       *string                `protobuf:"bytes,1,opt,name=title"`
+	xxx_hidden_Content     *string                `protobuf:"bytes,2,opt,name=content"`
+	XXX_raceDetectHookData protoimpl.RaceDetectHookData
+	XXX_presence           [1]uint32
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *Notebook) Reset() {
+	*x = Notebook{}
+	mi := &file_attachment_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Notebook) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Notebook) ProtoMessage() {}
+
+func (x *Notebook) ProtoReflect() protoreflect.Message {
+	mi := &file_attachment_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *Notebook) GetTitle() string {
+	if x != nil {
+		if x.xxx_hidden_Title != nil {
+			return *x.xxx_hidden_Title
+		}
+		return ""
+	}
+	return ""
+}
+
+func (x *Notebook) GetContent() string {
+	if x != nil {
+		if x.xxx_hidden_Content != nil {
+			return *x.xxx_hidden_Content
+		}
+		return ""
+	}
+	return ""
+}
+
+func (x *Notebook) SetTitle(v string) {
+	x.xxx_hidden_Title = &v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 0, 2)
+}
+
+func (x *Notebook) SetContent(v string) {
+	x.xxx_hidden_Content = &v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 1, 2)
+}
+
+func (x *Notebook) HasTitle() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 0)
+}
+
+func (x *Notebook) HasContent() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 1)
+}
+
+func (x *Notebook) ClearTitle() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 0)
+	x.xxx_hidden_Title = nil
+}
+
+func (x *Notebook) ClearContent() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 1)
+	x.xxx_hidden_Content = nil
+}
+
+type Notebook_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Title   *string
+	Content *string
+}
+
+func (b0 Notebook_builder) Build() *Notebook {
+	m0 := &Notebook{}
+	b, x := &b0, m0
+	_, _ = b, x
+	if b.Title != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 0, 2)
+		x.xxx_hidden_Title = b.Title
+	}
+	if b.Content != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 1, 2)
+		x.xxx_hidden_Content = b.Content
+	}
+	return m0
+}
+
+type GenericStringObject struct {
+	state                  protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Payload     *string                `protobuf:"bytes,1,opt,name=payload"`
+	xxx_hidden_ObjectType  *string                `protobuf:"bytes,2,opt,name=object_type,json=objectType"`
+	XXX_raceDetectHookData protoimpl.RaceDetectHookData
+	XXX_presence           [1]uint32
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *GenericStringObject) Reset() {
+	*x = GenericStringObject{}
+	mi := &file_attachment_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GenericStringObject) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GenericStringObject) ProtoMessage() {}
+
+func (x *GenericStringObject) ProtoReflect() protoreflect.Message {
+	mi := &file_attachment_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *GenericStringObject) GetPayload() string {
+	if x != nil {
+		if x.xxx_hidden_Payload != nil {
+			return *x.xxx_hidden_Payload
+		}
+		return ""
+	}
+	return ""
+}
+
+func (x *GenericStringObject) GetObjectType() string {
+	if x != nil {
+		if x.xxx_hidden_ObjectType != nil {
+			return *x.xxx_hidden_ObjectType
+		}
+		return ""
+	}
+	return ""
+}
+
+func (x *GenericStringObject) SetPayload(v string) {
+	x.xxx_hidden_Payload = &v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 0, 2)
+}
+
+func (x *GenericStringObject) SetObjectType(v string) {
+	x.xxx_hidden_ObjectType = &v
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 1, 2)
+}
+
+func (x *GenericStringObject) HasPayload() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 0)
+}
+
+func (x *GenericStringObject) HasObjectType() bool {
+	if x == nil {
+		return false
+	}
+	return protoimpl.X.Present(&(x.XXX_presence[0]), 1)
+}
+
+func (x *GenericStringObject) ClearPayload() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 0)
+	x.xxx_hidden_Payload = nil
+}
+
+func (x *GenericStringObject) ClearObjectType() {
+	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 1)
+	x.xxx_hidden_ObjectType = nil
+}
+
+type GenericStringObject_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Payload *string
+	// Refers to the JSON type of the object such as "JsonEnvVarCollection" or "JsonAIFact"
+	ObjectType *string
+}
+
+func (b0 GenericStringObject_builder) Build() *GenericStringObject {
+	m0 := &GenericStringObject{}
+	b, x := &b0, m0
+	_, _ = b, x
+	if b.Payload != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 0, 2)
+		x.xxx_hidden_Payload = b.Payload
+	}
+	if b.ObjectType != nil {
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 1, 2)
+		x.xxx_hidden_ObjectType = b.ObjectType
+	}
+	return m0
+}
+
 var File_attachment_proto protoreflect.FileDescriptor
 
 const file_attachment_proto_rawDesc = "" +
 	"\n" +
-	"\x10attachment.proto\x12\x13warp.multi_agent.v1\x1a!google/protobuf/go_features.proto\x1a\roptions.proto\"\xf9\x01\n" +
+	"\x10attachment.proto\x12\x13warp.multi_agent.v1\x1a!google/protobuf/go_features.proto\x1a\roptions.proto\"\xc0\x02\n" +
 	"\n" +
 	"Attachment\x12\x1f\n" +
 	"\n" +
 	"plain_text\x18\x01 \x01(\tH\x00R\tplainText\x12a\n" +
 	"\x16executed_shell_command\x18\x02 \x01(\v2).warp.multi_agent.v1.ExecutedShellCommandH\x00R\x14executedShellCommand\x12^\n" +
-	"\x15running_shell_command\x18\x03 \x01(\v2(.warp.multi_agent.v1.RunningShellCommandH\x00R\x13runningShellCommandB\a\n" +
+	"\x15running_shell_command\x18\x03 \x01(\v2(.warp.multi_agent.v1.RunningShellCommandH\x00R\x13runningShellCommand\x12E\n" +
+	"\fdrive_object\x18\x04 \x01(\v2 .warp.multi_agent.v1.DriveObjectH\x00R\vdriveObjectB\a\n" +
 	"\x05value\"q\n" +
 	"\x14ExecutedShellCommand\x12\x1e\n" +
 	"\acommand\x18\x01 \x01(\tB\x04\x80\xb5\x18\x01R\acommand\x12\x1c\n" +
@@ -577,24 +1239,49 @@ const file_attachment_proto_rawDesc = "" +
 	"\acommand\x18\x01 \x01(\tB\x04\x80\xb5\x18\x01R\acommand\x12P\n" +
 	"\bsnapshot\x18\x02 \x01(\v24.warp.multi_agent.v1.LongRunningShellCommandSnapshotR\bsnapshot\"?\n" +
 	"\x1fLongRunningShellCommandSnapshot\x12\x1c\n" +
-	"\x06output\x18\x01 \x01(\tB\x04\x80\xb5\x18\x01R\x06outputB8Z.github.com/warp/warp-proto-apis/multi_agent/v1\x92\x03\x05\xd2>\x02\x10\x03b\beditionsp\xe8\a"
+	"\x06output\x18\x01 \x01(\tB\x04\x80\xb5\x18\x01R\x06output\"\x91\x02\n" +
+	"\vDriveObject\x12\x16\n" +
+	"\x03uid\x18\x01 \x01(\tB\x04\x80\xb5\x18\x01R\x03uid\x12;\n" +
+	"\bworkflow\x18\x02 \x01(\v2\x1d.warp.multi_agent.v1.WorkflowH\x00R\bworkflow\x12;\n" +
+	"\bnotebook\x18\x03 \x01(\v2\x1d.warp.multi_agent.v1.NotebookH\x00R\bnotebook\x12^\n" +
+	"\x15generic_string_object\x18\x04 \x01(\v2(.warp.multi_agent.v1.GenericStringObjectH\x00R\x13genericStringObjectB\x10\n" +
+	"\x0eobject_payload\"l\n" +
+	"\bWorkflow\x12\x18\n" +
+	"\x04name\x18\x01 \x01(\tB\x04\x80\xb5\x18\x01R\x04name\x12&\n" +
+	"\vdescription\x18\x02 \x01(\tB\x04\x80\xb5\x18\x01R\vdescription\x12\x1e\n" +
+	"\acommand\x18\x03 \x01(\tB\x04\x80\xb5\x18\x01R\acommand\"F\n" +
+	"\bNotebook\x12\x1a\n" +
+	"\x05title\x18\x01 \x01(\tB\x04\x80\xb5\x18\x01R\x05title\x12\x1e\n" +
+	"\acontent\x18\x02 \x01(\tB\x04\x80\xb5\x18\x01R\acontent\"V\n" +
+	"\x13GenericStringObject\x12\x1e\n" +
+	"\apayload\x18\x01 \x01(\tB\x04\x80\xb5\x18\x01R\apayload\x12\x1f\n" +
+	"\vobject_type\x18\x02 \x01(\tR\n" +
+	"objectTypeB8Z.github.com/warp/warp-proto-apis/multi_agent/v1\x92\x03\x05\xd2>\x02\x10\x03b\beditionsp\xe8\a"
 
-var file_attachment_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_attachment_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_attachment_proto_goTypes = []any{
 	(*Attachment)(nil),                      // 0: warp.multi_agent.v1.Attachment
 	(*ExecutedShellCommand)(nil),            // 1: warp.multi_agent.v1.ExecutedShellCommand
 	(*RunningShellCommand)(nil),             // 2: warp.multi_agent.v1.RunningShellCommand
 	(*LongRunningShellCommandSnapshot)(nil), // 3: warp.multi_agent.v1.LongRunningShellCommandSnapshot
+	(*DriveObject)(nil),                     // 4: warp.multi_agent.v1.DriveObject
+	(*Workflow)(nil),                        // 5: warp.multi_agent.v1.Workflow
+	(*Notebook)(nil),                        // 6: warp.multi_agent.v1.Notebook
+	(*GenericStringObject)(nil),             // 7: warp.multi_agent.v1.GenericStringObject
 }
 var file_attachment_proto_depIdxs = []int32{
 	1, // 0: warp.multi_agent.v1.Attachment.executed_shell_command:type_name -> warp.multi_agent.v1.ExecutedShellCommand
 	2, // 1: warp.multi_agent.v1.Attachment.running_shell_command:type_name -> warp.multi_agent.v1.RunningShellCommand
-	3, // 2: warp.multi_agent.v1.RunningShellCommand.snapshot:type_name -> warp.multi_agent.v1.LongRunningShellCommandSnapshot
-	3, // [3:3] is the sub-list for method output_type
-	3, // [3:3] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	4, // 2: warp.multi_agent.v1.Attachment.drive_object:type_name -> warp.multi_agent.v1.DriveObject
+	3, // 3: warp.multi_agent.v1.RunningShellCommand.snapshot:type_name -> warp.multi_agent.v1.LongRunningShellCommandSnapshot
+	5, // 4: warp.multi_agent.v1.DriveObject.workflow:type_name -> warp.multi_agent.v1.Workflow
+	6, // 5: warp.multi_agent.v1.DriveObject.notebook:type_name -> warp.multi_agent.v1.Notebook
+	7, // 6: warp.multi_agent.v1.DriveObject.generic_string_object:type_name -> warp.multi_agent.v1.GenericStringObject
+	7, // [7:7] is the sub-list for method output_type
+	7, // [7:7] is the sub-list for method input_type
+	7, // [7:7] is the sub-list for extension type_name
+	7, // [7:7] is the sub-list for extension extendee
+	0, // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_attachment_proto_init() }
@@ -607,6 +1294,12 @@ func file_attachment_proto_init() {
 		(*attachment_PlainText)(nil),
 		(*attachment_ExecutedShellCommand)(nil),
 		(*attachment_RunningShellCommand)(nil),
+		(*attachment_DriveObject)(nil),
+	}
+	file_attachment_proto_msgTypes[4].OneofWrappers = []any{
+		(*driveObject_Workflow)(nil),
+		(*driveObject_Notebook)(nil),
+		(*driveObject_GenericStringObject)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -614,7 +1307,7 @@ func file_attachment_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_attachment_proto_rawDesc), len(file_attachment_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
