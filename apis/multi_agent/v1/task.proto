@@ -13,6 +13,7 @@ import "citations.proto";
 import "input_context.proto";
 import "attachment.proto";
 import "file_content.proto";
+import "document_content.proto";
 import "options.proto";
 import "todo.proto";
 
@@ -191,6 +192,9 @@ message Message {
       OpenCodeReview open_code_review = 17;
       InitProject init_project = 18;
       Subagent subagent = 19;
+      ReadDocuments read_documents = 20;
+      EditDocuments edit_documents = 21;
+      CreateDocuments create_documents = 22;
     }
 
     // A tool call that is totally resolved server-side and hence opaque to
@@ -341,6 +345,39 @@ message Message {
         google.protobuf.Empty cli = 3;
       }
     }
+
+    // A tool call to read documents.
+    message ReadDocuments {
+      repeated Document documents = 1;
+      message Document {
+        string document_id = 1;
+        // If empty, the entire document is retrieved.
+        repeated FileContentLineRange line_ranges = 2;
+      }
+    }
+
+    // A tool call to edit one or more existing documents.
+    message EditDocuments {
+      repeated DocumentDiff diffs = 1;
+
+      message DocumentDiff {
+        string document_id = 1;
+        // The content to be replaced.
+        string search = 2;
+        // The content that replaces `search`.
+        string replace = 3;
+      }
+    }
+
+    // A tool call to create one or more new documents.
+    message CreateDocuments {
+      repeated NewDocument new_documents = 1;
+
+      message NewDocument {
+        // The new document contents.
+        string content = 1;
+      }
+    }
   }
 
   // Entry in the message log representing the result of a tool call.
@@ -374,6 +411,9 @@ message Message {
       OpenCodeReviewResult open_code_review = 21;
       InitProjectResult init_project = 22;
       SubagentResult subagent = 23;
+      ReadDocumentsResult read_documents = 24;
+      EditDocumentsResult edit_documents = 25;
+      CreateDocumentsResult create_documents = 26;
     }
 
     // Result of a server-side tool call.
@@ -676,6 +716,48 @@ message OpenCodeReviewResult {}
 // Result of an `InitProject` tool call.
 message InitProjectResult {}
 
+// Result of a `ReadDocuments` tool call.
+message ReadDocumentsResult {
+  oneof result {
+    Success success = 1;
+    Error error = 2;
+  }
+
+  message Success {
+    repeated DocumentContent documents = 1;
+  }
+
+  message Error { string message = 1 [ (sensitive) = true ]; }
+}
+
+// Result of an `EditDocuments` tool call.
+message EditDocumentsResult {
+  oneof result {
+    Success success = 1;
+    Error error = 2;
+  }
+
+  message Success {
+    repeated DocumentContent updated_documents = 1;
+  }
+
+  message Error { string message = 1 [ (sensitive) = true ]; }
+}
+
+// Result of a `CreateDocuments` tool call.
+message CreateDocumentsResult {
+  oneof result {
+    Success success = 1;
+    Error error = 2;
+  }
+
+  message Success {
+    repeated DocumentContent created_documents = 1;
+  }
+
+  message Error { string message = 1 [ (sensitive) = true ]; }
+}
+
 // An enumeration of the different types of client-server tools.
 // This must map 1:1 with the list of structured tool call / tool call result types.
 //
@@ -699,5 +781,8 @@ enum ToolType {
   OPEN_CODE_REVIEW = 14;
   INIT_PROJECT = 15;
   SUBAGENT = 16;
+  READ_DOCUMENTS = 17;
+  EDIT_DOCUMENTS = 18;
+  CREATE_DOCUMENTS = 19;
 }
 
