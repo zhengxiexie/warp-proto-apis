@@ -57,6 +57,7 @@ message Request {
       TriggerSuggestPrompt trigger_suggest_prompt = 9;
       CreateNewProject create_new_project = 10;
       CloneRepository clone_repository = 11;
+      CodeReview code_review = 12;
 
       UserQuery user_query = 2 [deprecated = true];
       ToolCallResult tool_call_result = 3 [deprecated = true];
@@ -163,6 +164,16 @@ message Request {
       oneof trigger {
         google.protobuf.Empty files_changed = 2;
         google.protobuf.Empty command_run = 3;
+      }
+    }
+
+    message CodeReview {
+      oneof operation {
+        InitialReviewComments initial_review_comments = 1;
+      }
+
+      message InitialReviewComments {
+        repeated ReviewComment review_comments = 1;
       }
     }
   }
