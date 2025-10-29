@@ -359,6 +359,7 @@ type ReviewComments struct {
 	state                        protoimpl.MessageState `protogen:"opaque.v1"`
 	xxx_hidden_PendingComments   *[]*ReviewComment      `protobuf:"bytes,1,rep,name=pending_comments,json=pendingComments"`
 	xxx_hidden_CompletedComments *[]*ReviewComment      `protobuf:"bytes,2,rep,name=completed_comments,json=completedComments"`
+	xxx_hidden_DiffSet           *DiffSet               `protobuf:"bytes,3,opt,name=diff_set,json=diffSet"`
 	unknownFields                protoimpl.UnknownFields
 	sizeCache                    protoimpl.SizeCache
 }
@@ -406,6 +407,13 @@ func (x *ReviewComments) GetCompletedComments() []*ReviewComment {
 	return nil
 }
 
+func (x *ReviewComments) GetDiffSet() *DiffSet {
+	if x != nil {
+		return x.xxx_hidden_DiffSet
+	}
+	return nil
+}
+
 func (x *ReviewComments) SetPendingComments(v []*ReviewComment) {
 	x.xxx_hidden_PendingComments = &v
 }
@@ -414,11 +422,27 @@ func (x *ReviewComments) SetCompletedComments(v []*ReviewComment) {
 	x.xxx_hidden_CompletedComments = &v
 }
 
+func (x *ReviewComments) SetDiffSet(v *DiffSet) {
+	x.xxx_hidden_DiffSet = v
+}
+
+func (x *ReviewComments) HasDiffSet() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_DiffSet != nil
+}
+
+func (x *ReviewComments) ClearDiffSet() {
+	x.xxx_hidden_DiffSet = nil
+}
+
 type ReviewComments_builder struct {
 	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
 
 	PendingComments   []*ReviewComment
 	CompletedComments []*ReviewComment
+	DiffSet           *DiffSet
 }
 
 func (b0 ReviewComments_builder) Build() *ReviewComments {
@@ -427,19 +451,19 @@ func (b0 ReviewComments_builder) Build() *ReviewComments {
 	_, _ = b, x
 	x.xxx_hidden_PendingComments = &b.PendingComments
 	x.xxx_hidden_CompletedComments = &b.CompletedComments
+	x.xxx_hidden_DiffSet = b.DiffSet
 	return m0
 }
 
 type ReviewComment struct {
-	state                       protoimpl.MessageState `protogen:"opaque.v1"`
-	xxx_hidden_Id               *string                `protobuf:"bytes,1,opt,name=id"`
-	xxx_hidden_Comment          *string                `protobuf:"bytes,2,opt,name=comment"`
-	xxx_hidden_DiffSet          *DiffSet               `protobuf:"bytes,3,opt,name=diff_set,json=diffSet"`
-	xxx_hidden_CommentLineRange *FileContentLineRange  `protobuf:"bytes,4,opt,name=comment_line_range,json=commentLineRange"`
-	XXX_raceDetectHookData      protoimpl.RaceDetectHookData
-	XXX_presence                [1]uint32
-	unknownFields               protoimpl.UnknownFields
-	sizeCache                   protoimpl.SizeCache
+	state                    protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Id            *string                `protobuf:"bytes,1,opt,name=id"`
+	xxx_hidden_Comment       *string                `protobuf:"bytes,2,opt,name=comment"`
+	xxx_hidden_CommentedLine *DiffHunk              `protobuf:"bytes,3,opt,name=commented_line,json=commentedLine"`
+	XXX_raceDetectHookData   protoimpl.RaceDetectHookData
+	XXX_presence             [1]uint32
+	unknownFields            protoimpl.UnknownFields
+	sizeCache                protoimpl.SizeCache
 }
 
 func (x *ReviewComment) Reset() {
@@ -487,36 +511,25 @@ func (x *ReviewComment) GetComment() string {
 	return ""
 }
 
-func (x *ReviewComment) GetDiffSet() *DiffSet {
+func (x *ReviewComment) GetCommentedLine() *DiffHunk {
 	if x != nil {
-		return x.xxx_hidden_DiffSet
-	}
-	return nil
-}
-
-func (x *ReviewComment) GetCommentLineRange() *FileContentLineRange {
-	if x != nil {
-		return x.xxx_hidden_CommentLineRange
+		return x.xxx_hidden_CommentedLine
 	}
 	return nil
 }
 
 func (x *ReviewComment) SetId(v string) {
 	x.xxx_hidden_Id = &v
-	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 0, 4)
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 0, 3)
 }
 
 func (x *ReviewComment) SetComment(v string) {
 	x.xxx_hidden_Comment = &v
-	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 1, 4)
+	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 1, 3)
 }
 
-func (x *ReviewComment) SetDiffSet(v *DiffSet) {
-	x.xxx_hidden_DiffSet = v
-}
-
-func (x *ReviewComment) SetCommentLineRange(v *FileContentLineRange) {
-	x.xxx_hidden_CommentLineRange = v
+func (x *ReviewComment) SetCommentedLine(v *DiffHunk) {
+	x.xxx_hidden_CommentedLine = v
 }
 
 func (x *ReviewComment) HasId() bool {
@@ -533,18 +546,11 @@ func (x *ReviewComment) HasComment() bool {
 	return protoimpl.X.Present(&(x.XXX_presence[0]), 1)
 }
 
-func (x *ReviewComment) HasDiffSet() bool {
+func (x *ReviewComment) HasCommentedLine() bool {
 	if x == nil {
 		return false
 	}
-	return x.xxx_hidden_DiffSet != nil
-}
-
-func (x *ReviewComment) HasCommentLineRange() bool {
-	if x == nil {
-		return false
-	}
-	return x.xxx_hidden_CommentLineRange != nil
+	return x.xxx_hidden_CommentedLine != nil
 }
 
 func (x *ReviewComment) ClearId() {
@@ -557,22 +563,20 @@ func (x *ReviewComment) ClearComment() {
 	x.xxx_hidden_Comment = nil
 }
 
-func (x *ReviewComment) ClearDiffSet() {
-	x.xxx_hidden_DiffSet = nil
-}
-
-func (x *ReviewComment) ClearCommentLineRange() {
-	x.xxx_hidden_CommentLineRange = nil
+func (x *ReviewComment) ClearCommentedLine() {
+	x.xxx_hidden_CommentedLine = nil
 }
 
 type ReviewComment_builder struct {
 	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
 
 	// Unique identifier for the review comment.
-	Id               *string
-	Comment          *string
-	DiffSet          *DiffSet
-	CommentLineRange *FileContentLineRange
+	Id      *string
+	Comment *string
+	// The exact file location and line content that this comment is associated with.
+	// We need a diff hunk rather than just a starting and ending line number
+	// because the latter cannot uniquely identify a deleted line.
+	CommentedLine *DiffHunk
 }
 
 func (b0 ReviewComment_builder) Build() *ReviewComment {
@@ -580,15 +584,14 @@ func (b0 ReviewComment_builder) Build() *ReviewComment {
 	b, x := &b0, m0
 	_, _ = b, x
 	if b.Id != nil {
-		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 0, 4)
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 0, 3)
 		x.xxx_hidden_Id = b.Id
 	}
 	if b.Comment != nil {
-		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 1, 4)
+		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 1, 3)
 		x.xxx_hidden_Comment = b.Comment
 	}
-	x.xxx_hidden_DiffSet = b.DiffSet
-	x.xxx_hidden_CommentLineRange = b.CommentLineRange
+	x.xxx_hidden_CommentedLine = b.CommentedLine
 	return m0
 }
 
@@ -15993,15 +15996,15 @@ const file_task_proto_rawDesc = "" +
 	"\vserver_data\x18\b \x01(\tR\n" +
 	"serverData\x1aP\n" +
 	"\fDependencies\x12$\n" +
-	"\x0eparent_task_id\x18\x01 \x01(\tR\fparentTaskIdJ\x04\b\x02\x10\x03R\x14sibling_dependenciesJ\x04\b\x04\x10\x05R\x06status\"\xb2\x01\n" +
+	"\x0eparent_task_id\x18\x01 \x01(\tR\fparentTaskIdJ\x04\b\x02\x10\x03R\x14sibling_dependenciesJ\x04\b\x04\x10\x05R\x06status\"\xeb\x01\n" +
 	"\x0eReviewComments\x12M\n" +
 	"\x10pending_comments\x18\x01 \x03(\v2\".warp.multi_agent.v1.ReviewCommentR\x0fpendingComments\x12Q\n" +
-	"\x12completed_comments\x18\x02 \x03(\v2\".warp.multi_agent.v1.ReviewCommentR\x11completedComments\"\xd1\x01\n" +
+	"\x12completed_comments\x18\x02 \x03(\v2\".warp.multi_agent.v1.ReviewCommentR\x11completedComments\x127\n" +
+	"\bdiff_set\x18\x03 \x01(\v2\x1c.warp.multi_agent.v1.DiffSetR\adiffSet\"\x85\x01\n" +
 	"\rReviewComment\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1e\n" +
-	"\acomment\x18\x02 \x01(\tB\x04\x80\xb5\x18\x01R\acomment\x127\n" +
-	"\bdiff_set\x18\x03 \x01(\v2\x1c.warp.multi_agent.v1.DiffSetR\adiffSet\x12W\n" +
-	"\x12comment_line_range\x18\x04 \x01(\v2).warp.multi_agent.v1.FileContentLineRangeR\x10commentLineRange\"\xb7Y\n" +
+	"\acomment\x18\x02 \x01(\tB\x04\x80\xb5\x18\x01R\acomment\x12D\n" +
+	"\x0ecommented_line\x18\x03 \x01(\v2\x1d.warp.multi_agent.v1.DiffHunkR\rcommentedLine\"\xb7Y\n" +
 	"\aMessage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x17\n" +
 	"\atask_id\x18\v \x01(\tR\x06taskId\x12\x1d\n" +
@@ -16576,7 +16579,7 @@ var file_task_proto_goTypes = []any{
 	(*CreateDocumentsResult_Success)(nil),                        // 115: warp.multi_agent.v1.CreateDocumentsResult.Success
 	(*CreateDocumentsResult_Error)(nil),                          // 116: warp.multi_agent.v1.CreateDocumentsResult.Error
 	(*DiffSet)(nil),                                              // 117: warp.multi_agent.v1.DiffSet
-	(*FileContentLineRange)(nil),                                 // 118: warp.multi_agent.v1.FileContentLineRange
+	(*DiffHunk)(nil),                                             // 118: warp.multi_agent.v1.DiffHunk
 	(*timestamppb.Timestamp)(nil),                                // 119: google.protobuf.Timestamp
 	(*Citation)(nil),                                             // 120: warp.multi_agent.v1.Citation
 	(*LongRunningShellCommandSnapshot)(nil),                      // 121: warp.multi_agent.v1.LongRunningShellCommandSnapshot
@@ -16588,17 +16591,18 @@ var file_task_proto_goTypes = []any{
 	(*UpdatePendingTodos)(nil),                                   // 127: warp.multi_agent.v1.UpdatePendingTodos
 	(*MarkTodosCompleted)(nil),                                   // 128: warp.multi_agent.v1.MarkTodosCompleted
 	(*structpb.Struct)(nil),                                      // 129: google.protobuf.Struct
-	(*FileContent)(nil),                                          // 130: warp.multi_agent.v1.FileContent
-	(*AnyFileContent)(nil),                                       // 131: warp.multi_agent.v1.AnyFileContent
-	(*DocumentContent)(nil),                                      // 132: warp.multi_agent.v1.DocumentContent
+	(*FileContentLineRange)(nil),                                 // 130: warp.multi_agent.v1.FileContentLineRange
+	(*FileContent)(nil),                                          // 131: warp.multi_agent.v1.FileContent
+	(*AnyFileContent)(nil),                                       // 132: warp.multi_agent.v1.AnyFileContent
+	(*DocumentContent)(nil),                                      // 133: warp.multi_agent.v1.DocumentContent
 }
 var file_task_proto_depIdxs = []int32{
 	28,  // 0: warp.multi_agent.v1.Task.dependencies:type_name -> warp.multi_agent.v1.Task.Dependencies
 	4,   // 1: warp.multi_agent.v1.Task.messages:type_name -> warp.multi_agent.v1.Message
 	3,   // 2: warp.multi_agent.v1.ReviewComments.pending_comments:type_name -> warp.multi_agent.v1.ReviewComment
 	3,   // 3: warp.multi_agent.v1.ReviewComments.completed_comments:type_name -> warp.multi_agent.v1.ReviewComment
-	117, // 4: warp.multi_agent.v1.ReviewComment.diff_set:type_name -> warp.multi_agent.v1.DiffSet
-	118, // 5: warp.multi_agent.v1.ReviewComment.comment_line_range:type_name -> warp.multi_agent.v1.FileContentLineRange
+	117, // 4: warp.multi_agent.v1.ReviewComments.diff_set:type_name -> warp.multi_agent.v1.DiffSet
+	118, // 5: warp.multi_agent.v1.ReviewComment.commented_line:type_name -> warp.multi_agent.v1.DiffHunk
 	119, // 6: warp.multi_agent.v1.Message.timestamp:type_name -> google.protobuf.Timestamp
 	120, // 7: warp.multi_agent.v1.Message.citations:type_name -> warp.multi_agent.v1.Citation
 	29,  // 8: warp.multi_agent.v1.Message.user_query:type_name -> warp.multi_agent.v1.Message.UserQuery
@@ -16737,15 +16741,15 @@ var file_task_proto_depIdxs = []int32{
 	122, // 141: warp.multi_agent.v1.Message.ToolCall.WriteToLongRunningShellCommand.Mode.raw:type_name -> google.protobuf.Empty
 	122, // 142: warp.multi_agent.v1.Message.ToolCall.WriteToLongRunningShellCommand.Mode.line:type_name -> google.protobuf.Empty
 	122, // 143: warp.multi_agent.v1.Message.ToolCall.WriteToLongRunningShellCommand.Mode.block:type_name -> google.protobuf.Empty
-	118, // 144: warp.multi_agent.v1.Message.ToolCall.ReadFiles.File.line_ranges:type_name -> warp.multi_agent.v1.FileContentLineRange
-	118, // 145: warp.multi_agent.v1.Message.ToolCall.ReadDocuments.Document.line_ranges:type_name -> warp.multi_agent.v1.FileContentLineRange
+	130, // 144: warp.multi_agent.v1.Message.ToolCall.ReadFiles.File.line_ranges:type_name -> warp.multi_agent.v1.FileContentLineRange
+	130, // 145: warp.multi_agent.v1.Message.ToolCall.ReadDocuments.Document.line_ranges:type_name -> warp.multi_agent.v1.FileContentLineRange
 	29,  // 146: warp.multi_agent.v1.Message.ToolCallResult.RefineResult.user_query:type_name -> warp.multi_agent.v1.Message.UserQuery
-	130, // 147: warp.multi_agent.v1.ReadFilesResult.TextFilesSuccess.files:type_name -> warp.multi_agent.v1.FileContent
-	131, // 148: warp.multi_agent.v1.ReadFilesResult.AnyFilesSuccess.files:type_name -> warp.multi_agent.v1.AnyFileContent
-	130, // 149: warp.multi_agent.v1.SearchCodebaseResult.Success.files:type_name -> warp.multi_agent.v1.FileContent
-	130, // 150: warp.multi_agent.v1.ApplyFileDiffsResult.Success.updated_files:type_name -> warp.multi_agent.v1.FileContent
+	131, // 147: warp.multi_agent.v1.ReadFilesResult.TextFilesSuccess.files:type_name -> warp.multi_agent.v1.FileContent
+	132, // 148: warp.multi_agent.v1.ReadFilesResult.AnyFilesSuccess.files:type_name -> warp.multi_agent.v1.AnyFileContent
+	131, // 149: warp.multi_agent.v1.SearchCodebaseResult.Success.files:type_name -> warp.multi_agent.v1.FileContent
+	131, // 150: warp.multi_agent.v1.ApplyFileDiffsResult.Success.updated_files:type_name -> warp.multi_agent.v1.FileContent
 	89,  // 151: warp.multi_agent.v1.ApplyFileDiffsResult.Success.updated_files_v2:type_name -> warp.multi_agent.v1.ApplyFileDiffsResult.Success.UpdatedFileContent
-	130, // 152: warp.multi_agent.v1.ApplyFileDiffsResult.Success.UpdatedFileContent.file:type_name -> warp.multi_agent.v1.FileContent
+	131, // 152: warp.multi_agent.v1.ApplyFileDiffsResult.Success.UpdatedFileContent.file:type_name -> warp.multi_agent.v1.FileContent
 	93,  // 153: warp.multi_agent.v1.GrepResult.Success.matched_files:type_name -> warp.multi_agent.v1.GrepResult.Success.GrepFileMatch
 	94,  // 154: warp.multi_agent.v1.GrepResult.Success.GrepFileMatch.matched_lines:type_name -> warp.multi_agent.v1.GrepResult.Success.GrepFileMatch.GrepLineMatch
 	99,  // 155: warp.multi_agent.v1.FileGlobV2Result.Success.matched_files:type_name -> warp.multi_agent.v1.FileGlobV2Result.Success.FileGlobMatch
@@ -16754,9 +16758,9 @@ var file_task_proto_depIdxs = []int32{
 	109, // 158: warp.multi_agent.v1.CallMCPToolResult.Success.Result.text:type_name -> warp.multi_agent.v1.CallMCPToolResult.Success.Result.Text
 	110, // 159: warp.multi_agent.v1.CallMCPToolResult.Success.Result.image:type_name -> warp.multi_agent.v1.CallMCPToolResult.Success.Result.Image
 	14,  // 160: warp.multi_agent.v1.CallMCPToolResult.Success.Result.resource:type_name -> warp.multi_agent.v1.MCPResourceContent
-	132, // 161: warp.multi_agent.v1.ReadDocumentsResult.Success.documents:type_name -> warp.multi_agent.v1.DocumentContent
-	132, // 162: warp.multi_agent.v1.EditDocumentsResult.Success.updated_documents:type_name -> warp.multi_agent.v1.DocumentContent
-	132, // 163: warp.multi_agent.v1.CreateDocumentsResult.Success.created_documents:type_name -> warp.multi_agent.v1.DocumentContent
+	133, // 161: warp.multi_agent.v1.ReadDocumentsResult.Success.documents:type_name -> warp.multi_agent.v1.DocumentContent
+	133, // 162: warp.multi_agent.v1.EditDocumentsResult.Success.updated_documents:type_name -> warp.multi_agent.v1.DocumentContent
+	133, // 163: warp.multi_agent.v1.CreateDocumentsResult.Success.created_documents:type_name -> warp.multi_agent.v1.DocumentContent
 	164, // [164:164] is the sub-list for method output_type
 	164, // [164:164] is the sub-list for method input_type
 	164, // [164:164] is the sub-list for extension type_name
