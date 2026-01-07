@@ -275,6 +275,7 @@ message Message {
       ReadShellCommandOutput read_shell_command_output = 23;
       UseComputer use_computer = 24;
       InsertReviewComments insert_review_comments = 25;
+      ReadSkill read_skill = 26;
     }
 
     // A tool call that is totally resolved server-side and hence opaque to
@@ -579,6 +580,14 @@ message Message {
         FileContentLineRange range = 2;
       }
     }
+    
+    // A tool call to run a Skill.
+    message ReadSkill {
+      // The path to the SKILL.md to be read.
+      string skill_path = 1;
+      // The name of the Skill defined in SKILL.md.
+      string skill_name = 2;
+    }
 
     message UseComputer {
       // A series of actions to execute on the machine.
@@ -698,6 +707,7 @@ message Message {
       ReadShellCommandOutputResult read_shell_command_output = 27;
       UseComputerResult use_computer = 28;
       InsertReviewCommentsResult insert_review_comments = 29;
+      ReadSkillResult read_skill = 30;
     }
 
     // Result of a server-side tool call.
@@ -1179,6 +1189,20 @@ message UseComputerResult {
   }
 }
 
+message ReadSkillResult {
+  oneof result {
+    Success success = 1;
+    Error error = 2;
+  }
+
+  message Success {
+    // The content of the SKILL.md file that was read.
+    FileContent content = 1;
+  }
+
+  message Error { string message = 1 [ (sensitive) = true ]; }
+}
+
 message ShellCommandError {
   oneof type {
     // There was no command execution found with the given command_id in the tool call.
@@ -1215,6 +1239,7 @@ enum ToolType {
   READ_SHELL_COMMAND_OUTPUT = 20;
   USE_COMPUTER = 21;
   INSERT_REVIEW_COMMENTS = 22;
+  READ_SKILL = 23;
 }
 
 message UserQueryMode {
