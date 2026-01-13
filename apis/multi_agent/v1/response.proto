@@ -219,6 +219,7 @@ message ClientAction {
     RollbackTransaction rollback_transaction = 11;
     StartNewConversation start_new_conversation = 12;
     UpdateTaskServerData update_task_server_data = 13;
+    MoveMessagesToNewTask move_messages_to_new_task = 14;
   }
 
   // Create task action
@@ -281,6 +282,30 @@ message ClientAction {
   // Tells the client that a new conversation is started hereafter.
   message StartNewConversation {
     string start_from_message_id = 1;
+  }
+
+  // Moves a contiguous range of messages into a new task, replacing them
+  // in the source task with new messages.
+  message MoveMessagesToNewTask {
+    // ID of the task containing the messages to replace.
+    string source_task_id = 1;
+
+    // A new task to move the messages into.
+    Task new_task = 2;
+
+    // ID of the first message in the range to replace (inclusive).
+    string first_message_id = 3;
+
+    // ID of the last message in the range to replace (inclusive).
+    string last_message_id = 4;
+
+    // The expected number of messages in the range being moved. Acts as a
+    // checksum to verify client and server agree on the range contents.
+    uint32 expected_message_count = 5;
+
+    // The new messages to insert in place of the source range.  If empty,
+    // the messages are simply moved.
+    repeated Message replacement_messages = 6;
   }
 }
 
