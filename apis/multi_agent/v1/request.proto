@@ -61,6 +61,7 @@ message Request {
       SummarizeConversation summarize_conversation = 13;
       CreateEnvironment create_environment = 14;
       FetchReviewComments fetch_review_comments = 15;
+      StartFromAmbientRunPrompt start_from_ambient_run_prompt = 16;
 
       UserQuery user_query = 2 [deprecated = true];
       ToolCallResult tool_call_result = 3 [deprecated = true];
@@ -223,6 +224,14 @@ message Request {
     message SummarizeConversation {
       // Optional user-specified instructions to focus or augment the summary.
       string prompt = 1 [ (sensitive) = true ];
+    }
+
+    // A special input type used to start an ambient agent run where the initial prompt
+    // is retrieved at runtime as the latest prompt known for the run.
+    // This is only valid when supplied at the start of a conversation.
+    message StartFromAmbientRunPrompt {
+      // The ambient agent run ID to resolve the prompt from.
+      string ambient_run_id = 1;
     }
   }
 
