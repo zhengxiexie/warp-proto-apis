@@ -5047,231 +5047,6 @@ func (b0 Request_Input_SummarizeConversation_builder) Build() *Request_Input_Sum
 	return m0
 }
 
-// An input to invoke a skill. The skill content is passed as instructions
-// to the agent, while the user sees a visual indicator like "/{skill-name}".
-type Request_Input_InvokeSkill struct {
-	state                     protoimpl.MessageState                     `protogen:"opaque.v1"`
-	xxx_hidden_SkillReference isRequest_Input_InvokeSkill_SkillReference `protobuf_oneof:"skill_reference"`
-	xxx_hidden_Name           *string                                    `protobuf:"bytes,3,opt,name=name"`
-	xxx_hidden_Content        *FileContent                               `protobuf:"bytes,4,opt,name=content"`
-	XXX_raceDetectHookData    protoimpl.RaceDetectHookData
-	XXX_presence              [1]uint32
-	unknownFields             protoimpl.UnknownFields
-	sizeCache                 protoimpl.SizeCache
-}
-
-func (x *Request_Input_InvokeSkill) Reset() {
-	*x = Request_Input_InvokeSkill{}
-	mi := &file_request_proto_msgTypes[21]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *Request_Input_InvokeSkill) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*Request_Input_InvokeSkill) ProtoMessage() {}
-
-func (x *Request_Input_InvokeSkill) ProtoReflect() protoreflect.Message {
-	mi := &file_request_proto_msgTypes[21]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-func (x *Request_Input_InvokeSkill) GetPath() string {
-	if x != nil {
-		if x, ok := x.xxx_hidden_SkillReference.(*request_Input_InvokeSkill_Path); ok {
-			return x.Path
-		}
-	}
-	return ""
-}
-
-func (x *Request_Input_InvokeSkill) GetBundledSkillId() string {
-	if x != nil {
-		if x, ok := x.xxx_hidden_SkillReference.(*request_Input_InvokeSkill_BundledSkillId); ok {
-			return x.BundledSkillId
-		}
-	}
-	return ""
-}
-
-func (x *Request_Input_InvokeSkill) GetName() string {
-	if x != nil {
-		if x.xxx_hidden_Name != nil {
-			return *x.xxx_hidden_Name
-		}
-		return ""
-	}
-	return ""
-}
-
-func (x *Request_Input_InvokeSkill) GetContent() *FileContent {
-	if x != nil {
-		return x.xxx_hidden_Content
-	}
-	return nil
-}
-
-func (x *Request_Input_InvokeSkill) SetPath(v string) {
-	x.xxx_hidden_SkillReference = &request_Input_InvokeSkill_Path{v}
-}
-
-func (x *Request_Input_InvokeSkill) SetBundledSkillId(v string) {
-	x.xxx_hidden_SkillReference = &request_Input_InvokeSkill_BundledSkillId{v}
-}
-
-func (x *Request_Input_InvokeSkill) SetName(v string) {
-	x.xxx_hidden_Name = &v
-	protoimpl.X.SetPresent(&(x.XXX_presence[0]), 1, 3)
-}
-
-func (x *Request_Input_InvokeSkill) SetContent(v *FileContent) {
-	x.xxx_hidden_Content = v
-}
-
-func (x *Request_Input_InvokeSkill) HasSkillReference() bool {
-	if x == nil {
-		return false
-	}
-	return x.xxx_hidden_SkillReference != nil
-}
-
-func (x *Request_Input_InvokeSkill) HasPath() bool {
-	if x == nil {
-		return false
-	}
-	_, ok := x.xxx_hidden_SkillReference.(*request_Input_InvokeSkill_Path)
-	return ok
-}
-
-func (x *Request_Input_InvokeSkill) HasBundledSkillId() bool {
-	if x == nil {
-		return false
-	}
-	_, ok := x.xxx_hidden_SkillReference.(*request_Input_InvokeSkill_BundledSkillId)
-	return ok
-}
-
-func (x *Request_Input_InvokeSkill) HasName() bool {
-	if x == nil {
-		return false
-	}
-	return protoimpl.X.Present(&(x.XXX_presence[0]), 1)
-}
-
-func (x *Request_Input_InvokeSkill) HasContent() bool {
-	if x == nil {
-		return false
-	}
-	return x.xxx_hidden_Content != nil
-}
-
-func (x *Request_Input_InvokeSkill) ClearSkillReference() {
-	x.xxx_hidden_SkillReference = nil
-}
-
-func (x *Request_Input_InvokeSkill) ClearPath() {
-	if _, ok := x.xxx_hidden_SkillReference.(*request_Input_InvokeSkill_Path); ok {
-		x.xxx_hidden_SkillReference = nil
-	}
-}
-
-func (x *Request_Input_InvokeSkill) ClearBundledSkillId() {
-	if _, ok := x.xxx_hidden_SkillReference.(*request_Input_InvokeSkill_BundledSkillId); ok {
-		x.xxx_hidden_SkillReference = nil
-	}
-}
-
-func (x *Request_Input_InvokeSkill) ClearName() {
-	protoimpl.X.ClearPresent(&(x.XXX_presence[0]), 1)
-	x.xxx_hidden_Name = nil
-}
-
-func (x *Request_Input_InvokeSkill) ClearContent() {
-	x.xxx_hidden_Content = nil
-}
-
-const Request_Input_InvokeSkill_SkillReference_not_set_case case_Request_Input_InvokeSkill_SkillReference = 0
-const Request_Input_InvokeSkill_Path_case case_Request_Input_InvokeSkill_SkillReference = 1
-const Request_Input_InvokeSkill_BundledSkillId_case case_Request_Input_InvokeSkill_SkillReference = 2
-
-func (x *Request_Input_InvokeSkill) WhichSkillReference() case_Request_Input_InvokeSkill_SkillReference {
-	if x == nil {
-		return Request_Input_InvokeSkill_SkillReference_not_set_case
-	}
-	switch x.xxx_hidden_SkillReference.(type) {
-	case *request_Input_InvokeSkill_Path:
-		return Request_Input_InvokeSkill_Path_case
-	case *request_Input_InvokeSkill_BundledSkillId:
-		return Request_Input_InvokeSkill_BundledSkillId_case
-	default:
-		return Request_Input_InvokeSkill_SkillReference_not_set_case
-	}
-}
-
-type Request_Input_InvokeSkill_builder struct {
-	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
-
-	// Fields of oneof xxx_hidden_SkillReference:
-	Path           *string
-	BundledSkillId *string
-	// -- end of xxx_hidden_SkillReference
-	Name    *string
-	Content *FileContent
-}
-
-func (b0 Request_Input_InvokeSkill_builder) Build() *Request_Input_InvokeSkill {
-	m0 := &Request_Input_InvokeSkill{}
-	b, x := &b0, m0
-	_, _ = b, x
-	if b.Path != nil {
-		x.xxx_hidden_SkillReference = &request_Input_InvokeSkill_Path{*b.Path}
-	}
-	if b.BundledSkillId != nil {
-		x.xxx_hidden_SkillReference = &request_Input_InvokeSkill_BundledSkillId{*b.BundledSkillId}
-	}
-	if b.Name != nil {
-		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 1, 3)
-		x.xxx_hidden_Name = b.Name
-	}
-	x.xxx_hidden_Content = b.Content
-	return m0
-}
-
-type case_Request_Input_InvokeSkill_SkillReference protoreflect.FieldNumber
-
-func (x case_Request_Input_InvokeSkill_SkillReference) String() string {
-	md := file_request_proto_msgTypes[21].Descriptor()
-	if x == 0 {
-		return "not set"
-	}
-	return protoimpl.X.MessageFieldStringOf(md, protoreflect.FieldNumber(x))
-}
-
-type isRequest_Input_InvokeSkill_SkillReference interface {
-	isRequest_Input_InvokeSkill_SkillReference()
-}
-
-type request_Input_InvokeSkill_Path struct {
-	Path string `protobuf:"bytes,1,opt,name=path,oneof"` // Path to skill file
-}
-
-type request_Input_InvokeSkill_BundledSkillId struct {
-	BundledSkillId string `protobuf:"bytes,2,opt,name=bundled_skill_id,json=bundledSkillId,oneof"` // Bundled skill ID
-}
-
-func (*request_Input_InvokeSkill_Path) isRequest_Input_InvokeSkill_SkillReference() {}
-
-func (*request_Input_InvokeSkill_BundledSkillId) isRequest_Input_InvokeSkill_SkillReference() {}
-
 // A special input type used to start an ambient agent run where the initial prompt
 // is retrieved at runtime as the latest prompt known for the run.
 // This is only valid when supplied at the start of a conversation.
@@ -5286,7 +5061,7 @@ type Request_Input_StartFromAmbientRunPrompt struct {
 
 func (x *Request_Input_StartFromAmbientRunPrompt) Reset() {
 	*x = Request_Input_StartFromAmbientRunPrompt{}
-	mi := &file_request_proto_msgTypes[22]
+	mi := &file_request_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5298,7 +5073,7 @@ func (x *Request_Input_StartFromAmbientRunPrompt) String() string {
 func (*Request_Input_StartFromAmbientRunPrompt) ProtoMessage() {}
 
 func (x *Request_Input_StartFromAmbientRunPrompt) ProtoReflect() protoreflect.Message {
-	mi := &file_request_proto_msgTypes[22]
+	mi := &file_request_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5351,6 +5126,74 @@ func (b0 Request_Input_StartFromAmbientRunPrompt_builder) Build() *Request_Input
 		protoimpl.X.SetPresentNonAtomic(&(x.XXX_presence[0]), 0, 1)
 		x.xxx_hidden_AmbientRunId = b.AmbientRunId
 	}
+	return m0
+}
+
+type Request_Input_InvokeSkill struct {
+	state            protoimpl.MessageState `protogen:"opaque.v1"`
+	xxx_hidden_Skill *Skill                 `protobuf:"bytes,1,opt,name=skill"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *Request_Input_InvokeSkill) Reset() {
+	*x = Request_Input_InvokeSkill{}
+	mi := &file_request_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Request_Input_InvokeSkill) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Request_Input_InvokeSkill) ProtoMessage() {}
+
+func (x *Request_Input_InvokeSkill) ProtoReflect() protoreflect.Message {
+	mi := &file_request_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+func (x *Request_Input_InvokeSkill) GetSkill() *Skill {
+	if x != nil {
+		return x.xxx_hidden_Skill
+	}
+	return nil
+}
+
+func (x *Request_Input_InvokeSkill) SetSkill(v *Skill) {
+	x.xxx_hidden_Skill = v
+}
+
+func (x *Request_Input_InvokeSkill) HasSkill() bool {
+	if x == nil {
+		return false
+	}
+	return x.xxx_hidden_Skill != nil
+}
+
+func (x *Request_Input_InvokeSkill) ClearSkill() {
+	x.xxx_hidden_Skill = nil
+}
+
+type Request_Input_InvokeSkill_builder struct {
+	_ [0]func() // Prevents comparability and use of unkeyed literals for the builder.
+
+	Skill *Skill
+}
+
+func (b0 Request_Input_InvokeSkill_builder) Build() *Request_Input_InvokeSkill {
+	m0 := &Request_Input_InvokeSkill{}
+	b, x := &b0, m0
+	_, _ = b, x
+	x.xxx_hidden_Skill = b.Skill
 	return m0
 }
 
@@ -7047,7 +6890,7 @@ var File_request_proto protoreflect.FileDescriptor
 const file_request_proto_rawDesc = "" +
 	"\n" +
 	"\rrequest.proto\x12\x13warp.multi_agent.v1\x1a\x1bgoogle/protobuf/empty.proto\x1a!google/protobuf/go_features.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x13input_context.proto\x1a\x10attachment.proto\x1a\roptions.proto\x1a\x11suggestions.proto\x1a\n" +
-	"task.proto\x1a\x12file_content.proto\"\xd9T\n" +
+	"task.proto\x1a\vskill.proto\"\xe5S\n" +
 	"\aRequest\x12K\n" +
 	"\ftask_context\x18\x01 \x01(\v2(.warp.multi_agent.v1.Request.TaskContextR\vtaskContext\x128\n" +
 	"\x05input\x18\x02 \x01(\v2\".warp.multi_agent.v1.Request.InputR\x05input\x12A\n" +
@@ -7057,7 +6900,7 @@ const file_request_proto_rawDesc = "" +
 	"\vmcp_context\x18\x06 \x01(\v2'.warp.multi_agent.v1.Request.MCPContextR\n" +
 	"mcpContext\x1aT\n" +
 	"\vTaskContext\x12/\n" +
-	"\x05tasks\x18\x01 \x03(\v2\x19.warp.multi_agent.v1.TaskR\x05tasksJ\x04\b\x02\x10\x03R\x0eactive_task_id\x1a\x856\n" +
+	"\x05tasks\x18\x01 \x03(\v2\x19.warp.multi_agent.v1.TaskR\x05tasksJ\x04\b\x02\x10\x03R\x0eactive_task_id\x1a\x915\n" +
 	"\x05Input\x12;\n" +
 	"\acontext\x18\x01 \x01(\v2!.warp.multi_agent.v1.InputContextR\acontext\x12P\n" +
 	"\vuser_inputs\x18\x06 \x01(\v2-.warp.multi_agent.v1.Request.Input.UserInputsH\x00R\n" +
@@ -7176,15 +7019,11 @@ const file_request_proto_rawDesc = "" +
 	"\x13FetchReviewComments\x12!\n" +
 	"\trepo_path\x18\x01 \x01(\tB\x04\x80\xb5\x18\x01R\brepoPath\x1a5\n" +
 	"\x15SummarizeConversation\x12\x1c\n" +
-	"\x06prompt\x18\x01 \x01(\tB\x04\x80\xb5\x18\x01R\x06prompt\x1a\xb2\x01\n" +
-	"\vInvokeSkill\x12\x14\n" +
-	"\x04path\x18\x01 \x01(\tH\x00R\x04path\x12*\n" +
-	"\x10bundled_skill_id\x18\x02 \x01(\tH\x00R\x0ebundledSkillId\x12\x12\n" +
-	"\x04name\x18\x03 \x01(\tR\x04name\x12:\n" +
-	"\acontent\x18\x04 \x01(\v2 .warp.multi_agent.v1.FileContentR\acontentB\x11\n" +
-	"\x0fskill_reference\x1aA\n" +
+	"\x06prompt\x18\x01 \x01(\tB\x04\x80\xb5\x18\x01R\x06prompt\x1aA\n" +
 	"\x19StartFromAmbientRunPrompt\x12$\n" +
-	"\x0eambient_run_id\x18\x01 \x01(\tR\fambientRunIdB\x06\n" +
+	"\x0eambient_run_id\x18\x01 \x01(\tR\fambientRunId\x1a?\n" +
+	"\vInvokeSkill\x120\n" +
+	"\x05skill\x18\x01 \x01(\v2\x1a.warp.multi_agent.v1.SkillR\x05skillB\x06\n" +
 	"\x04type\x1a\xc7\x02\n" +
 	"\bMetadata\x12'\n" +
 	"\x0fconversation_id\x18\x01 \x01(\tR\x0econversationId\x12L\n" +
@@ -7273,32 +7112,32 @@ const file_request_proto_rawDesc = "" +
 var file_request_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_request_proto_msgTypes = make([]protoimpl.MessageInfo, 39)
 var file_request_proto_goTypes = []any{
-	(AutonomyLevel)(0),                              // 0: warp.multi_agent.v1.AutonomyLevel
-	(IsolationLevel)(0),                             // 1: warp.multi_agent.v1.IsolationLevel
-	(*Request)(nil),                                 // 2: warp.multi_agent.v1.Request
-	(*Request_TaskContext)(nil),                     // 3: warp.multi_agent.v1.Request.TaskContext
-	(*Request_Input)(nil),                           // 4: warp.multi_agent.v1.Request.Input
-	(*Request_Metadata)(nil),                        // 5: warp.multi_agent.v1.Request.Metadata
-	(*Request_Settings)(nil),                        // 6: warp.multi_agent.v1.Request.Settings
-	(*Request_MCPContext)(nil),                      // 7: warp.multi_agent.v1.Request.MCPContext
-	(*Request_Input_UserQuery)(nil),                 // 8: warp.multi_agent.v1.Request.Input.UserQuery
-	(*Request_Input_CLIAgentUserQuery)(nil),         // 9: warp.multi_agent.v1.Request.Input.CLIAgentUserQuery
-	(*Request_Input_UserInputs)(nil),                // 10: warp.multi_agent.v1.Request.Input.UserInputs
-	(*Request_Input_ToolCallResult)(nil),            // 11: warp.multi_agent.v1.Request.Input.ToolCallResult
-	(*Request_Input_QueryWithCannedResponse)(nil),   // 12: warp.multi_agent.v1.Request.Input.QueryWithCannedResponse
-	(*Request_Input_AutoCodeDiffQuery)(nil),         // 13: warp.multi_agent.v1.Request.Input.AutoCodeDiffQuery
-	(*Request_Input_ResumeConversation)(nil),        // 14: warp.multi_agent.v1.Request.Input.ResumeConversation
-	(*Request_Input_InitProjectRules)(nil),          // 15: warp.multi_agent.v1.Request.Input.InitProjectRules
-	(*Request_Input_CreateNewProject)(nil),          // 16: warp.multi_agent.v1.Request.Input.CreateNewProject
-	(*Request_Input_CloneRepository)(nil),           // 17: warp.multi_agent.v1.Request.Input.CloneRepository
-	(*Request_Input_CreateEnvironment)(nil),         // 18: warp.multi_agent.v1.Request.Input.CreateEnvironment
-	(*Request_Input_TriggerSuggestPrompt)(nil),      // 19: warp.multi_agent.v1.Request.Input.TriggerSuggestPrompt
-	(*Request_Input_CodeReview)(nil),                // 20: warp.multi_agent.v1.Request.Input.CodeReview
-	(*Request_Input_FetchReviewComments)(nil),       // 21: warp.multi_agent.v1.Request.Input.FetchReviewComments
-	(*Request_Input_SummarizeConversation)(nil),     // 22: warp.multi_agent.v1.Request.Input.SummarizeConversation
-	(*Request_Input_InvokeSkill)(nil),               // 23: warp.multi_agent.v1.Request.Input.InvokeSkill
-	(*Request_Input_StartFromAmbientRunPrompt)(nil), // 24: warp.multi_agent.v1.Request.Input.StartFromAmbientRunPrompt
-	nil, // 25: warp.multi_agent.v1.Request.Input.UserQuery.ReferencedAttachmentsEntry
+	(AutonomyLevel)(0),                                                     // 0: warp.multi_agent.v1.AutonomyLevel
+	(IsolationLevel)(0),                                                    // 1: warp.multi_agent.v1.IsolationLevel
+	(*Request)(nil),                                                        // 2: warp.multi_agent.v1.Request
+	(*Request_TaskContext)(nil),                                            // 3: warp.multi_agent.v1.Request.TaskContext
+	(*Request_Input)(nil),                                                  // 4: warp.multi_agent.v1.Request.Input
+	(*Request_Metadata)(nil),                                               // 5: warp.multi_agent.v1.Request.Metadata
+	(*Request_Settings)(nil),                                               // 6: warp.multi_agent.v1.Request.Settings
+	(*Request_MCPContext)(nil),                                             // 7: warp.multi_agent.v1.Request.MCPContext
+	(*Request_Input_UserQuery)(nil),                                        // 8: warp.multi_agent.v1.Request.Input.UserQuery
+	(*Request_Input_CLIAgentUserQuery)(nil),                                // 9: warp.multi_agent.v1.Request.Input.CLIAgentUserQuery
+	(*Request_Input_UserInputs)(nil),                                       // 10: warp.multi_agent.v1.Request.Input.UserInputs
+	(*Request_Input_ToolCallResult)(nil),                                   // 11: warp.multi_agent.v1.Request.Input.ToolCallResult
+	(*Request_Input_QueryWithCannedResponse)(nil),                          // 12: warp.multi_agent.v1.Request.Input.QueryWithCannedResponse
+	(*Request_Input_AutoCodeDiffQuery)(nil),                                // 13: warp.multi_agent.v1.Request.Input.AutoCodeDiffQuery
+	(*Request_Input_ResumeConversation)(nil),                               // 14: warp.multi_agent.v1.Request.Input.ResumeConversation
+	(*Request_Input_InitProjectRules)(nil),                                 // 15: warp.multi_agent.v1.Request.Input.InitProjectRules
+	(*Request_Input_CreateNewProject)(nil),                                 // 16: warp.multi_agent.v1.Request.Input.CreateNewProject
+	(*Request_Input_CloneRepository)(nil),                                  // 17: warp.multi_agent.v1.Request.Input.CloneRepository
+	(*Request_Input_CreateEnvironment)(nil),                                // 18: warp.multi_agent.v1.Request.Input.CreateEnvironment
+	(*Request_Input_TriggerSuggestPrompt)(nil),                             // 19: warp.multi_agent.v1.Request.Input.TriggerSuggestPrompt
+	(*Request_Input_CodeReview)(nil),                                       // 20: warp.multi_agent.v1.Request.Input.CodeReview
+	(*Request_Input_FetchReviewComments)(nil),                              // 21: warp.multi_agent.v1.Request.Input.FetchReviewComments
+	(*Request_Input_SummarizeConversation)(nil),                            // 22: warp.multi_agent.v1.Request.Input.SummarizeConversation
+	(*Request_Input_StartFromAmbientRunPrompt)(nil),                        // 23: warp.multi_agent.v1.Request.Input.StartFromAmbientRunPrompt
+	(*Request_Input_InvokeSkill)(nil),                                      // 24: warp.multi_agent.v1.Request.Input.InvokeSkill
+	nil,                                                                    // 25: warp.multi_agent.v1.Request.Input.UserQuery.ReferencedAttachmentsEntry
 	(*Request_Input_UserInputs_UserInput)(nil),                             // 26: warp.multi_agent.v1.Request.Input.UserInputs.UserInput
 	(*Request_Input_QueryWithCannedResponse_Install)(nil),                  // 27: warp.multi_agent.v1.Request.Input.QueryWithCannedResponse.Install
 	(*Request_Input_QueryWithCannedResponse_Code)(nil),                     // 28: warp.multi_agent.v1.Request.Input.QueryWithCannedResponse.Code
@@ -7347,7 +7186,7 @@ var file_request_proto_goTypes = []any{
 	(*ReadSkillResult)(nil),                         // 71: warp.multi_agent.v1.ReadSkillResult
 	(*Attachment)(nil),                              // 72: warp.multi_agent.v1.Attachment
 	(*emptypb.Empty)(nil),                           // 73: google.protobuf.Empty
-	(*FileContent)(nil),                             // 74: warp.multi_agent.v1.FileContent
+	(*Skill)(nil),                                   // 74: warp.multi_agent.v1.Skill
 	(*ReviewComment)(nil),                           // 75: warp.multi_agent.v1.ReviewComment
 	(*DiffSet)(nil),                                 // 76: warp.multi_agent.v1.DiffSet
 	(*structpb.Value)(nil),                          // 77: google.protobuf.Value
@@ -7374,8 +7213,8 @@ var file_request_proto_depIdxs = []int32{
 	22, // 17: warp.multi_agent.v1.Request.Input.summarize_conversation:type_name -> warp.multi_agent.v1.Request.Input.SummarizeConversation
 	18, // 18: warp.multi_agent.v1.Request.Input.create_environment:type_name -> warp.multi_agent.v1.Request.Input.CreateEnvironment
 	21, // 19: warp.multi_agent.v1.Request.Input.fetch_review_comments:type_name -> warp.multi_agent.v1.Request.Input.FetchReviewComments
-	24, // 20: warp.multi_agent.v1.Request.Input.start_from_ambient_run_prompt:type_name -> warp.multi_agent.v1.Request.Input.StartFromAmbientRunPrompt
-	23, // 21: warp.multi_agent.v1.Request.Input.invoke_skill:type_name -> warp.multi_agent.v1.Request.Input.InvokeSkill
+	23, // 20: warp.multi_agent.v1.Request.Input.start_from_ambient_run_prompt:type_name -> warp.multi_agent.v1.Request.Input.StartFromAmbientRunPrompt
+	24, // 21: warp.multi_agent.v1.Request.Input.invoke_skill:type_name -> warp.multi_agent.v1.Request.Input.InvokeSkill
 	8,  // 22: warp.multi_agent.v1.Request.Input.user_query:type_name -> warp.multi_agent.v1.Request.Input.UserQuery
 	11, // 23: warp.multi_agent.v1.Request.Input.tool_call_result:type_name -> warp.multi_agent.v1.Request.Input.ToolCallResult
 	34, // 24: warp.multi_agent.v1.Request.Metadata.logging:type_name -> warp.multi_agent.v1.Request.Metadata.LoggingEntry
@@ -7428,7 +7267,7 @@ var file_request_proto_depIdxs = []int32{
 	73, // 71: warp.multi_agent.v1.Request.Input.TriggerSuggestPrompt.files_changed:type_name -> google.protobuf.Empty
 	73, // 72: warp.multi_agent.v1.Request.Input.TriggerSuggestPrompt.command_run:type_name -> google.protobuf.Empty
 	33, // 73: warp.multi_agent.v1.Request.Input.CodeReview.initial_review_comments:type_name -> warp.multi_agent.v1.Request.Input.CodeReview.InitialReviewComments
-	74, // 74: warp.multi_agent.v1.Request.Input.InvokeSkill.content:type_name -> warp.multi_agent.v1.FileContent
+	74, // 74: warp.multi_agent.v1.Request.Input.InvokeSkill.skill:type_name -> warp.multi_agent.v1.Skill
 	72, // 75: warp.multi_agent.v1.Request.Input.UserQuery.ReferencedAttachmentsEntry.value:type_name -> warp.multi_agent.v1.Attachment
 	8,  // 76: warp.multi_agent.v1.Request.Input.UserInputs.UserInput.user_query:type_name -> warp.multi_agent.v1.Request.Input.UserQuery
 	11, // 77: warp.multi_agent.v1.Request.Input.UserInputs.UserInput.tool_call_result:type_name -> warp.multi_agent.v1.Request.Input.ToolCallResult
@@ -7457,7 +7296,7 @@ func file_request_proto_init() {
 	file_options_proto_init()
 	file_suggestions_proto_init()
 	file_task_proto_init()
-	file_file_content_proto_init()
+	file_skill_proto_init()
 	file_request_proto_msgTypes[2].OneofWrappers = []any{
 		(*request_Input_UserInputs_)(nil),
 		(*request_Input_QueryWithCannedResponse_)(nil),
@@ -7516,10 +7355,6 @@ func file_request_proto_init() {
 	}
 	file_request_proto_msgTypes[18].OneofWrappers = []any{
 		(*request_Input_CodeReview_InitialReviewComments_)(nil),
-	}
-	file_request_proto_msgTypes[21].OneofWrappers = []any{
-		(*request_Input_InvokeSkill_Path)(nil),
-		(*request_Input_InvokeSkill_BundledSkillId)(nil),
 	}
 	file_request_proto_msgTypes[24].OneofWrappers = []any{
 		(*request_Input_UserInputs_UserInput_UserQuery)(nil),

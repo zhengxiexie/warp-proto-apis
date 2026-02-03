@@ -16,6 +16,7 @@ import "file_content.proto";
 import "document_content.proto";
 import "options.proto";
 import "todo.proto";
+import "skill.proto";
 
 option go_package = "github.com/warp/warp-proto-apis/multi_agent/v1";
 option features.(pb.go).api_level = API_OPAQUE;
@@ -137,6 +138,7 @@ message Message {
     WebFetch web_fetch = 20;
     DebugOutput debug_output = 21;
     ArtifactEvent artifact_event = 22;
+    InvokeSkill invoke_skill = 23;
   }
 
   // User query message type
@@ -881,6 +883,10 @@ message Message {
         PullRequestArtifact pull_request = 1;
       }
     }
+  }
+
+  message InvokeSkill {
+    Skill skill = 1;
   }
 }
 
