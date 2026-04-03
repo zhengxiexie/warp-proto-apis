@@ -1580,10 +1580,24 @@ message StartAgent {
   // Optional lifecycle event subscription for the new child agent.
   // If not set or empty, defaults to all lifecycle event types.
   LifecycleSubscription lifecycle_subscription = 3;
+  // Where the child agent should run. Defaults to local when omitted.
+  ExecutionMode execution_mode = 4;
 
   message LifecycleSubscription {
     // Lifecycle event types the lead agent is subscribing to.
     repeated LifecycleEventType event_types = 1;
+  }
+
+  message ExecutionMode {
+    oneof mode {
+      google.protobuf.Empty local = 1;
+      Remote remote = 2;
+    }
+
+    message Remote {
+      // Optional cloud environment UID for remote child agents.
+      string environment_id = 1;
+    }
   }
 }
 
@@ -1595,7 +1609,9 @@ message StartAgentResult {
   }
 
   message Success {
-    // The server-assigned agent ID (conversation_id for V0).
+    // The server-assigned child agent address.
+    // When orchestration_v2 is disabled, this is the child conversation ID.
+    // When orchestration_v2 is enabled, this is the child run ID.
     string agent_id = 1;
   }
   message Error { string error = 1; }
