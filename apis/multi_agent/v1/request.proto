@@ -472,6 +472,10 @@ message Request {
       // Optional AWS credentials (e.g. for Bedrock).
       AWSCredentials aws_credentials = 6;
 
+      // Custom base URLs for BYOK providers (for OpenAI-compatible endpoints).
+      string anthropic_base_url = 7;
+      string openai_base_url = 8;
+
       message AWSCredentials {
         string access_key = 1 [ (sensitive) = true ];
         string secret_key = 2 [ (sensitive) = true ];
